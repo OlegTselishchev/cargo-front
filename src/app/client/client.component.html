@@ -1,0 +1,57 @@
+
+
+
+<div class="cont1">
+  <input type="text"  placeholder="FilterClientByLastName"  [(ngModel)]="searchByLastName" />
+  <button  (click)="showClient()">Show Users</button>
+  <button (click)="addClient()">Add User</button>
+  <button (click)="goBack()">goBack</button>
+</div>
+
+
+<div class="cont2">
+  <input type="text" placeholder="add_lastName" [(ngModel)]="clientNew.lastName"/>
+  <input type="text" placeholder="add_firstName" [(ngModel)]="clientNew.firstName"/>
+  <input type="text" placeholder="add_middleName" [(ngModel)]="clientNew.middleName"/>
+  <input type="text" placeholder="add_phone" [(ngModel)]="clientNew.phone"/>
+  <input type="text" placeholder="add_email" [(ngModel)]="clientNew.email"/>
+  <input type="text" placeholder="add_driveCategory" [(ngModel)]="clientNew.driveCategory"/>
+</div>
+
+
+
+  <div class="cont3" *ngIf="clientService.clientList.length; else noClient">
+
+    <tr>
+
+      <td style="width: 120px">LastName</td>
+      <td style="width: 120px">FirstName</td>
+      <td style="width: 120px">MiddleName</td>
+      <td style="width: 100px">Phone</td>
+      <td style="width: 150px">Email</td>
+      <td style="width: 80px">Category</td>
+      <td style="width: 50px">DelUser</td>
+    </tr>
+
+    <div class="cont4">
+    <tr *ngFor="let cl of clientService.clientList | clientFilterByLastN: searchByLastName">
+
+        <td style="width: 120px">{{cl.lastName}}</td>
+        <td style="width: 120px">{{cl.firstName}}</td>
+        <td style="width: 120px">{{cl.middleName}}</td>
+        <td style="width: 100px">{{cl.phone}}</td>
+        <td style="width: 150px">{{cl.email}}</td>
+        <td style="width: 80px">{{cl.driveCategory}}</td>
+        <td style="width: 50px"><button (click)="delete(cl.userId)">x</button></td>
+    </tr>
+    </div>
+  </div>
+
+
+  <ng-template #noClient>
+    <p>No clients now!</p>
+  </ng-template>
+
+
+
+

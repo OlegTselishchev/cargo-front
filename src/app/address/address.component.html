@@ -1,0 +1,41 @@
+
+<div class="cont1">
+  <input type="text"  placeholder="FilterAddressByStreet"  [(ngModel)]="searchByStreet" />
+  <button (click)="showAddress()" >Show Address</button>
+  <button (click)="addAddress()">Add</button>
+  <button (click)="goBack()">goBack</button>
+</div>
+
+<div class="cont2">
+  <input type="text" placeholder="add_country" [(ngModel)]="address.country"/>
+  <input type="text" placeholder="add_city" [(ngModel)]="address.city"/>
+  <input type="text" placeholder="add_street" [(ngModel)]="address.street"/>
+  <input type="text" placeholder="add_home" [(ngModel)]="address.home"/>
+  <input type="text" placeholder="add_apartment" [(ngModel)]="address.apartment"/>
+</div>
+
+<div class="cont3">
+      <tr>
+        <td style="width: 70px">country</td>
+        <td style="width: 120px">city</td>
+        <td style="width: 120px">street</td>
+        <td style="width: 90px">№_home</td>
+        <td style="width: 70px">№_apart</td>
+        <td style="width: 70px">delete</td>
+      </tr>
+  <div class="cont4">
+    <tr *ngFor="let cl of addressService.addressList | addressFilterByStreet: searchByStreet">
+      <td style="width: 70px">{{cl.country}}</td>
+      <td style="width: 120px">{{cl.city}}</td>
+      <td style="width: 120px">{{cl.street}}</td>
+      <td style="width: 90px">{{cl.home}}</td>
+      <td style="width: 70px">{{cl.apartment}}</td>
+      <td style="width: 70px"><button (click)="delete(cl.addressId)">x</button></td>
+    </tr>
+  </div>
+
+</div>
+
+<ng-template #noAddress>
+  <p>No address now!</p>
+</ng-template>
