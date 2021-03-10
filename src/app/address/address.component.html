@@ -1,5 +1,6 @@
 
 <div class="cont1">
+  <input type="text" placeholder="FilterAddressByCity" [(ngModel)]="searchByCity" />
   <input type="text"  placeholder="FilterAddressByStreet"  [(ngModel)]="searchByStreet" />
   <button (click)="showAddress()" >Show Address</button>
   <button (click)="addAddress()">Add</button>
@@ -24,7 +25,7 @@
         <td style="width: 70px">delete</td>
       </tr>
   <div class="cont4">
-    <tr *ngFor="let cl of addressService.addressList | addressFilterByStreet: searchByStreet">
+    <tr *ngFor="let cl of addressService.addressList | addressFilterByStreet: searchByStreet | addressFilterByCity: searchByCity">
       <td style="width: 70px">{{cl.country}}</td>
       <td style="width: 120px">{{cl.city}}</td>
       <td style="width: 120px">{{cl.street}}</td>

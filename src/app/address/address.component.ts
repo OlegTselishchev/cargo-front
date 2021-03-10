@@ -12,6 +12,7 @@ export class AddressComponent implements OnInit {
 
   public address: Address = new Address();
   public searchByStreet: string = '';
+  public searchByCity: string = '';
 
   constructor(public addressService: AddressService, public location: Location) { }
 

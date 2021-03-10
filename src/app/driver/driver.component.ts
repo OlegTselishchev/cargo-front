@@ -15,8 +15,8 @@ export class DriverComponent implements OnInit {
   constructor(public orderService: OrderService,
               public clientService: ClientService) { }
 
-  STATUS_OPEN = 22;
-  STATUS_IN_WORK = 23;
+  STATUS_OPEN = 1;
+  STATUS_IN_WORK = 2;
 
   driver1: Client = new Client();
   searchDriverLastName: string = '';

@@ -1,0 +1,52 @@
+<div class="cont1">
+   <button  (click)="showBoxAll()">Show Users</button>
+  <button (click)="goBack()">goBack</button>
+</div>
+
+
+<div class="cont2">
+<p>cont 2</p>
+</div>
+
+
+
+<div class="cont3" *ngIf="boxService.boxList.length; else noClient">
+
+  <tr>
+
+    <td style="width: 80px">boxId</td>
+    <td style="width: 100px">name</td>
+    <td style="width: 100px">weight</td>
+    <td style="width: 100px">volume</td>
+    <td style="width: 100px">width</td>
+    <td style="width: 100px">height</td>
+    <td style="width: 100px">type</td>
+  </tr>
+
+  <div class="cont4">
+    <tr *ngFor="let cl of boxService.boxList">
+
+      <td style="width: 80px">{{cl.boxId}}</td>
+      <td style="width: 100px">{{cl.name}}</td>
+      <td style="width: 100px">{{cl.weight}}</td>
+      <td style="width: 100px">{{cl.volume}}</td>
+      <td style="width: 100px">{{cl.width}}</td>
+      <td style="width: 100px">{{cl.height}}</td>
+      <td style="width: 100px">{{cl.typeCargo.name}}</td>
+
+    </tr>
+  </div>
+
+
+
+
+</div>
+
+
+
+<div>
+  <ng-template #noClient>
+    <p>No BOX now!</p>
+  </ng-template>
+</div>
+

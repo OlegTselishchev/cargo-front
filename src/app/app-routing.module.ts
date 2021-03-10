@@ -8,6 +8,7 @@ import { OrderDetailComponent } from "./order-detail/order-detail.component";
 import {OrderAddComponent} from "./order-add/order-add.component";
 import {ClientComponent} from "./client/client.component";
 import {AddressComponent} from "./address/address.component";
+import {BoxComponent} from "./box/box.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'orderDetail/:id', component: OrderDetailComponent},
   {path: 'order', component: OrderAddComponent},
   {path: 'client', component: ClientComponent},
-  {path: 'address', component: AddressComponent}
+  {path: 'address', component: AddressComponent},
+  {path: 'box', component: BoxComponent}
 ];
 
 @NgModule({

@@ -69,8 +69,10 @@
     | orderFilterByLocCity: searchOrderLocCity
     | orderFilterByDestCity: searchOrderDestCity">
       <app-order-list [modelOrder]="order"></app-order-list>
-      <button (click)="modifyById(order.id)">take</button>
-      <button (click)="back(order.id)">back</button>
+
+      <button (click)="modifyById(order.id)" style="width: 70px">take{{order.id}}</button>
+      <button (click)="back(order.id)" style="width: 70px">back</button>
+
     </ng-container>
 
   </div>

@@ -7,8 +7,8 @@ export class OrderService {
 
   constructor(public http: HttpClient) {}
 
-  urlOrder: string = 'https://app-cargo2020.herokuapp.com/order/';
-  //urlOrder: string = 'http://localhost:9000/order/';
+  //urlOrder: string = 'https://app-cargo2020.herokuapp.com/order/';
+  urlOrder: string = 'http://localhost:9000/order/';
 
   public ordersList: Order[] = [];
 
@@ -28,7 +28,7 @@ export class OrderService {
   public create(order: Order): void {
     this.http.post(this.urlOrder, order).subscribe(()=>{},
       error => {alert('error')},
-      ()=>{ this.showAllOrder();});
+      ()=>{ this.showAllOrder(); console.log('ok')});
 
   }
 

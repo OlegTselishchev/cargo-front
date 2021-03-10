@@ -9,8 +9,8 @@ export class StatusService {
   constructor(public http: HttpClient) {
   }
 
-  statusUrl: string = 'https://app-cargo2020.herokuapp.com/status/';
-  //statusUrl: string = 'http://localhost:9000/status/';
+  //statusUrl: string = 'https://app-cargo2020.herokuapp.com/status/';
+  statusUrl: string = 'http://localhost:9000/status/';
 
   statusList: Status[] = [];
 

@@ -8,8 +8,8 @@ export class TypeCargoService {
   constructor(public http: HttpClient) {
   }
 
-  urlTypeCargo: string = 'https://app-cargo2020.herokuapp.com/type/';
-  //urlTypeCargo: string = 'http://localhost:9000/type/';
+  //urlTypeCargo: string = 'https://app-cargo2020.herokuapp.com/type/';
+  urlTypeCargo: string = 'http://localhost:9000/type/';
 
   public typeCargo: TypeCargo[] = [];
 }

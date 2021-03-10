@@ -9,8 +9,8 @@ export class ClientService {
   constructor(public http: HttpClient) {}
 
 
-  urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
-  //urlClient: string = 'http://localhost:9000/client/';
+  //urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
+  urlClient: string = 'http://localhost:9000/client/';
 
   clientList: Client[] = [];
 

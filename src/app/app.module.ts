@@ -22,6 +22,8 @@ import {OrderFilterByLocCityPipe} from "./filter/orderFilterByLocCity.pipe";
 import {OrderFilterByDestCityPipe} from "./filter/orderFilterByDestCity.pipe";
 import { ClientComponent } from './client/client.component';
 import { AddressComponent } from './address/address.component';
+import { BoxComponent } from './box/box.component';
+import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
 
 
 @NgModule({
@@ -40,9 +42,11 @@ import { AddressComponent } from './address/address.component';
     OrderFilterByWeightPipe,
     OrderFilterByLocCityPipe,
     OrderFilterByDestCityPipe,
+    AddressFilterByCityPipe,
     OrderAddComponent,
     ClientComponent,
-    AddressComponent
+    AddressComponent,
+    BoxComponent
   ],
   imports: [
     BrowserModule,

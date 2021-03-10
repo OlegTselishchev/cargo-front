@@ -9,8 +9,8 @@ export class BoxService {
   constructor(public  http: HttpClient) {
   }
 
-  boxUrl: string = 'https://app-cargo2020.herokuapp.com/box/';
-  //boxUrl: string = 'http://localhost:9000/box/';
+  //boxUrl: string = 'https://app-cargo2020.herokuapp.com/box/';
+  boxUrl: string = 'http://localhost:9000/box/';
 
   public boxList: Box[] = [];
   public box: Box = new Box();
