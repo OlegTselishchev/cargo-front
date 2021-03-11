@@ -1,0 +1,29 @@
+.cont1 {
+  padding: 5px;
+  border: solid 2px green;
+  margin: 5px;
+  overflow: auto;
+}
+
+.cont2{
+  border: solid 2px greenyellow;
+  margin: 5px;
+  padding: 5px;
+}
+
+
+.cont3 {
+  border: solid 2px black;
+  padding: 10px;
+  margin: 5px;
+  overflow: auto;
+}
+
+.cont4{
+  border: solid 1px gray;
+  overflow: auto;
+  padding: 5px;
+  height: 500px;
+  width: 500px;
+}
+

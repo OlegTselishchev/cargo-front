@@ -1,0 +1,12 @@
+
+<tr>
+  <a routerLink="/orderDetail/{{modelOrder.id}}">
+      <td style="width: 30px">{{modelOrder.id}}</td>
+  </a>
+      <td style="width: 80px">{{modelOrder.name + modelOrder.id}}</td>
+      <td style="width: 60px">{{modelOrder.status.name}}</td>
+      <td style="width: 70px">{{modelOrder.price}}</td>
+      <td style="width: 70px">{{modelOrder.location.city}}</td>
+      <td style="width: 70px">{{modelOrder.destination.city}}</td>
+      <td style="width: 50px">{{modelOrder.box.weight}}</td>
+</tr>
