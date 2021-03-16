@@ -1,4 +1,13 @@
 
+.header{
+  padding: 30px;
+  text-align: center;
+  background: transparent;
+  font-size: 30px;
+  z-index: 1;
+  position: relative;
+
+}
 
 body{
   margin: 0;
@@ -13,17 +22,17 @@ body{
 }
 
 .button{
-  left: 40%;
+  left: 19%;
   bottom: -10px;
   transform: translate(10%, -20%);
   position: relative;
-  display: inline-block;
+  display: -webkit-inline-flex;
   padding: 15px 30px;
   color: #2196f3;
   text-transform: uppercase;
   text-decoration: none;
-  font-size: 24px;
-  letter-spacing: 4px;
+  font-size: 17px;
+  letter-spacing: 2px;
   overflow: hidden;
   transition: 0.2s;
 }
@@ -97,7 +106,7 @@ body{
 }
 
 .buttonWhite{
-  left: 58%;
+  left: 29%;
   bottom: -10px;
   transform: translate(10%, -20%);
   position: relative;
