@@ -1,0 +1,193 @@
+
+.header{
+  padding: 30px;
+  text-align: center;
+  background: transparent;
+  font-size: 30px;
+  z-index: 1;
+  position: relative;
+
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  font-family: Consolas;
+  background-color: #333;
+
+}
+
+.button{
+  left: 19%;
+  bottom: 10px;
+  transform: translate(10%, -20%);
+  position: relative;
+  display: -webkit-inline-flex;
+  padding: 15px 30px;
+  color: #2196f3;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 17px;
+  letter-spacing: 2px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.button__line{
+  position: absolute;
+  display: block;
+}
+
+.button__line--top{
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,transparent,#2196f3);
+}
+
+.button:hover .button__line--top{
+  left: 100%;
+  transition: 1s;
+  transition-delay: 0.25s;
+}
+
+.button__line--bottom{
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height:2px;
+  background: linear-gradient(270deg,transparent,#2196f3);
+}
+
+.button:hover .button__line--bottom {
+  right: 100%;
+  transition: 1s;
+  transition-delay: 0.25s;
+}
+
+.button__line--left{
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(0deg,transparent,#2196f3);
+}
+
+.button:hover .button__line--left {
+  bottom: 100%;
+  transition: 1s;
+  transition-delay: 0s;
+}
+
+.button__line--right{
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg,transparent,#2196f3);
+}
+
+.button:hover .button__line--right {
+  top: 100%;
+  transition: 1s;
+  transition-delay: 0s;
+}
+
+.button:hover  {
+  box-shadow: 0 0  10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+  background-color: #2196f3;
+  color: #ffffff;
+  transition-delay: 1s;
+}
+
+.buttonWhite{
+  left: 32%;
+  bottom: 10px;
+  transform: translate(10%, -20%);
+  position: relative;
+  display: -webkit-inline-flex;
+  padding: 15px 30px;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 17px;
+  letter-spacing: 2px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.buttonWhite__line{
+  position: absolute;
+  display: block;
+}
+
+.buttonWhite__line--top{
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,transparent, #ffffff);
+}
+
+.buttonWhite:hover .buttonWhite__line--top{
+  left: 100%;
+  transition: 1s;
+  transition-delay: 0.25s;
+}
+
+.buttonWhite__line--bottom{
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height:2px;
+  background: linear-gradient(270deg,transparent, #ffffff);
+}
+
+.buttonWhite:hover .buttonWhite__line--bottom {
+  right: 100%;
+  transition: 1s;
+  transition-delay: 0.25s;
+}
+
+.buttonWhite__line--left{
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(0deg,transparent, #ffffff);
+}
+
+.buttonWhite:hover .buttonWhite__line--left {
+  bottom: 100%;
+  transition: 1s;
+  transition-delay: 0s;
+}
+
+.buttonWhite__line--right{
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg,transparent, #ffffff);
+}
+
+.buttonWhite:hover .buttonWhite__line--right {
+  top: 100%;
+  transition: 1s;
+  transition-delay: 0s;
+}
+
+.buttonWhite:hover  {
+  box-shadow: 0 0  10px #ffffff, 0 0 40px #ffffff, 0 0 80px #ffffff;
+  background-color: #ffffff;
+  color: #2196f3;
+  transition-delay: 1s;
+}
+
+
+
