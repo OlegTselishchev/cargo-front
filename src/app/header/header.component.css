@@ -23,7 +23,7 @@ body{
 
 .button{
   left: 19%;
-  bottom: -10px;
+  bottom: 10px;
   transform: translate(10%, -20%);
   position: relative;
   display: -webkit-inline-flex;
@@ -106,8 +106,8 @@ body{
 }
 
 .buttonWhite{
-  left: 29%;
-  bottom: -10px;
+  left: 32%;
+  bottom: 10px;
   transform: translate(10%, -20%);
   position: relative;
   display: -webkit-inline-flex;
