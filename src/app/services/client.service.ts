@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Client} from "../model/client.model";
+import {Observable} from "rxjs";
 
 
 @Injectable({providedIn: 'root'})
@@ -13,6 +14,8 @@ export class ClientService {
   urlClient: string = 'http://localhost:9000/client/';
 
   clientList: Client[] = [];
+  profile: Client;
+
 
   public showAllClient(): void {
     this.http.get(this.urlClient).subscribe((date: Client[]) => {
@@ -32,4 +35,15 @@ export class ClientService {
       ()=>{this.showAllClient();});
 
   }
+
+  public showById(id: number): Observable<any> {
+    return this.http.get(this.urlClient + id);
+  }
+
+  public modify(client: Client): Observable<any> {
+    return this.http.patch(this.urlClient, client);
+  }
+
+
+
 }

@@ -38,4 +38,10 @@ export class OrderService {
       ()=>{this.showAllOrder();});
 
   }
+
+  public showOrderById(id: number): void {
+    this.http.get(this.urlOrder + id).subscribe((date: Order[]) => {
+      this.ordersList = date;
+    });
+  }
 }

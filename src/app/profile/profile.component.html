@@ -1,0 +1,47 @@
+<div class="cont1">
+  <h1 >{{profile.firstName}} {{profile.lastName}}</h1>
+  <b>Details</b><br>
+
+  <div class = "details">
+    <span>Name: {{profile.firstName}}</span> <br>
+    <span>Last name: {{profile.lastName}}</span> <br>
+    <span>Middle name: {{profile.middleName}}</span><br>
+    <span>Email: {{profile.email}}</span><br>
+    <span>Phone: {{profile.phone}}</span><br>
+    <span>Car: {{profile.car?.name}}</span>
+  </div>
+
+  <div *ngIf="profile.car == null; else elseBlock" class = "addButton">
+    <button  (click)="addCar(profile)" >add</button>
+  </div>
+
+  <div class = "deleteButton">
+    <ng-template #elseBlock>
+      <button class="btn btn-lg btn-outline-primary" (click)=deleteCar() class = "deleteButton">delete</button>
+    </ng-template>
+  </div>
+
+  <div class="edit">
+    <button class="btn btn-lg btn-outline-primary" (click)="edit(profile)" >Edit</button>
+  </div>
+
+  <div class="tableOrders">
+    <h2>Your orders</h2>
+     <tr>
+       <td style="width: 30px">id</td>
+       <td style="width: 80px">name</td>
+       <td style="width: 60px">status</td>
+       <td style="width: 70px">price</td>
+       <td style="width: 70px">loc_city</td>
+       <td style="width: 70px">dest_city</td>
+       <td style="width: 50px">weight</td>
+     </tr>
+
+    <ng-container *ngFor="let order of orderService.ordersList">
+      <app-order-list [modelOrder]="order" ></app-order-list>
+      <button (click)="deleteById(order.id)">delete</button>
+    </ng-container>
+  </div>
+
+</div>
+

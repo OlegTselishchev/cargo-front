@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +14,7 @@ import { ManagerComponent } from './manager/manager.component';
 import {ClientFilterLastNPipe} from "./filter/clientFilterLastN.pipe";
 import {AddressFilterByStreetPipe} from "./filter/addressFilterByStreet.pipe";
 import {BoxFilterByNamePipe} from "./filter/boxFilterByName.pipe";
-import {OrderAddComponent} from './order-add/order-add.component';
+// import {OrderAddComponent} from './order-add/order-add.component';
 import {OrderFilterByNamePipe} from "./filter/orderFilterByName.pipe";
 import {OrderFilterByPricePipe} from "./filter/orderFilterByPrice.pipe";
 import {OrderFilterByWeightPipe} from "./filter/orderFilterByWeight.pipe";
@@ -24,7 +24,10 @@ import { ClientComponent } from './client/client.component';
 import { AddressComponent } from './address/address.component';
 import { BoxComponent } from './box/box.component';
 import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
-
+import { ProfileComponent } from './profile/profile.component';
+import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { AddCarModel } from './add-car-model/add-car-model';
 
 @NgModule({
   declarations: [
@@ -43,17 +46,24 @@ import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
     OrderFilterByLocCityPipe,
     OrderFilterByDestCityPipe,
     AddressFilterByCityPipe,
-    OrderAddComponent,
+    // OrderAddComponent,
     ClientComponent,
     AddressComponent,
-    BoxComponent
+    BoxComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    AddCarModel
   ],
   imports: [
+    NgbPaginationModule,
+    NgbAlertModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
