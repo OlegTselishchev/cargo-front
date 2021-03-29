@@ -1,59 +1,59 @@
+йцукен
+<!--<div class="cont1">-->
 
-<div class="cont1">
+<!--  <a routerLink="/order">CreateOrder___ </a>-->
 
-  <a routerLink="/order">CreateOrder___ </a>
-
-  <a routerLink="/client"> User_</a>
-  <a routerLink="/"> Car_</a>
-  <a routerLink="/"> Trailer_</a>
-  <a routerLink="/box"> Box_</a>
-  <a routerLink="/address"> Address_</a>
+<!--  <a routerLink="/client"> User_</a>-->
+<!--  <a routerLink="/"> Car_</a>-->
+<!--  <a routerLink="/"> Trailer_</a>-->
+<!--  <a routerLink="/box"> Box_</a>-->
+<!--  <a routerLink="/address"> Address_</a>-->
 
 
-</div>
+<!--</div>-->
 
-<div class="cont2">
-  <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>
-  <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>
-  <input type="text" placeholder="filterByWeight" [(ngModel)]="searchOrderWeight"/>
-  <input type="text" placeholder="filterByLoc_city" [(ngModel)]="searchOrderLocCity"/>
-  <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>
-</div>
+<!--<div class="cont2">-->
+<!--  <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>-->
+<!--  <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>-->
+<!--  <input type="text" placeholder="filterByWeight" [(ngModel)]="searchOrderWeight"/>-->
+<!--  <input type="text" placeholder="filterByLoc_city" [(ngModel)]="searchOrderLocCity"/>-->
+<!--  <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>-->
+<!--</div>-->
 
-<div class="cont3">
+<!--<div class="cont3">-->
 
-  <div>
-    <tr>
-      <td style="width: 30px">id</td>
-      <td style="width: 80px">name</td>
-      <td style="width: 60px">status</td>
-      <td style="width: 70px">price</td>
-      <td style="width: 70px">loc_city</td>
-      <td style="width: 70px">dest_city</td>
-      <td style="width: 50px">weight</td>
-    </tr>
-  </div>
+<!--  <div>-->
+<!--    <tr>-->
+<!--      <td style="width: 30px">id</td>-->
+<!--      <td style="width: 80px">name</td>-->
+<!--      <td style="width: 60px">status</td>-->
+<!--      <td style="width: 70px">price</td>-->
+<!--      <td style="width: 70px">loc_city</td>-->
+<!--      <td style="width: 70px">dest_city</td>-->
+<!--      <td style="width: 50px">weight</td>-->
+<!--    </tr>-->
+<!--  </div>-->
 
-    <div class="cont4" *ngIf="orderService.ordersList.length; else noOrder">
+<!--    <div class="cont4" *ngIf="orderService.ordersList.length; else noOrder">-->
 
-        <ng-container *ngFor="let order of orderService.ordersList
-          | orderFilterByName: searchOrderName
-          | orderFilterByPrice: searchOrderPrice
-          | orderFilterByWeight: searchOrderWeight
-          | orderFilterByLocCity: searchOrderLocCity
-          | orderFilterByDestCity: searchOrderDestCity
-          ">
-              <app-order-list [modelOrder]="order" ></app-order-list>
-              <button (click)="deleteById(order.id)">delete</button>
-        </ng-container>
+<!--        <ng-container *ngFor="let order of orderService.ordersList-->
+<!--          | orderFilterByName: searchOrderName-->
+<!--          | orderFilterByPrice: searchOrderPrice-->
+<!--          | orderFilterByWeight: searchOrderWeight-->
+<!--          | orderFilterByLocCity: searchOrderLocCity-->
+<!--          | orderFilterByDestCity: searchOrderDestCity-->
+<!--          ">-->
+<!--              <app-order-list [modelOrder]="order" ></app-order-list>-->
+<!--              <button (click)="deleteById(order.id)">delete</button>-->
+<!--        </ng-container>-->
 
-    </div>
+<!--    </div>-->
 
-        <ng-template #noOrder>
-        <p> No order now!</p>
-        </ng-template>
+<!--        <ng-template #noOrder>-->
+<!--        <p> No order now!</p>-->
+<!--        </ng-template>-->
 
-</div>
+<!--</div>-->
 
 
 

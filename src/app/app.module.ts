@@ -25,6 +25,8 @@ import { AddressComponent } from './address/address.component';
 import { BoxComponent } from './box/box.component';
 import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
 import { HeaderComponent } from './header/header.component';
+import { SingSingupFormaComponent } from './sing-singup-forma/sing-singup-forma.component';
+import { MainBackgroundComponent } from './main-background/main-background.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { HeaderComponent } from './header/header.component';
     ClientComponent,
     AddressComponent,
     BoxComponent,
-    HeaderComponent
+    HeaderComponent,
+    SingSingupFormaComponent,
+    MainBackgroundComponent
   ],
   imports: [
     BrowserModule,
