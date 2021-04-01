@@ -9,22 +9,28 @@ import { OrderDetailComponent } from "./order-detail/order-detail.component";
 import {ClientComponent} from "./client/client.component";
 import {AddressComponent} from "./address/address.component";
 import {BoxComponent} from "./box/box.component";
+import {HeaderComponent} from "./header/header.component";
+import {MainBackgroundComponent} from "./main-background/main-background.component";
+import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
+
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HeaderComponent},
   {path: 'manager', component: ManagerComponent},
   {path: 'driver', component: DriverComponent},
   {path: 'orderDetail/:id', component: OrderDetailComponent},
   // {path: 'order', component: OrderAddComponent},
   {path: 'client', component: ClientComponent},
   {path: 'address', component: AddressComponent},
-  {path: 'box', component: BoxComponent}
+  {path: 'box', component: BoxComponent},
+  {path: 'login', component:SingSingupFormaComponent}
 ];
 
 @NgModule({
   declarations: [],
   imports: [
     RouterModule.forRoot(routes)
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
