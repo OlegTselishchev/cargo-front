@@ -4,7 +4,7 @@
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  /*font-family: "Montserrat", sans-serif;*/
   font-size: 12px;
   line-height: 1em;
 }
@@ -192,7 +192,7 @@ input::placeholder {
   top: 50%;
   left: 30px;
   width: calc(50% - 30px);
-  min-height: 419px;
+  min-height: 450px;
   padding: 70px 40px;
   background-color: #fff;
   border-radius: 3px;

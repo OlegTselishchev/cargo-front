@@ -11,6 +11,7 @@ import {AddressComponent} from "./address/address.component";
 import {BoxComponent} from "./box/box.component";
 import {HeaderComponent} from "./header/header.component";
 import {MainBackgroundComponent} from "./main-background/main-background.component";
+import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
   {path: 'client', component: ClientComponent},
   {path: 'address', component: AddressComponent},
   {path: 'box', component: BoxComponent},
-  // {path: 'login', component:s}
+  {path: 'login', component:SingSingupFormaComponent}
 ];
 
 @NgModule({
