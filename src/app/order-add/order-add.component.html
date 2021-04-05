@@ -1,0 +1,94 @@
+<div class="cont3">
+  <button (click)="create()">Order Create</button>
+  <button (click)="goBack()">goBack</button>
+
+  <p>
+    <label>destination: </label>
+    <input type="text" placeholder="destination"
+           [(ngModel)]="searchDest"
+           value="{{dest.city}}"/>
+
+
+    <label> location: </label>
+    <input type="text" placeholder="location"
+           [(ngModel)]="searchLoc"
+           value="{{loc.city}}"/>
+
+    <label>box: </label>
+    <input type="text" placeholder="box"
+           [(ngModel)]="searchBox"
+           value="{{box.name}}"/>
+
+
+    <label> receiver: </label>
+    <input type="text" placeholder="receiver"
+           [(ngModel)]="searchRec"
+           value="{{receiver.lastName}}"/>
+  </p>
+</div>
+
+<div class="y">
+
+  <div class="cont4" *ngIf="addressService.addressList.length; else noDataAddress">
+    <tr *ngFor="let l of addressService.addressList | addressFilterByCity: searchDest">
+      <a (click)="addDest(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
+        <td style="width: 50px">{{l.country}}</td>
+        <td style="width: 100px">{{l.city}}</td>
+        <td style="width: 120px">{{l.street}}</td>
+        <td style="width: 50px">{{l.home}}</td>
+        <td style="width: 50px">{{l.apartment}}</td>
+      </a>
+    </tr>
+  </div>
+
+  <div class="cont4" *ngIf="addressService.addressList.length; else noDataAddress">
+    <tr *ngFor="let l of addressService.addressList | addressFilterByCity: searchLoc">
+      <a (click)="addLoc(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
+        <td style="width: 50px">{{l.country}}</td>
+        <td style="width: 100px">{{l.city}}</td>
+        <td style="width: 120px">{{l.street}}</td>
+        <td style="width: 50px">{{l.home}}</td>
+        <td style="width: 50px">{{l.apartment}}</td>
+      </a>
+    </tr>
+  </div>
+
+  <div class="cont4" *ngIf="boxService.boxList.length; else noDataBox">
+    <tr *ngFor="let b of boxService.boxList | boxFilterByName: searchBox | boxFilterByClientEmail:searchBoxClientEmail">
+      <a (click)="addBox(b.boxId, b.name)">
+        <td style="width: 100px">{{b.name}}</td>
+        <td style="width: 50px">{{b.weight}}</td>
+        <td style="width: 50px">{{b.volume}}</td>
+        <td style="width: 100px">{{b.typeCargo.name}}</td>
+        <td style="width: 100px">{{b.client.lastName}}</td>
+      </a>
+    </tr>
+  </div>
+
+  <div class="cont4" *ngIf="clientService.clientList.length; else noDataClient">
+    <tr *ngFor="let c of clientService.clientList | clientFilterByLastN: searchRec">
+      <a (click)="addReceiver(c.userId, c.lastName, c.firstName)">
+        <td style="width: 100px">{{c.lastName}}</td>
+        <td style="width: 100px">{{c.firstName}}</td>
+        <td style="width: 120px">{{c.middleName}}</td>
+        <td style="width: 70px">{{c.phone}}</td>
+        <td style="width: 120px">{{c.email}}</td>
+      </a>
+    </tr>
+  </div>
+
+</div>
+
+
+<ng-template #noDataBox>
+  No data.
+</ng-template>
+
+<ng-template #noDataClient>
+  No data.
+</ng-template>
+
+<ng-template #noDataAddress>
+  No data.
+</ng-template>
+

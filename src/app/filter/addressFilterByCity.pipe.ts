@@ -4,6 +4,10 @@ import {Address} from "../model/address.model";
 @Pipe({name: 'addressFilterByCity'})
 export class AddressFilterByCityPipe implements PipeTransform {
   transform(address: Address[], search: string): Address[] {
-    return address.filter(a => {return a.city.includes(search)});
+    return address.filter(a => {
+      if(a.city == null){
+        return;
+      }
+      return a.city.includes(search)});
   }
 }
