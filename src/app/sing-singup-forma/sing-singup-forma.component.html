@@ -1,0 +1,65 @@
+
+
+<section class="user">
+
+  <div class="user_options-container">
+    <div class="user_options-text">
+      <div class="user_options-unregistered">
+        <h2 class="user_unregistered-title">Don't have an account?</h2>
+        <p class="user_unregistered-text">Hello. Join us. </p>
+        <button class="user_unregistered-signup" id="signup-button"(click)="_clickSignup()" >Sign up</button>
+      </div>
+
+      <div class="user_options-registered">
+        <h2 class="user_registered-title">Have an account?</h2>
+        <p class="user_registered-text">Hello again. Let's go!</p>
+        <button class="user_registered-login" id="login-button"(click)="_clickSignup()">Login</button>
+      </div>
+    </div>
+
+    <div class="user_options-forms" id="user_options-forms"[ngClass]="{'signup-click': toggleForm, 'login-click': !toggleForm}">
+      <div class="user_forms-login">
+        <h2 class="forms_title">Login</h2>
+        <form class="forms_form" >
+          <fieldset class="forms_fieldset">
+            <div class="forms_field">
+              <input type="email" name="email" placeholder="Email" class="forms_field-input" required autofocus [(ngModel)]="auth.email" />
+            </div>
+            <div class="forms_field">
+              <input type="password" name="password" placeholder="Password" class="forms_field-input" required [(ngModel)]="auth.password" />
+            </div>
+          </fieldset>
+          <div class="forms_buttons">
+          <!--  <button type="button" class="forms_buttons-forgot">Forgot password?</button>-->
+            <input type="button" value="Log In" class="forms_buttons-action" (click)="login()">
+          </div>
+        </form>
+      </div>
+
+      <div class="user_forms-signup">
+        <h2 class="forms_title">Sign Up</h2>
+        <form class="forms_form">
+          <fieldset class="forms_fieldset">
+
+           <!-- <div class="forms_field">
+              <input type="text" placeholder="Full Name" class="forms_field-input" required />
+            </div>-->
+
+            <div class="forms_field">
+              <input type="email" name="email" placeholder="Email" class="forms_field-input" required [(ngModel)]="email"/>
+            </div>
+            <div class="forms_field">
+              <input type="password" name="password1" placeholder="Password" class="forms_field-input" required [(ngModel)]="password1" />
+            </div>
+            <div class="forms_field">
+              <input type="password" name="password2" placeholder="Repeat password" class="forms_field-input" required [(ngModel)]="password2"/>
+            </div>
+          </fieldset>
+          <div class="forms_buttons">
+            <input type="button" value="Sign up" class="forms_buttons-action" (click)="reg()">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

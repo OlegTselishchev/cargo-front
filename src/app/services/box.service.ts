@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Box} from "../model/box.model";
+import {Client} from "../model/client.model";
 
 
 @Injectable({providedIn: 'root'})
@@ -28,5 +29,12 @@ export class BoxService {
       () => {console.log('error showBoxById')},
       () => {console.log('ok')});
   };
+
+  public create(box: Box): void {
+    this.http.post(this.boxUrl, box).subscribe(()=>{},
+      error => {alert('error')},
+      ()=>{this.showAllBox()});
+
+  }
 
 }

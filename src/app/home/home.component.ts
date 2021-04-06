@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AddressService} from "../services/address.service";
+import {AuthService} from "../services/auth.service";
+import {StatusService} from "../services/status.service";
 import {ClientService} from "../services/client.service";
-import {BoxService} from "../services/box.service";
-import {OrderService} from "../services/order.service";
+
 
 @Component({
   selector: 'app-home',
@@ -11,9 +11,13 @@ import {OrderService} from "../services/order.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService,
+             ) { }
 
   ngOnInit(): void {
   }
 
+  public get isLoggedIn(): boolean{
+    return this.authService.isAuthenticated()
+  }
 }

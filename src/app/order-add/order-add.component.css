@@ -1,0 +1,21 @@
+
+.cont3{
+  border: solid 2px green;
+  margin: 5px;
+  padding: 5px;
+  height: 100px;
+}
+.y{
+  border: solid 2px blue;
+  margin: 5px;
+  padding: 10px;
+  overflow: auto;
+}
+
+.cont4 {
+  border: solid 1px black;
+  overflow: auto;
+  height: 120px;
+  margin: 1px;
+}
+

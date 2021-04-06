@@ -1,13 +1,11 @@
 
 <div class="cont1">
-
   <a routerLink="/order">CreateOrder___ </a>
-
-  <a routerLink="/client"> User_</a>
+  <a routerLink="/box"> Box_</a>
+  <a routerLink="/client"> Receiver_</a>
+  <a routerLink="/address"> Address_</a>
   <a routerLink="/"> Car_</a>
   <a routerLink="/"> Trailer_</a>
-  <a routerLink="/box"> Box_</a>
-  <a routerLink="/address"> Address_</a>
 
 
 </div>
@@ -35,18 +33,20 @@
   </div>
 
     <div class="cont4" *ngIf="orderService.ordersList.length; else noOrder">
-
         <ng-container *ngFor="let order of orderService.ordersList
           | orderFilterByName: searchOrderName
           | orderFilterByPrice: searchOrderPrice
           | orderFilterByWeight: searchOrderWeight
           | orderFilterByLocCity: searchOrderLocCity
           | orderFilterByDestCity: searchOrderDestCity
+          |orderFilterByBoxClientEmail: searchOrderByBoxClientEmail
           ">
               <app-order-list [modelOrder]="order" ></app-order-list>
-              <button (click)="deleteById(order.id)">delete</button>
-        </ng-container>
+              <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'close'">delete</button>
+              <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'open'">delete</button>
+              <button (click)="closeById(order.id)" *ngIf="order.status.name == ('implemented')">close</button>
 
+        </ng-container>
     </div>
 
         <ng-template #noOrder>
