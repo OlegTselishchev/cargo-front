@@ -17,6 +17,8 @@ export class StatusService {
   public showAllStatus(): void {
     this.http.get(this.statusUrl).subscribe((date: Status[]) => {
       this.statusList = date;
-    });
+    },
+      error => {alert('error status ')},
+      () => {console.log('status Ok')});
   }
 }

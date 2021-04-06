@@ -4,6 +4,8 @@ import {Client} from "../model/client.model";
 import {Order} from "../model/order.model";
 import {Status} from "../model/status.model";
 import {ClientService} from "../services/client.service";
+import {AuthService} from "../services/auth.service";
+import {StatusService} from "../services/status.service";
 
 @Component({
   selector: 'app-driver',
@@ -13,13 +15,14 @@ import {ClientService} from "../services/client.service";
 export class DriverComponent implements OnInit {
 
   constructor(public orderService: OrderService,
-              public clientService: ClientService) { }
-
-  STATUS_OPEN = 1;
-  STATUS_IN_WORK = 2;
+              public clientService: ClientService,
+              private authService: AuthService,
+              public statusService: StatusService) { }
 
   driver1: Client = new Client();
   searchDriverLastName: string = '';
+  searchDriverByEmail: string = this.authService.getAuthEmail();
+  isOrderFull: boolean = true;
 
   searchOrderName: string = '';
   searchOrderPrice: string = '';
@@ -31,14 +34,16 @@ export class DriverComponent implements OnInit {
   ngOnInit(): void {
     this.showAllOrder();
     this.clientService.showAllClient();
+    this.statusService.showAllStatus();
   }
+
   showAllOrder(): void {
     this.orderService.showAllOrder();
   }
 
-  public modifyById(id: number): void {
+  public modifyByIdStatusInWork(id: number): void {
 
-    const status: Status = {id: this.STATUS_IN_WORK};
+    let status: Status = this.statusService.statusList.find(x => x.name == 'in_work');
 
     const order: Order = {
       id: id,
@@ -52,17 +57,50 @@ export class DriverComponent implements OnInit {
       driver: this.driver1
     };
       if(id != null){
-        if(order.driver.userId != null){
+        if(order.driver.userId != null && order.status != null){
           this.orderService.modify(order);
-        }else {alert('not id driver')}
+        }else {alert('not driver or status')}
       }else {alert('not id order for modify')}
   }
 
+
+  public modifyByIdStatusImplemented(id: number): void {
+
+    let key1 = prompt('Введи ключ');
+    let key2: string = '0000';
+
+    if(key1 == key2) {
+
+      let status: Status = this.statusService.statusList.find(x => x.name == 'implemented');
+
+      const order: Order = {
+        id: id,
+        name: null,
+        destination: null,
+        location: null,
+        box: null,
+        price: null,
+        receiver: null,
+        status: status,
+        driver: this.driver1
+      };
+      if (id != null) {
+        if (order.driver.userId != null && order.status != null) {
+          this.orderService.modify(order);
+        } else {
+          alert('not driver or status')
+        }
+      } else {
+        alert('not id order for modify')
+      }
+    }else alert('Неверный ключ')
+  }
+
+
   public back(id: number): void {
 
-    const status: Status = {
-      id: this.STATUS_OPEN
-    };
+    let status: Status = this.statusService.statusList.find(x => x.name == 'open');
+
     const order: Order = {
       id: id,
       name: null,
@@ -74,9 +112,9 @@ export class DriverComponent implements OnInit {
       status: status,
       driver: null
     };
-    if(id != null){
+    if(id != null && order.status != null){
         this.orderService.modify(order);
-    }else {alert('not id order for modify')}
+    }else {alert('not id order for modify or status')}
   }
 
   add(id: number, ln: string, fn: string, mn: string): void {
@@ -84,6 +122,14 @@ export class DriverComponent implements OnInit {
     this.driver1.lastName = ln;
     this.driver1.firstName = fn;
     this.driver1.middleName = mn;
+  }
+
+  myOrder(): void {
+    this.isOrderFull = false;
+  }
+
+  fullOrders():void {
+    this.isOrderFull = true;
   }
 
 }

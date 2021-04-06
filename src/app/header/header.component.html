@@ -1,5 +1,5 @@
 <div class = "header">
-<a href = "#">
+
   <div class = "button-logo" style="background: url(./assets/logo2.png);
   background-blend-mode: overlay;
     position: fixed;
@@ -10,29 +10,35 @@
     height:10%;
   background-size: cover;
 background-repeat: no-repeat;
-background-position: center right;">
-  </div>
-</a>
+background-position: center right;"></div>
+
+  <a routerLink = "/manager" class = "button" *ngIf="isLoggedIn">
+    <span class="button__line button__line--top"></span>
+    <span class="button__line button__line--right"></span>
+    <span class="button__line button__line--bottom"></span>
+    <span class="button__line button__line--left"></span>
+    Manager
+  </a>
+
+  <a routerLink = "/driver" class = "button" *ngIf="isLoggedAndDriver">
+    <span class="button__line button__line--top"></span>
+    <span class="button__line button__line--right"></span>
+    <span class="button__line button__line--bottom"></span>
+    <span class="button__line button__line--left"></span>
+    Diver
+  </a>
 
 
-<a routerLink = "/manager" class = "button">
+<a class = "button" (click)="logout()" *ngIf="isLoggedIn">
   <span class="button__line button__line--top"></span>
   <span class="button__line button__line--right"></span>
   <span class="button__line button__line--bottom"></span>
   <span class="button__line button__line--left"></span>
-  Contacts
+  Logout
 </a>
 
-<a href = "#" class = "button">
-  <span class="button__line button__line--top"></span>
-  <span class="button__line button__line--right"></span>
-  <span class="button__line button__line--bottom"></span>
-  <span class="button__line button__line--left"></span>
-  button
-</a>
 
-<a routerLink = "/login" class = "buttonWhite"  >
-
+<a routerLink = "/login" class = "buttonWhite" *ngIf="!isLoggedIn">
   <span class="buttonWhite__line buttonWhite__line--top"></span>
   <span class="buttonWhite__line buttonWhite__line--right"></span>
   <span class="buttonWhite__line buttonWhite__line--bottom"></span>
