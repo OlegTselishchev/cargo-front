@@ -9,4 +9,5 @@ export class Client{
   email: string;
   driveCategory: string;
   car?: Car;
+  password?: string;
 }

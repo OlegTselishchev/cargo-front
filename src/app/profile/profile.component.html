@@ -11,18 +11,18 @@
     <span>Car: {{profile.car?.name}}</span>
   </div>
 
-  <div *ngIf="profile.car == null; else elseBlock" class = "addButton">
-    <button  (click)="addCar(profile)" >add</button>
-  </div>
+<!--  <div *ngIf="profile.car == null; else elseBlock" class = "addButton">-->
+<!--    <button  (click)="addCar(profile)" >add</button>-->
+<!--  </div>-->
 
-  <div class = "deleteButton">
-    <ng-template #elseBlock>
-      <button class="btn btn-lg btn-outline-primary" (click)=deleteCar() class = "deleteButton">delete</button>
-    </ng-template>
-  </div>
+<!--  <div class = "deleteButton">-->
+<!--    <ng-template #elseBlock>-->
+<!--      <button class="btn btn-lg btn-outline-primary" (click)=deleteCar() class = "deleteButton">delete</button>-->
+<!--    </ng-template>-->
+<!--  </div>-->
 
   <div class="edit">
-    <button class="btn btn-lg btn-outline-primary" (click)="edit(profile)" >Edit</button>
+<!--    <button class="btn btn-lg btn-outline-primary" (click)="edit(profile)" >Edit</button>-->
   </div>
 
   <div class="tableOrders">

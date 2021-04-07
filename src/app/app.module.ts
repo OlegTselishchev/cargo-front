@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
@@ -71,8 +69,7 @@ export function tokenGetter(){
     BoxFilterByClientEmailPipe,
     OrderFilterByBoxClientEmailPipe,
     ClientFilterByEmailPipe,
-    OrderFilterByDriverEmailPipe
-
+    OrderFilterByDriverEmailPipe,
     BoxComponent,
     ProfileComponent,
     EditProfileComponent,
@@ -87,7 +84,7 @@ export function tokenGetter(){
     HttpClientModule,
     FormsModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     FormsModule,
 
     JwtModule.forRoot({

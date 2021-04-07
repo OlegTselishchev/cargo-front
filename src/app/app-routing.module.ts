@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: 'client', component: ClientComponent},
   {path: 'address', component: AddressComponent},
   {path: 'box', component: BoxComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent},
   {path: 'login', component:SingSingupFormaComponent},
   {path: 'manager', component: ManagerComponent, canActivate: [AuthGuard]},
   {path: 'driver', component: DriverComponent, canActivate: [AuthGuard]},

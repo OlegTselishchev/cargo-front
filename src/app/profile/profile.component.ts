@@ -8,6 +8,7 @@ import {Car} from "../model/car.model";
 import {CarService} from "../services/car.service";
 import {EditProfileComponent} from "../edit-profile/edit-profile.component";
 import {AddCarModel} from "../add-car-model/add-car-model";
+import {ACCESS_USER_ID, AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +22,8 @@ export class ProfileComponent implements OnInit {
               public orderService: OrderService,
               config: NgbModalConfig,
               private modalService: NgbModal,
-              public carService: CarService) {
+              public carService: CarService,
+              private authService: AuthService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -56,7 +58,7 @@ export class ProfileComponent implements OnInit {
   profile: Client = new Client();
   car: Car;
 
-  public currentId: number = 3;
+  public currentId: number = parseInt (this.authService.getClientId());
 
   showClient(): void {
     this.clientService
@@ -70,7 +72,7 @@ export class ProfileComponent implements OnInit {
   }
 
   showOrders(): void {
-    this.orderService.showOrderById(this.currentId);
+    // this.orderService.showOrderById(this.currentId);
   }
 
   public deleteById(id: number): void {

@@ -7,14 +7,14 @@ import {Observable} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class ClientService {
 
-  constructor(public http: HttpClient){
+  constructor(public http: HttpClient) {
   }
 
   //urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
   urlClient: string = 'http://localhost:9000/client/';
 
   clientList: Client[] = [];
-  profile: Client;
+
 
   client: Client = null;
 
@@ -26,8 +26,8 @@ export class ClientService {
 
   public showClientByEmail(email: string): void {
     this.http.get(this.urlClient + 'email/' + email).subscribe((c: Client) => {
-        this.client = c;
-  });
+      this.client = c;
+    });
   }
 
   public delete(id: number): void {
@@ -52,7 +52,6 @@ export class ClientService {
       });
   }
 
-  }
 
   public showById(id: number): Observable<any> {
     return this.http.get(this.urlClient + id);
@@ -61,8 +60,8 @@ export class ClientService {
   public modify(client: Client): Observable<any> {
     return this.http.patch(this.urlClient, client);
   }
-
-
-
-
 }
+
+
+
+

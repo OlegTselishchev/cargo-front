@@ -1,32 +1,32 @@
 .details {
   position: relative;
-  top: 10px;
-  left: 50px;
+  top: 0px;
+  right: 350px;
 }
-.edit{
-  position: relative;
-  top: -200px;
-  left: 250px;
-}
+/*.edit{*/
+/*  position: relative;*/
+/*  top: -200px;*/
+/*  left: 250px;*/
+/*}*/
 .tableOrders{
   position: relative;
   top: -125px;
   left: 750px;
   width: 600px;
 }
-.addButton{
-  position: relative;
-  top: -10px;
-  left: 85px;
+/*.addButton{*/
+/*  position: relative;*/
+/*  top: -10px;*/
+/*  left: 85px;*/
 
-}
-.deleteButton{
-  position: relative;
-  top: 15px;
-  left: 100px;
-  display: block;
+/*}*/
+/*.deleteButton{*/
+/*  position: relative;*/
+/*  top: 15px;*/
+/*  left: 100px;*/
+/*  display: block;*/
 
-}
+/*}*/
 
 
 
