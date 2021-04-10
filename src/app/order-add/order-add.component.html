@@ -29,8 +29,8 @@
 
 <div class="y">
 
-  <div class="cont4" *ngIf="addressService.addressList.length; else noDataAddress">
-    <tr *ngFor="let l of addressService.addressList | addressFilterByCity: searchDest">
+  <div class="cont4" *ngIf="addressList.length; else noDataAddress">
+    <tr *ngFor="let l of addressList | addressFilterByCity: searchDest">
       <a (click)="addDest(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
         <td style="width: 50px">{{l.country}}</td>
         <td style="width: 100px">{{l.city}}</td>
@@ -41,8 +41,8 @@
     </tr>
   </div>
 
-  <div class="cont4" *ngIf="addressService.addressList.length; else noDataAddress">
-    <tr *ngFor="let l of addressService.addressList | addressFilterByCity: searchLoc">
+  <div class="cont4" *ngIf="addressList.length; else noDataAddress">
+    <tr *ngFor="let l of addressList | addressFilterByCity: searchLoc">
       <a (click)="addLoc(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
         <td style="width: 50px">{{l.country}}</td>
         <td style="width: 100px">{{l.city}}</td>
@@ -53,8 +53,8 @@
     </tr>
   </div>
 
-  <div class="cont4" *ngIf="boxService.boxList.length; else noDataBox">
-    <tr *ngFor="let b of boxService.boxList | boxFilterByName: searchBox | boxFilterByClientEmail:searchBoxClientEmail">
+  <div class="cont4" *ngIf="boxList.length; else noDataBox">
+    <tr *ngFor="let b of boxList | boxFilterByName: searchBox | boxFilterByClientEmail:searchBoxClientEmail">
       <a (click)="addBox(b.boxId, b.name)">
         <td style="width: 100px">{{b.name}}</td>
         <td style="width: 50px">{{b.weight}}</td>
@@ -65,8 +65,8 @@
     </tr>
   </div>
 
-  <div class="cont4" *ngIf="clientService.clientList.length; else noDataClient">
-    <tr *ngFor="let c of clientService.clientList | clientFilterByLastN: searchRec">
+  <div class="cont4" *ngIf="clientList.length; else noDataClient">
+    <tr *ngFor="let c of clientList | clientFilterByLastN: searchRec">
       <a (click)="addReceiver(c.userId, c.lastName, c.firstName)">
         <td style="width: 100px">{{c.lastName}}</td>
         <td style="width: 100px">{{c.firstName}}</td>

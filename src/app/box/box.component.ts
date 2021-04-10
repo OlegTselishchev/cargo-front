@@ -6,6 +6,7 @@ import {Box} from "../model/box.model";
 import {TypeCargoService} from "../services/typeCargo.service";
 import {ClientService} from "../services/client.service";
 import {TypeCargo} from "../model/typeCargo.model";
+import {Client} from "../model/client.model";
 
 @Component({
   selector: 'app-box',
@@ -20,9 +21,14 @@ export class BoxComponent implements OnInit {
               public typeService: TypeCargoService,
               public clientService: ClientService) { }
 
+  public typeCargoList: TypeCargo[] = [];
+  public boxList: Box[] = [];
+  public client: Client = null;
+
   ngOnInit(): void {
-    this.typeService.showAllTypes();
-    this.clientService.showClientByEmail(this.authService.getAuthEmail());
+    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
+    this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
+    this.showBoxAll();
   }
 
   tId = null;
@@ -33,7 +39,7 @@ export class BoxComponent implements OnInit {
   searchBoxByClientEmail: string = this.authService.getAuthEmail();
 
   showBoxAll():void{
-    this.boxService.showAllBox();
+    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data);
   }
 
   goBack(): void {
@@ -45,7 +51,7 @@ export class BoxComponent implements OnInit {
      this.height != null &&
      this.width != null &&
      this.weight != null &&
-     this.clientService.client != null &&
+     this.client != null &&
      this.tId != null
    ){
      let type: TypeCargo = new TypeCargo();
@@ -58,9 +64,11 @@ export class BoxComponent implements OnInit {
      boxNew.weight = this.weight;
      boxNew.volume = this.width * this.width * this.height;
      boxNew.typeCargo = type;
-     boxNew.client = this.clientService.client;
+     boxNew.client = this.client;
 
-     this.boxService.create(boxNew);
+     this.boxService.create(boxNew).subscribe(()=>{},
+       error => {alert('error box create')},
+       ()=>{this.showBoxAll()});
 
    }else alert('not data');
   }

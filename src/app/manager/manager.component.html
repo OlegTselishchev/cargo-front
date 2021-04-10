@@ -32,8 +32,8 @@
     </tr>
   </div>
 
-    <div class="cont4" *ngIf="orderService.ordersList.length; else noOrder">
-        <ng-container *ngFor="let order of orderService.ordersList
+    <div class="cont4" *ngIf="orderList.length; else noOrder">
+        <ng-container *ngFor="let order of orderList
           | orderFilterByName: searchOrderName
           | orderFilterByPrice: searchOrderPrice
           | orderFilterByWeight: searchOrderWeight

@@ -25,7 +25,7 @@
 
 
   <div>
-    <tr *ngFor="let c of clientService.clientList | clientFilterByEmail: searchDriverByEmail">
+    <tr *ngFor="let c of clientList | clientFilterByEmail: searchDriverByEmail">
       <a (click)="add(c.userId, c.lastName, c.firstName, c.middleName)" *ngIf="c.car">
         <td style="width: 30px" >{{c.userId}}</td>
         <td style="width: 100px">{{c.lastName}}</td>
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div *ngIf="statusService.statusList.length; else noStatus">
+<div *ngIf="statusList.length; else noStatus">
 
 <div class="cont2">
   <input type="text" placeholder="name" [(ngModel)]="searchOrderName"/>
@@ -64,10 +64,10 @@
     </tr>
   </div>
 
-  <div class="cont33" *ngIf="orderService.ordersList.length; else noOrder">
+  <div class="cont33" *ngIf="orderList.length; else noOrder">
 
     <div *ngIf="isOrderFull">
-    <ng-container *ngFor="let order of orderService.ordersList
+    <ng-container *ngFor="let order of orderList
     | orderFilterByName: searchOrderName
     | orderFilterByPrice: searchOrderPrice
     | orderFilterByWeight: searchOrderWeight
@@ -85,7 +85,7 @@
 
 
     <div *ngIf="!isOrderFull">
-      <ng-container *ngFor="let order of orderService.ordersList
+      <ng-container *ngFor="let order of orderList
     | orderFilterByName: searchOrderName
     | orderFilterByPrice: searchOrderPrice
     | orderFilterByWeight: searchOrderWeight
