@@ -19,11 +19,11 @@ export class OrderDetailComponent implements OnInit {
   public orderDet: Order[] = [];
 
   ngOnInit(): void {
-    this.getOrder();
-    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data})
+    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data});
+    //this.getOrderDetails();
   }
 
-  getOrder(): void {
+  getOrderDetails(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.orderDet = this.orderList.filter(o => o.id == id);
   }

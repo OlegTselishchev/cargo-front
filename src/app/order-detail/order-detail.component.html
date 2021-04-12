@@ -58,6 +58,7 @@
   </div>
 </div>
 <button (click)="goBack()">go_back</button>
+<button (click)="getOrderDetails()" *ngIf="orderList.length; else load">show</button>
 
 
 <ng-template #noOrder>
@@ -101,4 +102,8 @@
 
 <ng-template #noDestination>
   <p> No Destination!</p>
+</ng-template>
+
+<ng-template #load>
+  <p> load_order_details</p>
 </ng-template>
