@@ -10,32 +10,19 @@ export class OrderService {
   //urlOrder: string = 'https://app-cargo2020.herokuapp.com/order/';
   urlOrder: string = 'http://localhost:9000/order/';
 
-  public ordersList: Order[] = [];
-
-  public showAllOrder(): void {
-    this.http.get(this.urlOrder).subscribe((date: Order[]) => {
-      this.ordersList = date;
-    });
+  public getOrderList(){
+    return this.http.get(this.urlOrder);
   }
 
-  public delete(id: number): void {
-    this.http.delete(this.urlOrder + id).subscribe(()=>{},
-      error => {alert('error')},
-      ()=>{this.ordersList = this.ordersList.filter(ord => ord.id !== id);});
-
+  public delete(id: number) {
+    return this.http.delete(this.urlOrder + id);
   }
 
-  public create(order: Order): void {
-    this.http.post(this.urlOrder, order).subscribe(()=>{},
-      error => {alert('error')},
-      ()=>{ this.showAllOrder(); console.log('ok')});
-
+  public create(order: Order) {
+    return this.http.post(this.urlOrder, order);
   }
 
-  public modify(order: Order): void {
-    this.http.patch(this.urlOrder, order).subscribe(()=>{},
-      error => {alert('error')},
-      ()=>{this.showAllOrder();});
-
+  public modify(order: Order) {
+    return this.http.patch(this.urlOrder, order);
   }
 }

@@ -19,6 +19,10 @@ export class DriverComponent implements OnInit {
               private authService: AuthService,
               public statusService: StatusService) { }
 
+  public statusList: Status[] = [];
+  public clientList: Client[] = [];
+  public orderList: Order[] = [];
+
   driver1: Client = new Client();
   searchDriverLastName: string = '';
   searchDriverByEmail: string = this.authService.getAuthEmail();
@@ -33,17 +37,17 @@ export class DriverComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllOrder();
-    this.clientService.showAllClient();
-    this.statusService.showAllStatus();
+    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data});
+    this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data});
   }
 
   showAllOrder(): void {
-    this.orderService.showAllOrder();
+    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data});
   }
 
   public modifyByIdStatusInWork(id: number): void {
 
-    let status: Status = this.statusService.statusList.find(x => x.name == 'in_work');
+    let status: Status = this.statusList.find(x => x.name == 'in_work');
 
     const order: Order = {
       id: id,
@@ -58,7 +62,9 @@ export class DriverComponent implements OnInit {
     };
       if(id != null){
         if(order.driver.userId != null && order.status != null){
-          this.orderService.modify(order);
+          this.orderService.modify(order).subscribe(()=>{},
+            error => {alert('error order modify')},
+            ()=>{this.showAllOrder()});
         }else {alert('not driver or status')}
       }else {alert('not id order for modify')}
   }
@@ -71,7 +77,7 @@ export class DriverComponent implements OnInit {
 
     if(key1 == key2) {
 
-      let status: Status = this.statusService.statusList.find(x => x.name == 'implemented');
+      let status: Status = this.statusList.find(x => x.name == 'implemented');
 
       const order: Order = {
         id: id,
@@ -86,7 +92,9 @@ export class DriverComponent implements OnInit {
       };
       if (id != null) {
         if (order.driver.userId != null && order.status != null) {
-          this.orderService.modify(order);
+          this.orderService.modify(order).subscribe(()=>{},
+            error => {alert('error order modify')},
+            ()=>{this.showAllOrder()});
         } else {
           alert('not driver or status')
         }
@@ -99,7 +107,7 @@ export class DriverComponent implements OnInit {
 
   public back(id: number): void {
 
-    let status: Status = this.statusService.statusList.find(x => x.name == 'open');
+    let status: Status = this.statusList.find(x => x.name == 'open');
 
     const order: Order = {
       id: id,
@@ -113,7 +121,9 @@ export class DriverComponent implements OnInit {
       driver: null
     };
     if(id != null && order.status != null){
-        this.orderService.modify(order);
+        this.orderService.modify(order).subscribe(()=>{},
+          error => {alert('error order modify')},
+          ()=>{this.showAllOrder()});
     }else {alert('not id order for modify or status')}
   }
 

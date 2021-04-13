@@ -1,5 +1,36 @@
 
-h1, h2 {
+h1, h2, p {
   text-align: center;
   color: darkred;
 }
+
+
+.cont1{
+  border: solid 2px blue;
+  margin: 5px;
+  padding: 5px;
+  overflow: auto;
+  height: 100px;
+}
+
+.cont2{
+  border: solid 2px greenyellow;
+  margin: 5px;
+  padding: 5px;
+}
+
+
+.cont3 {
+  border: solid 2px black;
+  overflow: auto;
+  padding: 5px;
+  margin: 5px;
+}
+
+.cont33{
+  border: solid 1px gray;
+  height: 430px;
+  width: 700px;
+}
+
+

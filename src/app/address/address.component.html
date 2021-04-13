@@ -2,7 +2,6 @@
 <div class="cont1">
   <input type="text" placeholder="FilterAddressByCity" [(ngModel)]="searchByCity" />
   <input type="text"  placeholder="FilterAddressByStreet"  [(ngModel)]="searchByStreet" />
-  <button (click)="showAddress()" >Show Address</button>
   <button (click)="addAddress()">Add</button>
   <button (click)="goBack()">goBack</button>
 </div>
@@ -24,8 +23,8 @@
         <td style="width: 70px">№_apart</td>
         <td style="width: 70px">delete</td>
       </tr>
-  <div class="cont4">
-    <tr *ngFor="let cl of addressService.addressList | addressFilterByStreet: searchByStreet | addressFilterByCity: searchByCity">
+  <div class="cont4" *ngIf="addressList; else noAddress">
+    <tr *ngFor="let cl of addressList | addressFilterByStreet: searchByStreet | addressFilterByCity: searchByCity">
       <td style="width: 70px">{{cl.country}}</td>
       <td style="width: 120px">{{cl.city}}</td>
       <td style="width: 120px">{{cl.street}}</td>

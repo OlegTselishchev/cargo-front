@@ -7,11 +7,13 @@ import {Client} from "../model/client.model";
 export class ClientFilterByEmailPipe implements PipeTransform {
 
   transform(client: Client[], search: string): Client[] {
-    return client.filter(c => {
-      if(c.email == null) {
-        return;
-      }
-      return c.email.includes(search)});
+    if (client != null) {
+      return client.filter(c => {
+        if (c.email == null) {
+          return;
+        }
+        return c.email.includes(search)
+      });
+    }
   }
-
 }
