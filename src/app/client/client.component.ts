@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ClientService} from "../services/client.service";
 import {Client} from "../model/client.model";
 import {Location} from "@angular/common";
+import {BoxService} from "../services/box.service";
+import {OrderService} from "../services/order.service";
+import {Order} from "../model/order.model";
+import {Box} from "../model/box.model";
 
 @Component({
   selector: 'app-client',
@@ -10,7 +14,8 @@ import {Location} from "@angular/common";
 })
 export class ClientComponent implements OnInit {
 
-  constructor( public clientService: ClientService, public location: Location) { }
+  constructor( public clientService: ClientService,
+               public location: Location) { }
 
   public clientList: Client[] =[];
 
@@ -26,6 +31,7 @@ export class ClientComponent implements OnInit {
       this.clientList = data;
     });
   }
+
 
   delete(id: number) {
     this.clientService.delete(id).subscribe(()=>{},
