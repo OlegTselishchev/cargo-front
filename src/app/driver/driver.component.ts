@@ -37,12 +37,20 @@ export class DriverComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllOrder();
-    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data});
-    this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data});
+    this.showClientAll();
+    this.showStatusAll();
   }
 
   showAllOrder(): void {
     this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data});
+  }
+
+  showClientAll(): void{
+    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data});
+  }
+
+  showStatusAll(): void{
+    this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data});
   }
 
   public modifyByIdStatusInWork(id: number): void {

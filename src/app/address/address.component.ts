@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {Address} from "../model/address.model";
 import {Location} from "@angular/common";
+import {OrderService} from "../services/order.service";
+import {Order} from "../model/order.model";
 
 @Component({
   selector: 'app-address',
@@ -16,20 +18,28 @@ export class AddressComponent implements OnInit {
 
   public addressList: Address[];
 
-  constructor(public addressService: AddressService, public location: Location) { }
+  constructor(public addressService: AddressService,
+              public location: Location) { }
 
   ngOnInit(): void {
    this.getAddressAll();
   }
 
   getAddressAll():void{
-    this.addressService.getAddressAll().subscribe((data:Address[]) => this.addressList = data);
+    this.addressService.getAddressAll().subscribe((data:Address[]) => {this.addressList = data;},
+      error => {alert('getAddress - error')},
+      ()=>{console.log('getAddress - ok')});
   }
 
   delete(id: number) : void {
-    this.addressService.delete(id).subscribe(()=>{},
-      error => {alert('error address delete')},
-      ()=>{this.getAddressAll()});
+      this.addressService.delete(id).subscribe(() => {
+        },
+        error => {
+          alert('error address delete')
+        },
+        () => {
+          this.getAddressAll()
+        });
   }
 
   addAddress(): void {
