@@ -29,6 +29,7 @@ export class AuthService {
       localStorage.setItem(ACCESS_USER_EMAIL, resp.email);
       localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
       localStorage.setItem(ACCESS_USER_ID, resp.id);
+      this.router.navigate(['/profile']);
     });
   }
 

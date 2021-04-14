@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../services/auth.service";
 import {Auth} from "../model/auth.model";
+import {Router, Routes} from "@angular/router";
 
 @Component({
   selector: 'app-sing-singup-forma',
@@ -16,7 +17,8 @@ export class SingSingupFormaComponent implements OnInit {
   password1;
   password2;
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {}
 

@@ -40,7 +40,7 @@ export class OrderService {
   }
 
   public showOrderById(id: number): void {
-    this.http.get(this.urlOrder + id).subscribe((date: Order[]) => {
+    this.http.get(this.urlOrder+ "ByReceiver/" + id).subscribe((date: Order[]) => {
       this.ordersList = date;
     });
   }

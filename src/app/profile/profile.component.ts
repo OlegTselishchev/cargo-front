@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
     config.keyboard = false;
   }
 
-
   ngOnInit(): void {
     this.showClient();
     this.showOrders()
@@ -38,6 +37,13 @@ export class ProfileComponent implements OnInit {
   addCar (profile: Client){
     const ref = this.modalService.open(AddCarModel);
     ref.componentInstance.profile = profile;
+    ref.result.then((yes) => {
+        this.showClient();
+        console.log("OK Click");
+      },
+      (cancel) =>{
+        console.log("Cancel Click")
+      })
   };
 
   edit (profile: Client){
@@ -68,11 +74,10 @@ export class ProfileComponent implements OnInit {
       }, error => {
         console.log("error get profile");
       });
-    // this.car = this.profile.car;
   }
 
   showOrders(): void {
-    // this.orderService.showOrderById(this.currentId);
+    this.orderService.showOrderById(this.currentId);
   }
 
   public deleteById(id: number): void {
@@ -81,6 +86,6 @@ export class ProfileComponent implements OnInit {
 
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id);
-    window.location.reload();
+    // window.location.reload();
   }
 }
