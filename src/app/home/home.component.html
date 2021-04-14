@@ -37,7 +37,7 @@
     </tr>
   </div>
 
-  <div class="cont33">
+  <div class="cont33" *ngIf="orderList; else noOrder">
   <ng-container *ngFor="let order of orderList
     | orderPrice: price
     | orderFilterByLocCity: locCity
@@ -49,4 +49,7 @@
   </div>
 
 
+  <ng-template #noOrder>
+    <p> No order now!</p>
+  </ng-template>
 </div>

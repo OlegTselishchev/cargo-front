@@ -28,7 +28,7 @@
     <td style="width: 200px">type</td>
   </tr>
 
-  <div class="cont4">
+  <div class="cont4" *ngIf="boxList.length; else noBox">
     <tr *ngFor="let cl of boxList | boxFilterByClientEmail: searchBoxByClientEmail">
 
       <td style="width: 80px">{{cl.boxId}}</td>
