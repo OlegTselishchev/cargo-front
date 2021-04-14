@@ -69,8 +69,7 @@ export function tokenGetter(){
     ClientFilterByEmailPipe,
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
-    OrderFilterByTypePipe
-
+    OrderFilterByTypePipe,
     OrderFilterByDriverEmailPipe
   ],
   imports: [
