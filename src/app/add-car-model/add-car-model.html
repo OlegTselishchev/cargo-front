@@ -1,0 +1,29 @@
+<div class="modal-header bg-primary text-white">
+  <h4 class="modal-title" id="modal-basic-title">Add vehicle</h4>
+</div>
+<div class="modal-body">
+<form>
+  <div class="form-group row d-flex justify-content-center align-items-center">
+    <label class="col-form-label col-sm-2 text-right">Name:</label>
+    <div class="col-sm-5">
+      <input type="text" [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}" class="form-control" >
+    </div>
+  </div>
+  <div class="form-group row d-flex justify-content-center align-items-center">
+    <label class="col-form-label col-sm-2 text-right">Volume:</label>
+    <div class="col-sm-5">
+      <input type="text"  [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}" class="form-control"  >
+    </div>
+  </div>
+  <div class="form-group row d-flex justify-content-center align-items-center">
+      <label class="col-form-label col-sm-2 text-left">lifting Capacity:</label>
+      <div class="col-sm-5">
+        <input type="text" [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}"  class="form-control" >
+      </div>
+  </div>
+    <div class="modal-footer">
+    <button  class="btn btn-primary mr-2" (click)="modal.close('Cancel')">Cancel</button>
+    <button  class="btn btn-primary mr-2" (click)="onSubmit()">Save</button>
+  </div>
+</form>
+</div>

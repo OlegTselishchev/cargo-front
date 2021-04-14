@@ -27,44 +27,15 @@ export class ProfileComponent implements OnInit {
     config.backdrop = 'static';
     config.keyboard = false;
   }
+  public currentId: number = parseInt (this.authService.getClientId());
+  profile: Client = new Client();
+  car: Car;
+  orderList: Order [] = [];
 
   ngOnInit(): void {
     this.showClient();
     this.showOrders()
   }
-
-
-  addCar (profile: Client){
-    const ref = this.modalService.open(AddCarModel);
-    ref.componentInstance.profile = profile;
-    ref.result.then((yes) => {
-        this.showClient();
-        console.log("OK Click");
-      },
-      (cancel) =>{
-        console.log("Cancel Click")
-      })
-  };
-
-  edit (profile: Client){
-    const ref = this.modalService.open(EditProfileComponent);
-    ref.componentInstance.profile = profile;
-    ref.result.then((yes) => {
-            this.showClient();
-        console.log("OK Click");
-    },
-      (cancel) =>{
-      console.log("Cancel Click")
-      })
-  }
-
-  @Input()
-  public modelOrder: Order;
-
-  profile: Client = new Client();
-  car: Car;
-
-  public currentId: number = parseInt (this.authService.getClientId());
 
   showClient(): void {
     this.clientService
@@ -76,8 +47,43 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+
+
+  addCar (profile: Client){
+    const editRef = this.modalService.open(AddCarModel);
+    // editRef.componentInstance.profile = profile;
+    editRef.result.then((yes) => {
+        console.log("11111");
+        this.showClient();
+        console.log("222222");
+        console.log("OK Click");
+        window.location.reload();
+
+      },
+      (cancel) =>{
+        console.log("Cancel Click")
+      })
+  };
+
+  edit (profile: Client){
+    const addCarRef = this.modalService.open(EditProfileComponent);
+    addCarRef.componentInstance.profile = profile;
+    addCarRef.result.then((yes) => {
+        console.log("11111");
+        this.showClient();
+        console.log("222222");
+        console.log("OK Click");
+      },
+      (cancel) =>{
+      console.log("Cancel Click")
+      })
+  }
+
   showOrders(): void {
-    this.orderService.showOrderById(this.currentId);
+    this.orderService.showOrderById(this.currentId)
+      .subscribe((date: Order[]) => {
+        this.orderList = date;
+      });
   }
 
   public deleteById(id: number): void {
@@ -85,7 +91,9 @@ export class ProfileComponent implements OnInit {
   }
 
   public  deleteCar(): void{
-    this.carService.delete(this.profile.car.id);
-    // window.location.reload();
+    this.carService.delete(this.profile.car.id)
+      .subscribe( ()=>{},error => {alert('error')});
+    window.location.reload();
+    // this.showClient()
   }
 }
