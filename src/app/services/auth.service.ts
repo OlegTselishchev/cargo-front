@@ -35,7 +35,7 @@ export class AuthService {
 
   public reg(regUser: Auth): void {
     this.http.post(this.urlReg, regUser).subscribe(()=>{},
-      error => alert('error, you not registration'),
+      error => alert('error, you are not registration'),
       ()=> {alert('success registration')});
   }
 

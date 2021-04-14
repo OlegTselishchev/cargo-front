@@ -75,7 +75,7 @@ export function tokenGetter(){
     BoxComponent,
     ProfileComponent,
     EditProfileComponent,
-    AddCarModel
+    AddCarModel,
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
     OrderFilterByTypePipe,
