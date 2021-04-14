@@ -4,10 +4,13 @@ import {Box} from "../model/box.model";
 @Pipe({name: 'boxFilterByName'})
 export class BoxFilterByNamePipe implements PipeTransform {
   transform(box: Box[], search: string): Box[] {
-    return box.filter(box => {
-      if (box.name == null){
-        return;
-      }
-      return box.name.includes(search)})
+    if (box != null) {
+      return box.filter(box => {
+        if (box.name == null) {
+          return;
+        }
+        return box.name.includes(search)
+      })
+    }
   }
 }

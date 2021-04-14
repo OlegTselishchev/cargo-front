@@ -7,11 +7,13 @@ import {Box} from "../model/box.model";
 export class BoxFilterByClientEmailPipe implements PipeTransform {
 
   transform(box: Box[], search: string): Box[] {
-    return box.filter(box => {
-      if (box.client.email == null){
-        return;
-      }
-      return box.client.email.includes(search)})
+    if (box != null) {
+      return box.filter(box => {
+        if (box.client.email == null) {
+          return;
+        }
+        return box.client.email.includes(search)
+      })
+    }
   }
-
 }

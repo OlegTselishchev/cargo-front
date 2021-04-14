@@ -24,16 +24,16 @@
     <tr>
       <td style="width: 30px">id</td>
       <td style="width: 80px">name</td>
-      <td style="width: 60px">status</td>
-      <td style="width: 70px">price</td>
-      <td style="width: 70px">loc_city</td>
-      <td style="width: 70px">dest_city</td>
+      <td style="width: 130px">status</td>
+      <td style="width: 80px">price</td>
+      <td style="width: 150px">loc_city</td>
+      <td style="width: 150px">dest_city</td>
       <td style="width: 50px">weight</td>
     </tr>
   </div>
 
-    <div class="cont4" *ngIf="orderService.ordersList.length; else noOrder">
-        <ng-container *ngFor="let order of orderService.ordersList
+    <div class="cont4" *ngIf="orderList.length; else noOrder">
+        <ng-container *ngFor="let order of orderList
           | orderFilterByName: searchOrderName
           | orderFilterByPrice: searchOrderPrice
           | orderFilterByWeight: searchOrderWeight

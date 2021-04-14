@@ -1,5 +1,52 @@
 
-<h1> Welcome </h1>
-<h2 *ngIf="!isLoggedIn"> Please Sign In or Sign Up </h2>
-<h2 *ngIf="isLoggedIn"> Success  </h2>
+<h1> Welcome
+<p *ngIf="!isLoggedIn"> Please Sign In or Sign Up </p>
+<p *ngIf="isLoggedIn"> Success SignIn</p>
+</h1>
 
+<div>
+  <label>locCity</label>
+  <select [(ngModel)]="locCity" >
+    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} </option>
+  </select>
+
+  <label>destCity</label>
+  <select [(ngModel)]="destCity">
+    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} </option>
+  </select>
+
+  <input type="number" placeholder="price" [(ngModel)]="price"/>
+
+  <label>TypeCargo</label>
+  <select [(ngModel)]="type">
+    <option *ngFor="let t of typeCargoList" value="{{t.name}}"> {{t.name}} </option>
+  </select>
+</div>
+
+<div class="cont3" *ngIf="orderList.length && price">
+
+  <div>
+    <tr>
+      <td style="width: 30px">id</td>
+      <td style="width: 80px">name</td>
+      <td style="width: 130px">status</td>
+      <td style="width: 80px">price</td>
+      <td style="width: 150px">loc_city</td>
+      <td style="width: 150px">dest_city</td>
+      <td style="width: 50px">weight</td>
+    </tr>
+  </div>
+
+  <div class="cont33">
+  <ng-container *ngFor="let order of orderList
+    | orderPrice: price
+    | orderFilterByLocCity: locCity
+    | orderFilterByDestCity: destCity
+    | orderFilterByType: type
+    ">
+    <app-order-list [modelOrder]="order"></app-order-list>
+  </ng-container>
+  </div>
+
+
+</div>

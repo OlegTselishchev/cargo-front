@@ -25,7 +25,7 @@
 
 
   <div>
-    <tr *ngFor="let c of clientService.clientList | clientFilterByEmail: searchDriverByEmail">
+    <tr *ngFor="let c of clientList | clientFilterByEmail: searchDriverByEmail">
       <a (click)="add(c.userId, c.lastName, c.firstName, c.middleName)" *ngIf="c.car">
         <td style="width: 30px" >{{c.userId}}</td>
         <td style="width: 100px">{{c.lastName}}</td>
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div *ngIf="statusService.statusList.length; else noStatus">
+
 
 <div class="cont2">
   <input type="text" placeholder="name" [(ngModel)]="searchOrderName"/>
@@ -50,24 +50,25 @@
   <input type="text" placeholder="dest_city" [(ngModel)]="searchOrderDestCity"/>
 </div>
 
+
 <div class="cont3">
 
   <div>
     <tr>
       <td style="width: 30px">id</td>
       <td style="width: 80px">name</td>
-      <td style="width: 60px">status</td>
-      <td style="width: 70px">price</td>
-      <td style="width: 70px">loc_city</td>
-      <td style="width: 70px">dest_city</td>
+      <td style="width: 130px">status</td>
+      <td style="width: 80px">price</td>
+      <td style="width: 150px">loc_city</td>
+      <td style="width: 150px">dest_city</td>
       <td style="width: 50px">weight</td>
     </tr>
   </div>
 
-  <div class="cont33" *ngIf="orderService.ordersList.length; else noOrder">
+  <div class="cont33" *ngIf="orderList.length; else noOrder">
 
     <div *ngIf="isOrderFull">
-    <ng-container *ngFor="let order of orderService.ordersList
+    <ng-container *ngFor="let order of orderList
     | orderFilterByName: searchOrderName
     | orderFilterByPrice: searchOrderPrice
     | orderFilterByWeight: searchOrderWeight
@@ -77,15 +78,14 @@
       <div *ngIf="order.status.name == 'open'">
       <app-order-list [modelOrder]="order"></app-order-list>
 
-      <button (click)="modifyByIdStatusInWork(order.id)" style="width: 70px">take{{order.id}}</button>
+      <button (click)="modifyByIdStatusInWork(order.id)" style="width: 70px" *ngIf="statusList.length">take{{order.id}}</button>
      <!-- <button (click)="back(order.id)" style="width: 70px">back</button>-->
       </div>
     </ng-container>
     </div>
 
-
     <div *ngIf="!isOrderFull">
-      <ng-container *ngFor="let order of orderService.ordersList
+      <ng-container *ngFor="let order of orderList
     | orderFilterByName: searchOrderName
     | orderFilterByPrice: searchOrderPrice
     | orderFilterByWeight: searchOrderWeight
@@ -95,8 +95,8 @@
         <div *ngIf="((order.driver != null) && (order.driver.email == searchDriverByEmail) && (order.status.name == 'in_work'))">
           <app-order-list [modelOrder]="order"></app-order-list>
 
-        <button (click)="modifyByIdStatusImplemented(order.id)" style="width: 120px">implemented{{order.id}}</button>
-        <button (click)="back(order.id)" style="width: 70px">back</button>
+        <button (click)="modifyByIdStatusImplemented(order.id)" style="width: 120px" *ngIf="statusList.length">implemented{{order.id}}</button>
+        <button (click)="back(order.id)" style="width: 70px" *ngIf="statusList.length">back</button>
         </div>
 
       </ng-container>
@@ -110,9 +110,3 @@
   </ng-template>
 
 </div>
-
-</div>
-
-<ng-template #noStatus>
-  <p> NO STATUS</p>
-</ng-template>

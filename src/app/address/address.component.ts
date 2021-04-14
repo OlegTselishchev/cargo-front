@@ -14,17 +14,22 @@ export class AddressComponent implements OnInit {
   public searchByStreet: string = '';
   public searchByCity: string = '';
 
+  public addressList: Address[];
+
   constructor(public addressService: AddressService, public location: Location) { }
 
   ngOnInit(): void {
+   this.getAddressAll();
   }
 
-  showAddress(): void {
-    this.addressService.showAllAddress();
+  getAddressAll():void{
+    this.addressService.getAddressAll().subscribe((data:Address[]) => this.addressList = data);
   }
 
   delete(id: number) : void {
-    this.addressService.delete(id);
+    this.addressService.delete(id).subscribe(()=>{},
+      error => {alert('error address delete')},
+      ()=>{this.getAddressAll()});
   }
 
   addAddress(): void {
@@ -43,7 +48,10 @@ export class AddressComponent implements OnInit {
       address.home != null && address.home !== '' &&
       address.apartment != null && address.apartment !== '') {
 
-      this.addressService.create(address);
+      this.addressService.create(address).subscribe(()=>{},
+        error => {alert('error address clear')},
+        ()=>{this.getAddressAll()}
+        );
 
       this.address.country = '';
       this.address.city = '';

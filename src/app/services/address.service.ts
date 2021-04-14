@@ -10,23 +10,15 @@ export class AddressService {
   //urlAddress: string = 'https://app-cargo2020.herokuapp.com/address/';
   urlAddress: string = 'http://localhost:9000/address/';
 
-  public addressList: Address[] = []
-
-  public showAllAddress(): void {
-    this.http.get(this.urlAddress).subscribe((date: Address[]) => {
-      this.addressList = date;
-    });
+  public getAddressAll() {
+    return this.http.get(this.urlAddress);
   }
 
-  delete(id: number) : void {
-    this.http.delete(this.urlAddress + id).subscribe(()=>{},
-      error => {alert('error')},
-      ()=>{this.addressList = this.addressList.filter(a => a.addressId !== id);});
+  public delete(id: number)  {
+    return this.http.delete(this.urlAddress + id);
   }
 
-  create(address: Address) : void {
-    this.http.post(this.urlAddress, address).subscribe(()=>{},
-      error => {alert('error')},
-      ()=>{this.showAllAddress()});
+  public create(address: Address)  {
+    return this.http.post(this.urlAddress, address);
   }
 }

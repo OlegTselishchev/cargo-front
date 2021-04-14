@@ -15,15 +15,18 @@ export class OrderDetailComponent implements OnInit {
               public location: Location,
               public orderService: OrderService) { }
 
-  ngOnInit(): void {
-    this.getOrder();
-  }
-
+  public orderList: Order[] = [];
   public orderDet: Order[] = [];
 
-  getOrder(): void {
+  ngOnInit(): void {
+    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
+      error => {alert('error get order')},
+      ()=>{this.getOrderDetails()});
+  }
+
+  getOrderDetails(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.orderDet = this.orderService.ordersList.filter(o => o.id == id);
+    this.orderDet = this.orderList.filter(o => o.id == id);
   }
 
   goBack(): void {

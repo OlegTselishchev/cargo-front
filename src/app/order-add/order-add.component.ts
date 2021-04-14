@@ -28,6 +28,11 @@ export class OrderAddComponent implements OnInit {
                 public statusService: StatusService
   ) { }
 
+  public addressList: Address[] = [];
+  public clientList: Client[] = [];
+  public boxList: Box[] = [];
+  public statusList: Status[] = [];
+
   ngOnInit(): void {
     this.showBox();
     this.showClient();
@@ -48,12 +53,12 @@ export class OrderAddComponent implements OnInit {
 
 
   create(): void {
-    let status: Status = this.statusService.statusList.find(x => x.name == 'open');
+    let status: Status = this.statusList.find(x => x.name == 'open');
 
     let price1 = 0;
 
     if (this.box.boxId != null) {
-      let boxById: Box[] = this.boxService.boxList.filter(box => box.boxId == this.box.boxId);
+      let boxById: Box[] = this.boxList.filter(box => box.boxId == this.box.boxId);
       let box: Box = boxById[0];
       price1 = box.weight * 500;
     };
@@ -73,7 +78,9 @@ export class OrderAddComponent implements OnInit {
       order.location.addressId != null && order.destination.addressId != null &&
       order.price != null && order.status.id != null
     ) {
-      this.orderService.create(order);
+      this.orderService.create(order).subscribe(()=>{},
+        error => {alert('error order create')},
+        ()=>{console.log('order created')});
     } else {
       alert('введи все данные');
     }
@@ -99,7 +106,6 @@ export class OrderAddComponent implements OnInit {
     this.box.name = name;
   }
 
-
   addLoc(id: number, country: string, city: string, street: string, home: string, apart: string): void {
     this.loc.addressId = id;
     this.loc.country = country;
@@ -123,17 +129,19 @@ export class OrderAddComponent implements OnInit {
   }
 
   showBox():void{
-    this.boxService.showAllBox();
+    this.boxService.getBoxAll().subscribe((data: Box[]) => {this.boxList = data});
   }
+
   showAddress():void{
-    this.addressService.showAllAddress();
+    this.addressService.getAddressAll().subscribe((data: Address[]) => {this.addressList = data});
   }
+
   showClient():void{
-    this.clientService.showAllClient();
+    this.clientService.getClientAll().subscribe((data: Client[]) => {this.clientList = data});
   }
 
   showStatus():void{
-    this.statusService.showAllStatus();
+    this.statusService.getStatus().subscribe((data: Status[]) => {this.statusList = data});
   }
 
 }

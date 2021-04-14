@@ -1,7 +1,6 @@
 <div class="cont1">
-   <button  (click)="showBoxAll()">Show Box</button>
    <button (click)="goBack()">goBack</button>
-  <button  (click)="createBox()">Create Box</button>
+   <button  (click)="createBox()">Create Box</button>
 </div>
 
 
@@ -12,13 +11,11 @@
   <input type="text" placeholder="weight" [(ngModel)]="weight"/>
   <label>type</label>
   <select [(ngModel)]="tId">
-    <option *ngFor="let t of typeService.typeCargoList" value="{{t.typeId}}" > {{t.name}} </option>
+    <option *ngFor="let t of typeCargoList" value="{{t.typeId}}"> {{t.name}} </option>
   </select>
 </div>
 
-
-
-<div class="cont3" *ngIf="boxService.boxList.length; else noBox">
+<div class="cont3" *ngIf="boxList.length; else noBox">
 
   <tr>
 
@@ -32,7 +29,7 @@
   </tr>
 
   <div class="cont4">
-    <tr *ngFor="let cl of boxService.boxList | boxFilterByClientEmail: searchBoxByClientEmail">
+    <tr *ngFor="let cl of boxList | boxFilterByClientEmail: searchBoxByClientEmail">
 
       <td style="width: 80px">{{cl.boxId}}</td>
       <td style="width: 100px">{{cl.name}}</td>
@@ -44,13 +41,7 @@
 
     </tr>
   </div>
-
-
-
-
 </div>
-
-
 
 <div>
   <ng-template #noBox>
