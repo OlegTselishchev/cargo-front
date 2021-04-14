@@ -7,49 +7,26 @@ import {Observable} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class ClientService {
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient){
   }
 
   //urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
   urlClient: string = 'http://localhost:9000/client/';
 
-  clientList: Client[] = [];
-
-
-  client: Client = null;
-
-  public showAllClient(): void {
-    this.http.get(this.urlClient).subscribe((date: Client[]) => {
-      this.clientList = date;
-    });
+  public getClientAll(){
+    return this.http.get(this.urlClient);
   }
 
-  public showClientByEmail(email: string): void {
-    this.http.get(this.urlClient + 'email/' + email).subscribe((c: Client) => {
-      this.client = c;
-    });
+  public getClientByEmail(email: string){
+    return this.http.get(this.urlClient + 'email/' + email);
   }
 
-  public delete(id: number): void {
-    this.http.delete(this.urlClient + id)
-      .subscribe(() => {
-        }, error => {
-          alert('error')
-        },
-        () => {
-          alert('deleted'), this.clientList = this.clientList.filter(c => c.userId !== id);
-        });
+  public delete(id: number) {
+    return this.http.delete(this.urlClient + id);
   }
 
-  public create(client: Client): void {
-    this.http.post(this.urlClient, client).subscribe(() => {
-      },
-      error => {
-        alert('error Create Client')
-      },
-      () => {
-        this.showAllClient();
-      });
+  public create(client: Client) {
+    return this.http.post(this.urlClient, client);
   }
 
 
@@ -61,7 +38,3 @@ export class ClientService {
     return this.http.patch(this.urlClient, client);
   }
 }
-
-
-
-

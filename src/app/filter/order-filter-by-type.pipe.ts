@@ -2,18 +2,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Order} from "../model/order.model";
 
 @Pipe({
-  name: 'orderFilterByBoxClientEmail'
+  name: 'orderFilterByType'
 })
-export class OrderFilterByBoxClientEmailPipe implements PipeTransform {
+export class OrderFilterByTypePipe implements PipeTransform {
 
   transform(order: Order[], search: string): Order[] {
     if (order != null) {
       return order.filter(order => {
-        if (order.box.client.email == null) {
-          return;
-        }
-        return order.box.client.email.includes(search)
+        return order.box.typeCargo.name.includes(search);
       });
     }
   }
+
 }

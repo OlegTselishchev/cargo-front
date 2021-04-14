@@ -37,6 +37,8 @@ import { BoxFilterByClientEmailPipe } from './filter/box-filter-by-client-email.
 import { OrderFilterByBoxClientEmailPipe } from './filter/order-filter-by-box-client-email.pipe';
 import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
+import { OrderPricePipe } from './filter/order-price.pipe';
+import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
 
 
 export function tokenGetter(){
@@ -74,6 +76,10 @@ export function tokenGetter(){
     ProfileComponent,
     EditProfileComponent,
     AddCarModel
+    OrderFilterByDriverEmailPipe,
+    OrderPricePipe,
+    OrderFilterByTypePipe,
+    OrderFilterByDriverEmailPipe
   ],
   imports: [
     NgbPaginationModule,
