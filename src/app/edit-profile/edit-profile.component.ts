@@ -4,6 +4,7 @@ import {Client} from "../model/client.model";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ClientService} from "../services/client.service";
+import {ProfileComponent} from "../profile/profile.component";
 
 @Component({
   selector: 'app-edit-profile',
@@ -29,15 +30,22 @@ export class EditProfileComponent implements OnInit {
 
 
   onSubmit() {
-    if(this.editForm.getRawValue().password == this.passwordConfirm){
-      this.usersService.modify(this.editForm.value).
-      subscribe((data: Client) =>{
-          this.profile=data;
-        },
-        error => {alert('error')});
+    if (this.editForm.getRawValue().password == this.passwordConfirm) {
+      this.isLoading = true;
+      this.usersService.modify(this.editForm.value)
+        .subscribe((response) => {
+          this.isLoading = false;
+          this.modal.close('Yes');
+          if (response.status === 200) {
+            console.log("data was updated");
+          }
+          }, error => {
+            alert('error');
+        });
       this.isLoading = false;
-    }else {alert('passwords not equals')}
-    this.modal.close("Yes");
+    } else {
+      alert('passwords not equals');
+    }
   }
 
   get editFormData() { return this.editForm.controls; }

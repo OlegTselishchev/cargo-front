@@ -1,23 +1,23 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Client} from "../model/client.model";
-import {Observable} from "rxjs";
+import {observable, Observable} from "rxjs";
 
 
 @Injectable({providedIn: 'root'})
 export class ClientService {
 
-  constructor(public http: HttpClient){
+  constructor(public http: HttpClient) {
   }
 
   //urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
   urlClient: string = 'http://localhost:9000/client/';
 
-  public getClientAll(){
+  public getClientAll() {
     return this.http.get(this.urlClient);
   }
 
-  public getClientByEmail(email: string){
+  public getClientByEmail(email: string) {
     return this.http.get(this.urlClient + 'email/' + email);
   }
 
@@ -35,6 +35,6 @@ export class ClientService {
   }
 
   public modify(client: Client): Observable<any> {
-    return this.http.patch(this.urlClient, client);
+    return this.http.patch(this.urlClient, client, {observe: 'response'});
   }
 }

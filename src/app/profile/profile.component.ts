@@ -8,7 +8,7 @@ import {Car} from "../model/car.model";
 import {CarService} from "../services/car.service";
 import {EditProfileComponent} from "../edit-profile/edit-profile.component";
 import {AddCarModel} from "../add-car-model/add-car-model";
-import {ACCESS_USER_ID, AuthService} from "../services/auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -37,28 +37,16 @@ export class ProfileComponent implements OnInit {
     this.showOrders()
   }
 
-  showClient(): void {
-    this.clientService
-      .showById(this.currentId)
-      .subscribe(data => {
-        this.profile = data;
-      }, error => {
-        console.log("error get profile");
-      });
-  }
-
 
 
   addCar (profile: Client){
     const editRef = this.modalService.open(AddCarModel);
-    // editRef.componentInstance.profile = profile;
+    editRef.componentInstance.profile = profile;
     editRef.result.then((yes) => {
         console.log("11111");
         this.showClient();
         console.log("222222");
         console.log("OK Click");
-        window.location.reload();
-
       },
       (cancel) =>{
         console.log("Cancel Click")
@@ -69,14 +57,24 @@ export class ProfileComponent implements OnInit {
     const addCarRef = this.modalService.open(EditProfileComponent);
     addCarRef.componentInstance.profile = profile;
     addCarRef.result.then((yes) => {
-        console.log("11111");
-        this.showClient();
-        console.log("222222");
         console.log("OK Click");
+        this.showClient();
       },
       (cancel) =>{
       console.log("Cancel Click")
       })
+    console.log("debug")
+  }
+
+
+  showClient(): void {
+    this.clientService
+      .showById(this.currentId)
+      .subscribe(data => {
+        this.profile = data;
+      }, error => {
+        console.log("error get profile");
+      });
   }
 
   showOrders(): void {
@@ -92,8 +90,9 @@ export class ProfileComponent implements OnInit {
 
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id)
-      .subscribe( ()=>{},error => {alert('error')});
-    window.location.reload();
-    // this.showClient()
+      .subscribe( ()=> {
+        this.showClient()
+      },error => {alert('error')});
+
   }
 }

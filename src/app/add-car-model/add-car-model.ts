@@ -29,18 +29,14 @@ export class AddCarModel implements OnInit {
 
   onSubmit() {
     this.isLoading = true;
-    this.createCar(this.newCar);
-    this.isLoading = false;
-    console.log("test1")
-    this.modal.close("Yes");
-    // window.location.reload();
-  }
-
-  createCar(car: Car): void {
-    this.carService.create(car)
-      .subscribe(() => {}, error => {
+    this.carService.create(this.newCar)
+      .subscribe(() => {
+        this.isLoading = false;
+        this.modal.close('Yes');
+      },  error => {
         console.log("error get profile");
+        this.isLoading = false;
       });
+    console.log("test1")
   }
-
 }
