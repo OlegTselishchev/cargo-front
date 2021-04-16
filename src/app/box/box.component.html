@@ -25,10 +25,10 @@
     <td style="width: 100px">volume</td>
     <td style="width: 100px">width</td>
     <td style="width: 100px">height</td>
-    <td style="width: 100px">type</td>
+    <td style="width: 200px">type</td>
   </tr>
 
-  <div class="cont4">
+  <div class="cont4" *ngIf="boxList.length; else noBox">
     <tr *ngFor="let cl of boxList | boxFilterByClientEmail: searchBoxByClientEmail">
 
       <td style="width: 80px">{{cl.boxId}}</td>
@@ -37,7 +37,7 @@
       <td style="width: 100px">{{cl.volume}}</td>
       <td style="width: 100px">{{cl.width}}</td>
       <td style="width: 100px">{{cl.height}}</td>
-      <td style="width: 100px">{{cl.typeCargo.name}}</td>
+      <td style="width: 200px">{{cl.typeCargo.name}}</td>
 
     </tr>
   </div>

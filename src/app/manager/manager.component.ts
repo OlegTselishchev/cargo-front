@@ -29,11 +29,15 @@ export class ManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllOrder();
-    this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data});
+    this.getStatus();
   }
 
   showAllOrder(): void {
     this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data});
+  }
+
+  getStatus(): void{
+    this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data});
   }
 
   public deleteById(id: number): void {

@@ -26,8 +26,8 @@ export class BoxComponent implements OnInit {
   public client: Client = null;
 
   ngOnInit(): void {
-    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
-    this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
+    this.showTypeAll();
+    this.showClientByEmail();
     this.showBoxAll();
   }
 
@@ -39,7 +39,22 @@ export class BoxComponent implements OnInit {
   searchBoxByClientEmail: string = this.authService.getAuthEmail();
 
   showBoxAll():void{
-    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data);
+    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data,
+      error => {alert('getBox - error')},
+      ()=> {console.log('getBox - OK')});
+  }
+
+  showTypeAll():void{
+    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
+      error => alert('getType - error'),
+      ()=>{console.log('getType - OK')});
+  }
+
+  showClientByEmail():void{
+    this.clientService.getClientByEmail(this.authService.getAuthEmail())
+      .subscribe((data:Client)=>{this.client = data},
+        error => {alert('getClientByEmail - error')},
+        ()=>{console.log('getClientByEmail - OK')});
   }
 
   goBack(): void {
