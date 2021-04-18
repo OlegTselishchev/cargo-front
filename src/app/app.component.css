@@ -20,6 +20,11 @@
   z-index: 0;
 }
 
+.notifications {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
 
 

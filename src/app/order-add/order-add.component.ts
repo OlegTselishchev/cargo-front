@@ -11,6 +11,7 @@ import {OrderService} from "../services/order.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-order-add',
@@ -25,8 +26,8 @@ export class OrderAddComponent implements OnInit {
                 public orderService: OrderService,
                 public location: Location,
                 public authService: AuthService,
-                public statusService: StatusService
-  ) { }
+                public statusService: StatusService,
+                public notificationService: NotificationService) { }
 
   public addressList: Address[] = [];
   public clientList: Client[] = [];
@@ -79,8 +80,14 @@ export class OrderAddComponent implements OnInit {
       order.price != null && order.status.id != null
     ) {
       this.orderService.create(order).subscribe(()=>{},
-        error => {alert('error order create')},
-        ()=>{console.log('order created')});
+        error => {
+          this.notificationService.add('createError');
+          setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
+        },
+        ()=>{
+          this.notificationService.add('createOk');
+          setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
+        });
     } else {
       alert('введи все данные');
     }

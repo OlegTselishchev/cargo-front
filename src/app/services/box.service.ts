@@ -23,4 +23,8 @@ export class BoxService {
   public create(box: Box) {
     return this.http.post(this.boxUrl, box);
   }
+
+  public deleteById(id: number){
+    return this.http.delete(this.boxUrl + id)
+  }
 }

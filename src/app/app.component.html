@@ -1,11 +1,18 @@
 
 <div class="text-center">
-
   <app-header></app-header>
-
 <div class="container1">
   <router-outlet></router-outlet>
 </div>
 
 </div>
 
+<div class="notifications" *ngIf="notificationService.notifications.length">
+
+  <ng-container *ngFor="let notification of notificationService.notifications">
+
+    <app-notification [model]="notification">  </app-notification>
+
+  </ng-container>
+
+</div>
