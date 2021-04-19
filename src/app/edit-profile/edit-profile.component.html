@@ -1,61 +1,41 @@
-<div class="modal-header bg-primary text-white">
-  <h4 class="modal-title" id="modal-basic-title">Edit profile</h4>
-</div>
-<div class="modal-body">
+<h1 mat-dialog-title>Edit Your data</h1>
+<div mat-dialog-content>
 
-  <form [formGroup]="editForm"  *ngIf="editForm">
-    <div class="form-group row d-flex justify-content-center align-items-center">
-      <label class="col-form-label col-sm-2 text-right">First Name:</label>
-      <div class="col-sm-5">
-        <input type="text" formControlName="firstName" class="form-control" />
-        <div *ngIf="editFormData.firstName.invalid && (editFormData.firstName.dirty || editFormData.firstName.touched)"
-             class="alert-danger">
-          <span>First name is required!</span>
-        </div>
-      </div>
-    </div>
+  <form>
 
-    <div class="form-group row d-flex justify-content-center align-items-center">
-      <label  class="col-form-label col-sm-2 text-right">Last Name:</label>
-      <div class="col-sm-5">
-        <input type="text" formControlName="lastName" class="form-control" />
-        <div *ngIf="editFormData.lastName.invalid && (editFormData.lastName.dirty || editFormData.lastName.touched)"
-             class="alert-danger">
-          <span>Last name is required!</span>
-        </div>
-      </div>
-    </div>
+    <mat-form-field>
+      <label>First name: </label>
+      <input matInput [(ngModel)]="profile.firstName" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
 
-       <div class="form-group row d-flex justify-content-center align-items-center">
-      <label  class="col-form-label col-sm-2 text-right">Mobile number:</label>
-      <div class="col-sm-5">
-        <input type="text" formControlName="phone" class="form-control" />
-        <div *ngIf="editFormData.phone.invalid && (editFormData.phone.dirty || editFormData.phone.touched)"
-             class="alert-danger">
-          <span>Mobile number is required!</span>
-        </div>
-      </div>
-    </div>
+    <mat-form-field>
+      <label>Last name: </label>
+      <input matInput [(ngModel)]="profile.lastName" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
 
-    <div class="form-group row d-flex justify-content-center align-items-center">
-      <label  class="col-form-label col-sm-2 text-right">password:</label>
-      <div class="col-sm-5">
-        <input type="password" formControlName="password"  class="form-control" />
-      </div>
-    </div>
+    <mat-form-field>
+      <label>Middle name: </label>
+      <input matInput [(ngModel)]="profile.middleName" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
 
-    <div class="form-group row d-flex justify-content-center align-items-center">
-      <label  class="col-form-label col-sm-2 text-right">Confirm password:</label>
-      <div class="col-sm-5">
-      <input type="password" [(ngModel)]="passwordConfirm" [ngModelOptions]="{standalone: true}"  class="form-control" >
-      </div>
-    </div>
+    <mat-form-field>
+      <label>Phone: </label>
+      <input matInput [(ngModel)]="profile.phone" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
 
-    <div class="modal-footer">
-      <button [disabled]="isLoading" class="btn btn-primary mr-2" (click)="modal.close('Cancel')">Cancel</button>
-      <button [disabled]="isLoading" class="btn btn-primary mr-2" (click)="onSubmit()">Save</button>
-    </div>
+    <mat-form-field>
+      <label>Password: </label>
+      <input type ="password" matInput [(ngModel)]="profile.password" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <label>Confirm password: </label><input type ="password" matInput [(ngModel)]="passwordConfirm" [ngModelOptions]="{standalone: true}">
+    </mat-form-field><br>
 
   </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button (click)="onSubmit()">Save</button>
 </div>
 

@@ -12,17 +12,18 @@
   </div>
 
   <div *ngIf="profile?.car == null; else elseBlock" class = "addButton">
-    <button  (click)="addCar(profile)" >add</button>
-  </div>
+    <button mat-button (click)="addCar()" >add</button>
+      </div>
 
   <div class = "deleteButton">
     <ng-template #elseBlock>
-      <button class="btn btn-lg btn-outline-primary" (click)=deleteCar() class = "deleteButton">delete</button>
+      <button mat-button (click)="addTrailer()" >add trailer</button>
+      <button mat-button (click)=deleteCar() class = "deleteButton">delete</button>
     </ng-template>
   </div>
 
   <div class="edit">
-    <button class="btn btn-lg btn-outline-primary" (click)="edit(profile)" >Edit</button>
+    <button mat-button (click)="edit()" >Edit</button>
   </div>
 
   <div class="tableOrders">

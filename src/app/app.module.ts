@@ -39,6 +39,14 @@ import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatButtonModule} from "@angular/material/button";
+import { AddtrailerComponent } from './addtrailer/addtrailer.component';
+import { AddTrailerComponent } from './add-trailer/add-trailer.component';
 
 
 export function tokenGetter(){
@@ -79,7 +87,9 @@ export function tokenGetter(){
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
     OrderFilterByTypePipe,
-    OrderFilterByDriverEmailPipe
+    OrderFilterByDriverEmailPipe,
+    AddtrailerComponent,
+    AddTrailerComponent
   ],
   imports: [
     NgbPaginationModule,
@@ -92,6 +102,25 @@ export function tokenGetter(){
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatGridListModule,
+    MatButtonModule,
+    // Material.MatFormFieldModule,
+    // Material.MatInputModule,
+    // Material.MatRadioModule,
+    // Material.MatSelectModule,
+    // Material.MatCheckboxModule,
+    // Material.MatDatepickerModule,
+    // Material.MatNativeDateModule,
+    // Material.MatButtonModule,
+    // Material.MatSnackBarModule,
+    // Material.MatTableModule,
+    // Material.MatIconModule,
+    // Material.MatPaginatorModule,
+    // Material.MatSortModule,
+    // Material.MatDialogModule,
 
     JwtModule.forRoot({
         config: {
@@ -99,7 +128,9 @@ export function tokenGetter(){
           disallowedRoutes:["localhost:9000"]
         }
       }
-    )
+    ),
+
+    BrowserAnimationsModule
   ],
   providers: [
     {

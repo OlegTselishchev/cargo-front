@@ -13,13 +13,13 @@ import {DialogData} from "../profile/profile.component";
   templateUrl: './add-car-model.html',
   styleUrls: ['./add-car-model.css']
 })
-export class AddCarModel implements OnInit {
+export class addTrailerComponent implements OnInit {
 
   constructor(
-              private route: ActivatedRoute,
-              private carService: CarService,
-              public dialogRef: MatDialogRef<AddCarModel>,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    private route: ActivatedRoute,
+    private carService: CarService,
+    public dialogRef: MatDialogRef<addTrailerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
 
   newCar: Car = new Car();
@@ -35,7 +35,7 @@ export class AddCarModel implements OnInit {
     this.carService.create(this.newCar)
       .subscribe((response) => {
         if (response.status === 200) {
-        this.dialogRef.close("Yes");
+          this.dialogRef.close("Yes");
         }
       },  error => {
         alert('error');

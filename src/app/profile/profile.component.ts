@@ -9,6 +9,7 @@ import {CarService} from "../services/car.service";
 import {EditProfileComponent} from "../edit-profile/edit-profile.component";
 import {AddCarModel} from "../add-car-model/add-car-model";
 import {AuthService} from "../services/auth.service";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   constructor(public clientService: ClientService,
               public orderService: OrderService,
               config: NgbModalConfig,
+              public dialog: MatDialog,
               private modalService: NgbModal,
               public carService: CarService,
               private authService: AuthService) {
@@ -37,35 +39,50 @@ export class ProfileComponent implements OnInit {
     this.showOrders()
   }
 
-
-
-  addCar (profile: Client){
-    const editRef = this.modalService.open(AddCarModel);
-    editRef.componentInstance.profile = profile;
-    editRef.result.then((yes) => {
-        console.log("11111");
-        this.showClient();
-        console.log("222222");
-        console.log("OK Click");
-      },
-      (cancel) =>{
-        console.log("Cancel Click")
+  addTrailer (){
+    const addCarRef = this.dialog.open(AddCarModel,
+      {data: {profile: this.profile}
       })
+    addCarRef.afterClosed().subscribe(result => {
+      if (result == "Yes" ) {
+        this.showClient();
+      } else if  (result == "cancel") {
+        alert('фу лох, даже не поменял ничего')
+      } else {
+        alert('You have some issues with back. Please, try again');
+      }
+    });
   };
 
-  edit (profile: Client){
-    const addCarRef = this.modalService.open(EditProfileComponent);
-    addCarRef.componentInstance.profile = profile;
-    addCarRef.result.then((yes) => {
-        console.log("OK Click");
-        this.showClient();
-      },
-      (cancel) =>{
-      console.log("Cancel Click")
+  addCar (){
+    const addCarRef = this.dialog.open(AddCarModel,
+      {data: {profile: this.profile}
       })
-    console.log("debug")
-  }
+    addCarRef.afterClosed().subscribe(result => {
+      if (result == "Yes" ) {
+        this.showClient();
+      } else if  (result == "cancel") {
+        alert('фу лох, даже не поменял ничего')
+      } else {
+        alert('You have some issues with back. Please, try again');
+      }
+    });
+  };
 
+  edit (){
+    const editRef = this.dialog.open(EditProfileComponent,
+      {data: {profile: this.profile}
+      })
+    editRef.afterClosed().subscribe(result  => {
+      if (result == "Yes" ) {
+        this.showClient();
+      }else if (result == "cancel"){
+        alert('фу лох, даже не поменял ничего')
+      } else {
+        alert('You have some issues with back. Please, try again');
+      }
+    });
+  }
 
   showClient(): void {
     this.clientService
@@ -95,4 +112,8 @@ export class ProfileComponent implements OnInit {
       },error => {alert('error')});
 
   }
+}
+
+export interface DialogData {
+  profile: Client;
 }

@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Component, Inject, OnInit} from '@angular/core';
 import {Client} from "../model/client.model";
 import {ActivatedRoute} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ClientService} from "../services/client.service";
-import {ProfileComponent} from "../profile/profile.component";
+import {DialogData} from "../profile/profile.component";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,53 +12,38 @@ import {ProfileComponent} from "../profile/profile.component";
 })
 export class EditProfileComponent implements OnInit {
 
-  constructor(public modal: NgbActiveModal,
-              private route: ActivatedRoute,
-              private usersService: ClientService,
-              private formBuilder: FormBuilder) { }
+  constructor(
+    private route: ActivatedRoute,
+    private usersService: ClientService,
+    public dialogRef: MatDialogRef<EditProfileComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
 
 
   profile: Client;
-  editForm: FormGroup;
-  isLoading = false;
-  passwordConfirm;
+  passwordConfirm: String;
 
   ngOnInit() {
-    this.setForm()
+    this.profile = {...this.data.profile}
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close("cancel");
   }
 
 
   onSubmit() {
-    if (this.editForm.getRawValue().password == this.passwordConfirm) {
-      this.isLoading = true;
-      this.usersService.modify(this.editForm.value)
+    if (this.profile.password == this.passwordConfirm) {
+      this.usersService.modify(this.profile)
         .subscribe((response) => {
-          this.isLoading = false;
-          this.modal.close('Yes');
           if (response.status === 200) {
-            console.log("data was updated");
+            this.dialogRef.close("Yes");
           }
-          }, error => {
-            alert('error');
+        }, error => {
+          alert('error');
         });
-      this.isLoading = false;
     } else {
       alert('passwords not equals');
     }
-  }
-
-  get editFormData() { return this.editForm.controls; }
-
-  private setForm() {
-    console.log(this.profile);
-
-    this.editForm = this.formBuilder.group({
-      userId: [this.profile.userId],
-      firstName: [this.profile.firstName, Validators.required],
-      lastName: [this.profile.lastName, Validators.required],
-      phone: [this.profile.phone, Validators.required],
-      password: [this.profile.password, Validators.required],
-      confirmPassword: ['', Validators.required]
-    });
   }
 }
