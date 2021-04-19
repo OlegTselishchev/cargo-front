@@ -25,7 +25,6 @@ import { AddressComponent } from './address/address.component';
 import { BoxComponent } from './box/box.component';
 import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
 import { ProfileComponent } from './profile/profile.component';
-import {NgbPaginationModule, NgbAlertModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { AddCarModel } from './add-car-model/add-car-model';
 import { HeaderComponent } from './header/header.component';
@@ -39,104 +38,86 @@ import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDialogModule} from "@angular/material/dialog";
+import { AddTrailerComponent } from './add-trailer/add-trailer.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {MatGridListModule} from "@angular/material/grid-list";
 import {MatButtonModule} from "@angular/material/button";
-import { AddtrailerComponent } from './addtrailer/addtrailer.component';
-import { AddTrailerComponent } from './add-trailer/add-trailer.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 export function tokenGetter(){
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+    return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    OrderListComponent,
-    OrderDetailComponent,
-    HomeComponent,
-    DriverComponent,
-    ManagerComponent,
-    ClientFilterLastNPipe,
-    AddressFilterByStreetPipe,
-    BoxFilterByNamePipe,
-    OrderFilterByNamePipe,
-    OrderFilterByPricePipe,
-    OrderFilterByWeightPipe,
-    OrderFilterByLocCityPipe,
-    OrderFilterByDestCityPipe,
-    AddressFilterByCityPipe,
-    ClientComponent,
-    AddressComponent,
-    BoxComponent,
-    HeaderComponent,
-    SingSingupFormaComponent,
-    OrderAddComponent,
-    BoxFilterByClientEmailPipe,
-    OrderFilterByBoxClientEmailPipe,
-    ClientFilterByEmailPipe,
-    OrderFilterByDriverEmailPipe,
-    BoxComponent,
-    ProfileComponent,
-    EditProfileComponent,
-    AddCarModel,
-    OrderFilterByDriverEmailPipe,
-    OrderPricePipe,
-    OrderFilterByTypePipe,
-    OrderFilterByDriverEmailPipe,
-    AddtrailerComponent,
-    AddTrailerComponent
-  ],
-  imports: [
-    NgbPaginationModule,
-    NgbAlertModule,
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule,
-    HttpClientModule,
-    FormsModule,
-    NgbModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatGridListModule,
-    MatButtonModule,
-    // Material.MatFormFieldModule,
-    // Material.MatInputModule,
-    // Material.MatRadioModule,
-    // Material.MatSelectModule,
-    // Material.MatCheckboxModule,
-    // Material.MatDatepickerModule,
-    // Material.MatNativeDateModule,
-    // Material.MatButtonModule,
-    // Material.MatSnackBarModule,
-    // Material.MatTableModule,
-    // Material.MatIconModule,
-    // Material.MatPaginatorModule,
-    // Material.MatSortModule,
-    // Material.MatDialogModule,
+    declarations: [
+        AppComponent,
+        OrderListComponent,
+        OrderDetailComponent,
+        HomeComponent,
+        DriverComponent,
+        ManagerComponent,
+        ClientFilterLastNPipe,
+        AddressFilterByStreetPipe,
+        BoxFilterByNamePipe,
+        OrderFilterByNamePipe,
+        OrderFilterByPricePipe,
+        OrderFilterByWeightPipe,
+        OrderFilterByLocCityPipe,
+        OrderFilterByDestCityPipe,
+        AddressFilterByCityPipe,
+        ClientComponent,
+        AddressComponent,
+        BoxComponent,
+        HeaderComponent,
+        SingSingupFormaComponent,
+        OrderAddComponent,
+        BoxFilterByClientEmailPipe,
+        OrderFilterByBoxClientEmailPipe,
+        ClientFilterByEmailPipe,
+        OrderFilterByDriverEmailPipe,
+        BoxComponent,
+        ProfileComponent,
+        EditProfileComponent,
+        AddCarModel,
+        OrderFilterByDriverEmailPipe,
+        OrderPricePipe,
+        OrderFilterByTypePipe,
+        OrderFilterByDriverEmailPipe,
+        AddTrailerComponent
 
-    JwtModule.forRoot({
-        config: {
-          tokenGetter,
-          disallowedRoutes:["localhost:9000"]
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA],
+
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+
+        JwtModule.forRoot({
+                config: {
+                    tokenGetter,
+                    disallowedRoutes:["localhost:9000"]
+                }
+            }
+        )
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
         }
-      }
-    ),
-
-    BrowserAnimationsModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,45 +1,39 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Car} from "../model/car.model";
-// import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute} from "@angular/router";
-import {CarService} from "../services/car.service";
-import {Client} from "../model/client.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../profile/profile.component";
+import {TrailerService} from "../services/trailer.service";
 
+import {Trailer} from "../model/trailer.model";
 
 @Component({
-  selector: 'app-add-or-delete-car',
-  templateUrl: './add-car-model.html',
-  styleUrls: ['./add-car-model.css']
+  selector: 'app-add-trailer',
+  templateUrl: './add-trailer.component.html',
+  styleUrls: ['./add-trailer.component.css']
 })
-export class addTrailerComponent implements OnInit {
+export class AddTrailerComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute,
-    private carService: CarService,
-    public dialogRef: MatDialogRef<addTrailerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  constructor( private route: ActivatedRoute,
+               private trailerService: TrailerService,
+               public dialogRef: MatDialogRef<AddTrailerComponent>,
+               @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-
-  newCar: Car = new Car();
-  profile: Client;
-
+  newTrailer: Trailer = new Trailer();
 
   ngOnInit(): void {
-    this.newCar.client =  {...this.data.profile}
+    this.newTrailer.car =  {...this.data.profile.car}
   }
 
-
   onSubmit() {
-    this.carService.create(this.newCar)
-      .subscribe((response) => {
-        if (response.status === 200) {
-          this.dialogRef.close("Yes");
-        }
-      },  error => {
-        alert('error');
-      });
+    this.trailerService.create(this.newTrailer)
+        .subscribe((response) => {
+          if (response.status === 200) {
+            this.dialogRef.close("Yes");
+          }
+        },  error => {
+          alert('error');
+            this.dialogRef.close("error");
+        });
   }
 
   onNoClick(): void {

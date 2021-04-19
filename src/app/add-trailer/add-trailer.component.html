@@ -1,1 +1,31 @@
-<p>add-trailer works!</p>
+<h1 mat-dialog-title>Add trailer</h1>
+<div mat-dialog-content>
+
+    <form>
+
+        <mat-form-field>
+            <label>Trailer name: </label>
+            <input matInput [(ngModel)]="newTrailer.name" [ngModelOptions]="{standalone: true}">
+        </mat-form-field><br>
+
+        <mat-form-field>
+            <label>Volume: </label>
+            <input matInput [(ngModel)]="newTrailer.volume" [ngModelOptions]="{standalone: true}">
+        </mat-form-field><br>
+
+        <mat-form-field>
+            <label>lifting Capacity: </label>
+            <input matInput [(ngModel)]="newTrailer.liftingCapacity" [ngModelOptions]="{standalone: true}">
+        </mat-form-field><br>
+
+        <mat-form-field>
+            <label>Number: </label>
+            <input matInput [(ngModel)]="newTrailer.number" [ngModelOptions]="{standalone: true}">
+        </mat-form-field><br>
+
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="onSubmit()">Save</button>
+</div>

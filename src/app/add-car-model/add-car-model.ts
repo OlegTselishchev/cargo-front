@@ -39,6 +39,7 @@ export class AddCarModel implements OnInit {
         }
       },  error => {
         alert('error');
+        this.dialogRef.close("error");
       });
   }
 

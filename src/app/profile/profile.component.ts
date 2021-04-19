@@ -1,33 +1,31 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../services/client.service";
 import {Client} from "../model/client.model";
 import {OrderService} from "../services/order.service";
 import {Order} from "../model/order.model";
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {Car} from "../model/car.model";
 import {CarService} from "../services/car.service";
 import {EditProfileComponent} from "../edit-profile/edit-profile.component";
 import {AddCarModel} from "../add-car-model/add-car-model";
 import {AuthService} from "../services/auth.service";
 import {MatDialog} from '@angular/material/dialog';
+import {AddTrailerComponent} from "../add-trailer/add-trailer.component";
+import {TrailerService} from "../services/trailer.service";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  providers: [NgbModalConfig, NgbModal]
 })
 export class ProfileComponent implements OnInit {
 
   constructor(public clientService: ClientService,
               public orderService: OrderService,
-              config: NgbModalConfig,
               public dialog: MatDialog,
-              private modalService: NgbModal,
               public carService: CarService,
+              public trailerService: TrailerService,
               private authService: AuthService) {
-    config.backdrop = 'static';
-    config.keyboard = false;
+
   }
   public currentId: number = parseInt (this.authService.getClientId());
   profile: Client = new Client();
@@ -40,15 +38,13 @@ export class ProfileComponent implements OnInit {
   }
 
   addTrailer (){
-    const addCarRef = this.dialog.open(AddCarModel,
+    const addTrailerRef = this.dialog.open(AddTrailerComponent,
       {data: {profile: this.profile}
       })
-    addCarRef.afterClosed().subscribe(result => {
-      if (result == "Yes" ) {
+    addTrailerRef.afterClosed().subscribe(result => {
+      if (result === "Yes" ) {
         this.showClient();
-      } else if  (result == "cancel") {
-        alert('фу лох, даже не поменял ничего')
-      } else {
+      } else if  (result === "error") {
         alert('You have some issues with back. Please, try again');
       }
     });
@@ -61,9 +57,7 @@ export class ProfileComponent implements OnInit {
     addCarRef.afterClosed().subscribe(result => {
       if (result == "Yes" ) {
         this.showClient();
-      } else if  (result == "cancel") {
-        alert('фу лох, даже не поменял ничего')
-      } else {
+      } else if (result === "error") {
         alert('You have some issues with back. Please, try again');
       }
     });
@@ -76,9 +70,7 @@ export class ProfileComponent implements OnInit {
     editRef.afterClosed().subscribe(result  => {
       if (result == "Yes" ) {
         this.showClient();
-      }else if (result == "cancel"){
-        alert('фу лох, даже не поменял ничего')
-      } else {
+      } else if (result === "error") {
         alert('You have some issues with back. Please, try again');
       }
     });
@@ -110,7 +102,13 @@ export class ProfileComponent implements OnInit {
       .subscribe( ()=> {
         this.showClient()
       },error => {alert('error')});
+  }
 
+  public  deleteTrailer(): void{
+    this.trailerService.delete(this.profile.car.trailer.id)
+        .subscribe( ()=> {
+          this.showClient()
+        },error => {alert('error')});
   }
 }
 

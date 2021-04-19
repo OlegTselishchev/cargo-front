@@ -8,18 +8,26 @@
     <span>Middle name: {{profile?.middleName}}</span><br>
     <span>Email: {{profile?.email}}</span><br>
     <span>Phone: {{profile?.phone}}</span><br>
-    <span>Car: {{profile.car?.name}}</span>
+    <span  *ngIf="profile?.car != null;" >Car: {{profile.car?.name}}</span><br>
+    <span  *ngIf="profile?.car?.trailer != null;" >Trailer: {{profile.car?.trailer.name}}</span>
   </div>
 
   <div *ngIf="profile?.car == null; else elseBlock" class = "addButton">
-    <button mat-button (click)="addCar()" >add</button>
+    <button mat-button (click)="addCar()" >add car</button>
       </div>
 
   <div class = "deleteButton">
     <ng-template #elseBlock>
-      <button mat-button (click)="addTrailer()" >add trailer</button>
-      <button mat-button (click)=deleteCar() class = "deleteButton">delete</button>
+      <button mat-button (click)=deleteCar() class = "deleteButton">delete car</button>
+<!--      <button mat-button (click)="addTrailer()" >add trailer</button>-->
     </ng-template>
+  </div>
+
+  <div *ngIf="profile?.car != null && profile?.car?.trailer == null;">
+    <button mat-button (click)="addTrailer()" >add trailer</button>  </div>
+
+  <div *ngIf="profile?.car?.trailer != null;">
+    <button mat-button (click)="deleteTrailer()" >delete trailer</button>
   </div>
 
   <div class="edit">

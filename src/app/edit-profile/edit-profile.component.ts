@@ -19,7 +19,6 @@ export class EditProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
 
-
   profile: Client;
   passwordConfirm: String;
 
@@ -31,7 +30,6 @@ export class EditProfileComponent implements OnInit {
     this.dialogRef.close("cancel");
   }
 
-
   onSubmit() {
     if (this.profile.password == this.passwordConfirm) {
       this.usersService.modify(this.profile)
@@ -41,6 +39,7 @@ export class EditProfileComponent implements OnInit {
           }
         }, error => {
           alert('error');
+          this.dialogRef.close("error");
         });
     } else {
       alert('passwords not equals');
