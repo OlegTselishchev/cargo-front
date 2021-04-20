@@ -11,6 +11,7 @@ import {AuthService} from "../services/auth.service";
 import {MatDialog} from '@angular/material/dialog';
 import {AddTrailerComponent} from "../add-trailer/add-trailer.component";
 import {TrailerService} from "../services/trailer.service";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(public clientService: ClientService,
               public orderService: OrderService,
+              public notificationService: NotificationService,
               public dialog: MatDialog,
               public carService: CarService,
               public trailerService: TrailerService,
@@ -45,7 +47,8 @@ export class ProfileComponent implements OnInit {
       if (result === "Yes" ) {
         this.showClient();
       } else if  (result === "error") {
-        alert('You have some issues with back. Please, try again');
+        this.notificationService.add('errorUpdate');
+        setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
       }
     });
   };
@@ -58,7 +61,8 @@ export class ProfileComponent implements OnInit {
       if (result == "Yes" ) {
         this.showClient();
       } else if (result === "error") {
-        alert('You have some issues with back. Please, try again');
+        this.notificationService.add('errorUpdate');
+        setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
       }
     });
   };
@@ -71,7 +75,8 @@ export class ProfileComponent implements OnInit {
       if (result == "Yes" ) {
         this.showClient();
       } else if (result === "error") {
-        alert('You have some issues with back. Please, try again');
+        this.notificationService.add('errorUpdate');
+        setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
       }
     });
   }

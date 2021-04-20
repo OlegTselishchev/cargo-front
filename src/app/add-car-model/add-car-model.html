@@ -5,17 +5,17 @@
 
     <mat-form-field>
       <label>Car name: </label>
-      <input matInput [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}">
+      <input  matInput [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}">
     </mat-form-field><br>
 
     <mat-form-field>
       <label>Volume: </label>
-      <input matInput [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
+      <input type="number" matInput [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
     </mat-form-field><br>
 
     <mat-form-field>
       <label>lifting Capacity: </label>
-      <input matInput [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
+      <input type="number" matInput [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
     </mat-form-field><br>
 
   </form>

@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ClientService} from "../services/client.service";
 import {DialogData} from "../profile/profile.component";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,6 +15,7 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    public notificationService: NotificationService,
     private usersService: ClientService,
     public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -38,11 +40,11 @@ export class EditProfileComponent implements OnInit {
             this.dialogRef.close("Yes");
           }
         }, error => {
-          alert('error');
           this.dialogRef.close("error");
         });
     } else {
-      alert('passwords not equals');
+      this.notificationService.add('equalsPassword');
+      setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
     }
   }
 }

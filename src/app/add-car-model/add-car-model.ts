@@ -6,6 +6,9 @@ import {CarService} from "../services/car.service";
 import {Client} from "../model/client.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../profile/profile.component";
+import {formatNumber} from "@angular/common";
+import {isNumber} from "util";
+import {NotificationService} from "../services/notification.service";
 
 
 @Component({
@@ -17,6 +20,7 @@ export class AddCarModel implements OnInit {
 
   constructor(
               private route: ActivatedRoute,
+              public notificationService: NotificationService,
               private carService: CarService,
               public dialogRef: MatDialogRef<AddCarModel>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
@@ -32,16 +36,16 @@ export class AddCarModel implements OnInit {
 
 
   onSubmit() {
-    this.carService.create(this.newCar)
-      .subscribe((response) => {
-        if (response.status === 200) {
-        this.dialogRef.close("Yes");
-        }
-      },  error => {
-        alert('error');
-        this.dialogRef.close("error");
-      });
+      this.carService.create(this.newCar)
+          .subscribe((response) => {
+            if (response.status === 200) {
+              this.dialogRef.close("Yes");
+            }
+          }, error => {
+            this.dialogRef.close("error");
+          });
   }
+
 
   onNoClick(): void {
     this.dialogRef.close("cancel");

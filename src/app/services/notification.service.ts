@@ -132,6 +132,13 @@ export class NotificationService {
       this.notifications.push(notification);
     }
 
+    if (action === 'errorUpdate') {
+      const notification: Notification = new Notification();
+      notification.message = 'You have some issues with back. Please, try again';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
   }
 
   public remove(action: string): void {

@@ -31,7 +31,6 @@ export class AddTrailerComponent implements OnInit {
             this.dialogRef.close("Yes");
           }
         },  error => {
-          alert('error');
             this.dialogRef.close("error");
         });
   }
