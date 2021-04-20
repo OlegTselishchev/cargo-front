@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Auth} from "../model/auth.model";
+import {NotificationService} from "./notification.service";
 
 export const ACCESS_TOKEN_KEY = 'token_key';
 export const ACCESS_USER_EMAIL = 'user_email';
@@ -14,30 +15,47 @@ export class AuthService {
 
   constructor(public http: HttpClient,
               public router: Router,
-              private jwtHelper: JwtHelperService
-            ) {
-  }
-
+              private jwtHelper: JwtHelperService,
+              public notificationService: NotificationService){}
 
   private urlLog: string = 'http://localhost:9000/login';
   private urlReg: string = 'http://localhost:9000/reg';
 
 
   public login(auth: Auth): void {
-    this.http.post(this.urlLog, auth).subscribe((resp: any) => {
-      localStorage.setItem(ACCESS_TOKEN_KEY, resp.token);
-      localStorage.setItem(ACCESS_USER_EMAIL, resp.email);
-      localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
-      localStorage.setItem(ACCESS_USER_ID, resp.id);
-      this.router.navigate(['/profile']);
-    });
+     this.http.post(this.urlLog, auth).subscribe((resp:any)=>{
+         localStorage.setItem(ACCESS_TOKEN_KEY, resp.token);
+         localStorage.setItem(ACCESS_USER_EMAIL, resp.email);
+         localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
+         localStorage.setItem(ACCESS_USER_ID, resp.id);
+       },
+       error => {
+         this.notificationService.add('loginError');
+         setTimeout(()=>{this.notificationService.remove('loginError')}, 2000);
+       },
+       ()=>{
+         this.notificationService.add('loginOk');
+         setTimeout(()=>{this.notificationService.remove('loginOk')}, 2000);
+       });
   }
 
   public reg(regUser: Auth): void {
-    this.http.post(this.urlReg, regUser).subscribe(()=>{},
-      error => alert('error, you are not registration'),
-      ()=> {alert('success registration')});
+    this.http.post(this.urlReg, regUser).subscribe(() => {
+      },
+      error => {
+        this.notificationService.add('regError');
+        setTimeout(() => {
+          this.notificationService.remove('regError')
+        }, 2000);
+      },
+      () => {
+        this.notificationService.add('regOk');
+        setTimeout(() => {
+          this.notificationService.remove('regOk')
+        }, 2000);
+      });
   }
+
 
   public isAuthenticated(): boolean{
     let token = localStorage.getItem(ACCESS_TOKEN_KEY);

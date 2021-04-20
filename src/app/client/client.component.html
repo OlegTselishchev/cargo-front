@@ -32,7 +32,7 @@
       <td style="width: 50px">DelUser</td>
     </tr>
 
-    <div class="cont4">
+    <div class="cont4" *ngIf="clientList.length; else noClient">
     <tr *ngFor="let cl of clientList | clientFilterByLastN: searchByLastName">
 
         <td style="width: 120px">{{cl.lastName}}</td>

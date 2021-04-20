@@ -28,16 +28,17 @@ import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { AddCarModel } from './add-car-model/add-car-model';
 import { HeaderComponent } from './header/header.component';
-import { SingSingupFormaComponent } from './sing-singup-forma/sing-singup-forma.component';
 import { OrderAddComponent } from './order-add/order-add.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
-import {ACCESS_TOKEN_KEY} from "./services/auth.service";
 import { BoxFilterByClientEmailPipe } from './filter/box-filter-by-client-email.pipe';
 import { OrderFilterByBoxClientEmailPipe } from './filter/order-filter-by-box-client-email.pipe';
 import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
+import { NotificationComponent } from './notification/notification.component';
+import {ACCESS_USER_ID} from "./services/auth.service";
+import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 import { AddTrailerComponent } from './add-trailer/add-trailer.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -48,62 +49,60 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 export function tokenGetter(){
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return localStorage.getItem(ACCESS_USER_ID);
 }
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        OrderListComponent,
-        OrderDetailComponent,
-        HomeComponent,
-        DriverComponent,
-        ManagerComponent,
-        ClientFilterLastNPipe,
-        AddressFilterByStreetPipe,
-        BoxFilterByNamePipe,
-        OrderFilterByNamePipe,
-        OrderFilterByPricePipe,
-        OrderFilterByWeightPipe,
-        OrderFilterByLocCityPipe,
-        OrderFilterByDestCityPipe,
-        AddressFilterByCityPipe,
-        ClientComponent,
-        AddressComponent,
-        BoxComponent,
-        HeaderComponent,
-        SingSingupFormaComponent,
-        OrderAddComponent,
-        BoxFilterByClientEmailPipe,
-        OrderFilterByBoxClientEmailPipe,
-        ClientFilterByEmailPipe,
-        OrderFilterByDriverEmailPipe,
-        BoxComponent,
-        ProfileComponent,
-        EditProfileComponent,
-        AddCarModel,
-        OrderFilterByDriverEmailPipe,
-        OrderPricePipe,
-        OrderFilterByTypePipe,
-        OrderFilterByDriverEmailPipe,
-        AddTrailerComponent
+  declarations: [
+    AppComponent,
+    OrderListComponent,
+    OrderDetailComponent,
+    HomeComponent,
+    DriverComponent,
+    ManagerComponent,
+    ClientFilterLastNPipe,
+    AddressFilterByStreetPipe,
+    BoxFilterByNamePipe,
+    OrderFilterByNamePipe,
+    OrderFilterByPricePipe,
+    OrderFilterByWeightPipe,
+    OrderFilterByLocCityPipe,
+    OrderFilterByDestCityPipe,
+    AddressFilterByCityPipe,
+    ClientComponent,
+    AddressComponent,
+    BoxComponent,
+    HeaderComponent,
+    SingSingupFormaComponent,
+    OrderAddComponent,
+    BoxFilterByClientEmailPipe,
+    OrderFilterByBoxClientEmailPipe,
+    ClientFilterByEmailPipe,
+    OrderFilterByDriverEmailPipe,
+    OrderPricePipe,
+    OrderFilterByTypePipe,
+    NotificationComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    AddCarModel,
+    AddTrailerComponent
+  ],
 
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA],
 
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        RouterModule,
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogModule,
-        BrowserAnimationsModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
 
         JwtModule.forRoot({
                 config: {
