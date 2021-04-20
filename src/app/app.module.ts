@@ -25,20 +25,21 @@ import { AddressComponent } from './address/address.component';
 import { BoxComponent } from './box/box.component';
 import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
 import { HeaderComponent } from './header/header.component';
-import { SingSingupFormaComponent } from './sing-singup-forma/sing-singup-forma.component';
 import { OrderAddComponent } from './order-add/order-add.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
-import {ACCESS_TOKEN_KEY} from "./services/auth.service";
 import { BoxFilterByClientEmailPipe } from './filter/box-filter-by-client-email.pipe';
 import { OrderFilterByBoxClientEmailPipe } from './filter/order-filter-by-box-client-email.pipe';
 import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
+import { NotificationComponent } from './notification/notification.component';
+import {ACCESS_USER_ID} from "./services/auth.service";
+import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 
 
 export function tokenGetter(){
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return localStorage.getItem(ACCESS_USER_ID);
 }
 
 @NgModule({
@@ -69,7 +70,8 @@ export function tokenGetter(){
     ClientFilterByEmailPipe,
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
-    OrderFilterByTypePipe
+    OrderFilterByTypePipe,
+    NotificationComponent
 
   ],
   imports: [

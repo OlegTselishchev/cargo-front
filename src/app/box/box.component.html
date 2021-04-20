@@ -1,6 +1,6 @@
 <div class="cont1">
    <button (click)="goBack()">goBack</button>
-   <button  (click)="createBox()">Create Box</button>
+   <button  (click)="createBox()">Create_Box</button>
 </div>
 
 
@@ -38,7 +38,7 @@
       <td style="width: 100px">{{cl.width}}</td>
       <td style="width: 100px">{{cl.height}}</td>
       <td style="width: 200px">{{cl.typeCargo.name}}</td>
-
+      <td style="width: 70px"><button (click)="delete(cl.boxId)">x</button></td>
     </tr>
   </div>
 </div>

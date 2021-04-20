@@ -6,6 +6,8 @@ import {Status} from "../model/status.model";
 import {ClientService} from "../services/client.service";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
+import {NotificationService} from "../services/notification.service";
+import {Notification} from "../model/notification.model";
 
 @Component({
   selector: 'app-driver',
@@ -17,7 +19,8 @@ export class DriverComponent implements OnInit {
   constructor(public orderService: OrderService,
               public clientService: ClientService,
               private authService: AuthService,
-              public statusService: StatusService) { }
+              public statusService: StatusService,
+              public notificationService: NotificationService) { }
 
   public statusList: Status[] = [];
   public clientList: Client[] = [];
@@ -42,15 +45,33 @@ export class DriverComponent implements OnInit {
   }
 
   showAllOrder(): void {
-    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data});
+    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
+      });
   }
 
   showClientAll(): void{
-    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data});
+    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{console.log('getClient-ok')});
   }
 
   showStatusAll(): void{
-    this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data});
+    this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{console.log('getStatus-ok')});
   }
 
   public modifyByIdStatusInWork(id: number): void {
@@ -71,10 +92,22 @@ export class DriverComponent implements OnInit {
       if(id != null){
         if(order.driver.userId != null && order.status != null){
           this.orderService.modify(order).subscribe(()=>{},
-            error => {alert('error order modify')},
-            ()=>{this.showAllOrder()});
-        }else {alert('not driver or status')}
-      }else {alert('not id order for modify')}
+            error => {
+              this.notificationService.add('modifyError', id);
+              setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+            },
+            ()=>{this.showAllOrder();
+              this.notificationService.add('modifyOk', id);
+              setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
+          });
+        }else {
+          this.notificationService.add('dataError');
+          setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+        }
+      }else {
+        this.notificationService.add('dataError');
+        setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+      }
   }
 
 
@@ -101,15 +134,26 @@ export class DriverComponent implements OnInit {
       if (id != null) {
         if (order.driver.userId != null && order.status != null) {
           this.orderService.modify(order).subscribe(()=>{},
-            error => {alert('error order modify')},
-            ()=>{this.showAllOrder()});
+            error => {
+              this.notificationService.add('modifyError', id);
+              setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+            },
+            ()=>{this.showAllOrder();
+              this.notificationService.add('modifyOk', id);
+              setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
+            });
         } else {
-          alert('not driver or status')
+          this.notificationService.add('dataError');
+          setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
         }
       } else {
-        alert('not id order for modify')
+        this.notificationService.add('dataError');
+        setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
       }
-    }else alert('Неверный ключ')
+    }else {
+      this.notificationService.add('keyError');
+      setTimeout(()=>{this.notificationService.remove('keyError')}, 2000);
+    }
   }
 
 
@@ -130,9 +174,18 @@ export class DriverComponent implements OnInit {
     };
     if(id != null && order.status != null){
         this.orderService.modify(order).subscribe(()=>{},
-          error => {alert('error order modify')},
-          ()=>{this.showAllOrder()});
-    }else {alert('not id order for modify or status')}
+          error => {
+            this.notificationService.add('modifyError', id);
+            setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+          },
+          ()=>{this.showAllOrder();
+            this.notificationService.add('modifyOk', id);
+            setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
+          });
+    }else {
+      this.notificationService.add('dataError');
+      setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+    }
   }
 
   add(id: number, ln: string, fn: string, mn: string): void {

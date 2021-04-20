@@ -1,0 +1,15 @@
+.notificationOk {
+  background: aquamarine;
+  border: 1px aquamarine solid;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.notificationEr {
+  background: lightcoral;
+  border: 1px lightcoral solid;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 10px;
+}

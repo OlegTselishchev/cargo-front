@@ -7,6 +7,7 @@ import {TypeCargoService} from "../services/typeCargo.service";
 import {ClientService} from "../services/client.service";
 import {TypeCargo} from "../model/typeCargo.model";
 import {Client} from "../model/client.model";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-box',
@@ -19,7 +20,8 @@ export class BoxComponent implements OnInit {
               public boxService: BoxService,
               public authService: AuthService,
               public typeService: TypeCargoService,
-              public clientService: ClientService) { }
+              public clientService: ClientService,
+              public notificationService: NotificationService) { }
 
   public typeCargoList: TypeCargo[] = [];
   public boxList: Box[] = [];
@@ -40,20 +42,32 @@ export class BoxComponent implements OnInit {
 
   showBoxAll():void{
     this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data,
-      error => {alert('getBox - error')},
-      ()=> {console.log('getBox - OK')});
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=> {
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
+      });
   }
 
   showTypeAll():void{
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
-      error => alert('getType - error'),
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
       ()=>{console.log('getType - OK')});
   }
 
   showClientByEmail():void{
     this.clientService.getClientByEmail(this.authService.getAuthEmail())
       .subscribe((data:Client)=>{this.client = data},
-        error => {alert('getClientByEmail - error')},
+        error => {
+          this.notificationService.add('getError');
+          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+        },
         ()=>{console.log('getClientByEmail - OK')});
   }
 
@@ -82,9 +96,32 @@ export class BoxComponent implements OnInit {
      boxNew.client = this.client;
 
      this.boxService.create(boxNew).subscribe(()=>{},
-       error => {alert('error box create')},
-       ()=>{this.showBoxAll()});
+       error => {
+         this.notificationService.add('createError');
+         setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
+       },
+       ()=>{this.showBoxAll();
+         this.notificationService.add('createOk');
+         setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
+     });
 
-   }else alert('not data');
+   }else {
+     this.notificationService.add('dataError');
+     setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+   }
+  }
+
+  delete(id: number):void{
+    this.boxService.deleteById(id).subscribe(() => {
+      },
+      error => {
+        this.notificationService.add('deleteError', id);
+        setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
+      },
+      () => {
+        this.showBoxAll();
+        this.notificationService.add('deleteOk', id);
+        setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
+      });
   }
 }
