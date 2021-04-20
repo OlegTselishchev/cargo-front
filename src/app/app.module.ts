@@ -35,6 +35,14 @@ import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { IconMenuComponent } from './icon-menu/icon-menu.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
 
 
 export function tokenGetter(){
@@ -69,7 +77,8 @@ export function tokenGetter(){
     ClientFilterByEmailPipe,
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
-    OrderFilterByTypePipe
+    OrderFilterByTypePipe,
+    IconMenuComponent
 
   ],
   imports: [
@@ -78,14 +87,22 @@ export function tokenGetter(){
     RouterModule,
     HttpClientModule,
     FormsModule,
+    MatInputModule,
 
     JwtModule.forRoot({
         config: {
           tokenGetter,
-          disallowedRoutes:["localhost:9000"]
+          disallowedRoutes: ["localhost:9000"]
         }
       }
-    )
+    ),
+
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [
     {

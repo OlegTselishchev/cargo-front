@@ -1,12 +1,6 @@
-
-
-
 <div class="cont1">
-  <input type="text"  placeholder="FilterClientByLastName"  [(ngModel)]="searchByLastName" />
-  <button (click)="addClient()">Add User</button>
-  <button (click)="goBack()">goBack</button>
+  <a class="button-2" (click)="goBack()">goBack</a>
 </div>
-
 
 <div class="cont2">
   <input type="text" placeholder="add_lastName" [(ngModel)]="clientNew.lastName"/>
@@ -15,42 +9,58 @@
   <input type="text" placeholder="add_phone" [(ngModel)]="clientNew.phone"/>
   <input type="text" placeholder="add_email" [(ngModel)]="clientNew.email"/>
   <input type="text" placeholder="add_driveCategory" [(ngModel)]="clientNew.driveCategory"/>
+  <a class="button-1" (click)="addClient()">Add User</a>
 </div>
 
+<div  class="mat-elevation-z8 test" >
+  <mat-form-field class="search">
+    <mat-label>SEARCH</mat-label>
+    <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" >
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> lastName </th>
+      <td mat-cell *matCellDef="let element"> {{element?.lastName}} </td>
+    </ng-container>
 
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> firstName </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
 
-  <div class="cont3" *ngIf="clientList.length; else noClient">
+    <ng-container matColumnDef="middleName">
+      <th mat-header-cell *matHeaderCellDef> middleName </th>
+      <td mat-cell *matCellDef="let element"> {{element.middleName}} </td>
+    </ng-container>
 
-    <tr>
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
 
-      <td style="width: 120px">LastName</td>
-      <td style="width: 120px">FirstName</td>
-      <td style="width: 120px">MiddleName</td>
-      <td style="width: 100px">Phone</td>
-      <td style="width: 150px">Email</td>
-      <td style="width: 80px">Category</td>
-      <td style="width: 50px">DelUser</td>
-    </tr>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
 
-    <div class="cont4">
-    <tr *ngFor="let cl of clientList | clientFilterByLastN: searchByLastName">
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+    </ng-container>
 
-        <td style="width: 120px">{{cl.lastName}}</td>
-        <td style="width: 120px">{{cl.firstName}}</td>
-        <td style="width: 120px">{{cl.middleName}}</td>
-        <td style="width: 100px">{{cl.phone}}</td>
-        <td style="width: 150px">{{cl.email}}</td>
-        <td style="width: 80px">{{cl.driveCategory}}</td>
-        <td style="width: 50px"><button (click)="delete(cl.userId)">x</button></td>
-    </tr>
-    </div>
+    <ng-container matColumnDef="delUser">
+      <th mat-header-cell *matHeaderCellDef> delUser </th>
+      <td mat-cell *matCellDef="let element"> {{element.delUser}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator   showFirstLastButtons
+                   [length]="10"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[1, 5, 10]">
+  </mat-paginator >
   </div>
-
-
-  <ng-template #noClient>
-    <p>No clients now!</p>
-  </ng-template>
-
-
-
-

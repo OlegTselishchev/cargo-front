@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {ClientService} from "../services/client.service";
 import {BoxService} from "../services/box.service";
@@ -11,6 +11,8 @@ import {OrderService} from "../services/order.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-order-add',
@@ -18,6 +20,17 @@ import {StatusService} from "../services/status.service";
   styleUrls: ['./order-add.component.css']
 })
 export class OrderAddComponent implements OnInit {
+
+//   displayedColumns: string[] = ['id', 'name', 'price'];
+// // , 'destination','location','box','receiver','status','driver'
+//   // dataSource = new MatTableDataSource();
+//
+//   dataSource: any;
+//
+//   public pageSize = 1;
+//
+//   @ViewChild
+//   (MatPaginator) paginator: MatPaginator;
 
   constructor(  public addressService: AddressService,
                 public clientService: ClientService,
@@ -38,6 +51,20 @@ export class OrderAddComponent implements OnInit {
     this.showClient();
     this.showAddress();
     this.showStatus();
+
+    // this.orderService.getOrderList().subscribe((result: Order[])=>{
+    //   let array = [];
+    //   result.forEach(function(item) {
+    //     console.log(item.name + "111");
+    //     array.push({"id":item.id, "name":item.name, "price":item.price});
+    //     //
+    //     // ,"destination":item.destination,
+    //     //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
+    //   })
+    //   this.dataSource  = new MatTableDataSource<any>(array);
+    //   this.dataSource.paginator = this.paginator;
+    // })
+
   }
 
   dest: Address = new Address();

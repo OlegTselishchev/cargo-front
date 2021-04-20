@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { OrderService} from "../services/order.service";
 import {AuthService} from "../services/auth.service";
 import {Status} from "../model/status.model";
 import {Order} from "../model/order.model";
 import {StatusService} from "../services/status.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 @Component({
@@ -12,6 +14,16 @@ import {StatusService} from "../services/status.service";
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'price'];
+// , 'destination','location','box','receiver','status','driver'
+ // dataSource = new MatTableDataSource();
+
+  dataSource: any;
+
+  public pageSize = 1;
+
+  @ViewChild
+  (MatPaginator) paginator: MatPaginator;
 
   constructor(public orderService: OrderService,
               private authService: AuthService,
@@ -28,8 +40,21 @@ export class ManagerComponent implements OnInit {
   searchOrderByBoxClientEmail: string = this.authService.getAuthEmail();
 
   ngOnInit(): void {
-    this.showAllOrder();
+    // this.showAllOrder();
     this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data});
+
+    this.orderService.getOrderList().subscribe((result: Order[])=>{
+      let array = [];
+      result.forEach(function(item) {
+        console.log(item.name + "111");
+        array.push({"id":item.id, "name":item.name, "price":item.price});
+      // ,"destination":item.destination,
+      //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
+      })
+      this.dataSource  = new MatTableDataSource<any>(array);
+      this.dataSource.paginator = this.paginator;
+    })
+
   }
 
   showAllOrder(): void {
