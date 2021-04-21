@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,9 @@ import { ClientComponent } from './client/client.component';
 import { AddressComponent } from './address/address.component';
 import { BoxComponent } from './box/box.component';
 import {AddressFilterByCityPipe} from "./filter/addressFilterByCity.pipe";
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { AddCarModel } from './add-car-model/add-car-model';
 import { HeaderComponent } from './header/header.component';
 import { OrderAddComponent } from './order-add/order-add.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
@@ -36,6 +39,13 @@ import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
 import { NotificationComponent } from './notification/notification.component';
 import {ACCESS_USER_ID} from "./services/auth.service";
 import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
+import { AddTrailerComponent } from './add-trailer/add-trailer.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 export function tokenGetter(){
@@ -71,29 +81,42 @@ export function tokenGetter(){
     OrderFilterByDriverEmailPipe,
     OrderPricePipe,
     OrderFilterByTypePipe,
-    NotificationComponent
-
+    NotificationComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    AddCarModel,
+    AddTrailerComponent
   ],
+
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
 
-    JwtModule.forRoot({
-        config: {
-          tokenGetter,
-          disallowedRoutes:["localhost:9000"]
+        JwtModule.forRoot({
+                config: {
+                    tokenGetter,
+                    disallowedRoutes:["localhost:9000"]
+                }
+            }
+        )
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
         }
-      }
-    )
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

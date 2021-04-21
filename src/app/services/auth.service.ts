@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Auth} from "../model/auth.model";
 import {NotificationService} from "./notification.service";
+import {ProfileComponent} from "../profile/profile.component";
 
 export const ACCESS_TOKEN_KEY = 'token_key';
 export const ACCESS_USER_EMAIL = 'user_email';
@@ -28,6 +29,7 @@ export class AuthService {
          localStorage.setItem(ACCESS_USER_EMAIL, resp.email);
          localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
          localStorage.setItem(ACCESS_USER_ID, resp.id);
+           this.router.navigate(['/profile']);
        },
        error => {
          this.notificationService.add('loginError');
@@ -37,6 +39,7 @@ export class AuthService {
          this.notificationService.add('loginOk');
          setTimeout(()=>{this.notificationService.remove('loginOk')}, 2000);
        });
+
   }
 
   public reg(regUser: Auth): void {

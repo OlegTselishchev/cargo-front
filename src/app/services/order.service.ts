@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import { Order } from "../model/order.model";
 import { HttpClient } from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class OrderService {
@@ -24,5 +25,9 @@ export class OrderService {
 
   public modify(order: Order) {
     return this.http.patch(this.urlOrder, order);
+  }
+
+  public showOrderById(id: number): Observable<any> {
+    return this.http.get(this.urlOrder+ "ByReceiver/" + id);
   }
 }
