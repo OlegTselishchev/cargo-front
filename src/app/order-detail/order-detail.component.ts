@@ -19,6 +19,10 @@ export class OrderDetailComponent implements OnInit {
   public orderDet: Order[] = [];
 
   ngOnInit(): void {
+    this.getOrderList();
+  }
+
+  getOrderList(): void{
     this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
       error => {alert('error get order')},
       ()=>{this.getOrderDetails()});

@@ -1,0 +1,5 @@
+<div *ngIf="model.status; else isError" class="notificationOk">  {{model?.message}} </div>
+
+<ng-template #isError>
+  <div class="notificationEr">  {{model?.message}} </div>
+</ng-template>

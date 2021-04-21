@@ -2,12 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ClientService} from "../services/client.service";
 import {Client} from "../model/client.model";
 import {Location} from "@angular/common";
-import {BoxService} from "../services/box.service";
-import {OrderService} from "../services/order.service";
-import {Order} from "../model/order.model";
-import {Box} from "../model/box.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-client',
@@ -25,9 +22,10 @@ export class ClientComponent implements OnInit {
   (MatPaginator) paginator: MatPaginator;
 
   constructor( public clientService: ClientService,
-               public location: Location) { }
+               public location: Location,
+               public notificationService: NotificationService) { }
 
-  public clientList: Client[] =[];
+  public clientList: Client[] = [];
 
   ngOnInit(): void {
     this.showClient();
@@ -51,14 +49,28 @@ export class ClientComponent implements OnInit {
   showClient(): void {
     this.clientService.getClientAll().subscribe((data: Client[])=>{
       this.clientList = data;
-    });
+    },
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
+      });
   }
 
 
   delete(id: number) {
     this.clientService.delete(id).subscribe(()=>{},
-      error => {alert('error delete client')},
-      ()=>{this.showClient()}
+      error => {
+        this.notificationService.add('deleteError', id);
+        setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
+      },
+      ()=>{this.showClient();
+        this.notificationService.add('deleteOk', id);
+        setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
+        }
       );
   }
 
@@ -88,8 +100,13 @@ export class ClientComponent implements OnInit {
       client.email != null && client.email !== '' ) {
 
       this.clientService.create(client).subscribe(()=>{},
-        error => {alert('error create client')},
-        ()=>{this.showClient();}
+        error => {
+          this.notificationService.add('createError');
+          setTimeout(()=>{this.notificationService.remove('createError')}, 2000);},
+        ()=>{this.showClient();
+          this.notificationService.add('createOk');
+          setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
+          }
         );
 
       this.clientNew.lastName = '';
@@ -98,7 +115,10 @@ export class ClientComponent implements OnInit {
       this.clientNew.phone = '';
       this.clientNew.email = '';
       this.clientNew.driveCategory = '';
-    } else { alert('введите данные клиента'); }
+    } else {
+      this.notificationService.add('dataError');
+      setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+    }
   }
 
   goBack(): void {

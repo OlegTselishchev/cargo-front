@@ -6,6 +6,7 @@ import {AddressService} from "../services/address.service";
 import {Address} from "../model/address.model";
 import {TypeCargo} from "../model/typeCargo.model";
 import {TypeCargoService} from "../services/typeCargo.service";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-home',
@@ -29,13 +30,21 @@ export class HomeComponent implements OnInit {
   type: string;
 
   ngOnInit(): void {
-    this.getOrders()
-    this.addressService.getAddressAll().subscribe((data: Address[])=>{this.addressList = data;});
-    this.typeService.getType().subscribe((data: TypeCargo[])=>{this.typeCargoList = data});
+    this.getOrders();
+    this.getAddress();
+    this.getType();
   }
 
   public get isLoggedIn(): boolean{
     return this.authService.isAuthenticated()
+  }
+
+  public getAddress(): void{
+    this.addressService.getAddressAll().subscribe((data: Address[])=>{this.addressList = data;});
+  }
+
+  public getType(): void{
+    this.typeService.getType().subscribe((data: TypeCargo[])=>{this.typeCargoList = data});
   }
 
   public getOrders(): void{

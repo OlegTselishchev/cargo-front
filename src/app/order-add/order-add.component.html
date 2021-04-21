@@ -57,10 +57,9 @@
     <tr *ngFor="let b of boxList | boxFilterByName: searchBox | boxFilterByClientEmail:searchBoxClientEmail">
       <a (click)="addBox(b.boxId, b.name)">
         <td style="width: 100px">{{b.name}}</td>
-        <td style="width: 50px">{{b.weight}}</td>
-        <td style="width: 50px">{{b.volume}}</td>
-        <td style="width: 100px">{{b.typeCargo.name}}</td>
-        <td style="width: 100px">{{b.client.lastName}}</td>
+        <td style="width: 80px">{{b.weight}}</td>
+        <td style="width: 100px">{{b.volume}}</td>
+        <td style="width: 200px">{{b.typeCargo.name}}</td>
       </a>
     </tr>
   </div>

@@ -11,8 +11,7 @@ import {OrderService} from "../services/order.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-order-add',
@@ -21,25 +20,14 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class OrderAddComponent implements OnInit {
 
-//   displayedColumns: string[] = ['id', 'name', 'price'];
-// // , 'destination','location','box','receiver','status','driver'
-//   // dataSource = new MatTableDataSource();
-//
-//   dataSource: any;
-//
-//   public pageSize = 1;
-//
-//   @ViewChild
-//   (MatPaginator) paginator: MatPaginator;
-
   constructor(  public addressService: AddressService,
                 public clientService: ClientService,
                 public boxService: BoxService,
                 public orderService: OrderService,
                 public location: Location,
                 public authService: AuthService,
-                public statusService: StatusService
-  ) { }
+                public statusService: StatusService,
+                public notificationService: NotificationService) { }
 
   public addressList: Address[] = [];
   public clientList: Client[] = [];
@@ -51,20 +39,6 @@ export class OrderAddComponent implements OnInit {
     this.showClient();
     this.showAddress();
     this.showStatus();
-
-    // this.orderService.getOrderList().subscribe((result: Order[])=>{
-    //   let array = [];
-    //   result.forEach(function(item) {
-    //     console.log(item.name + "111");
-    //     array.push({"id":item.id, "name":item.name, "price":item.price});
-    //     //
-    //     // ,"destination":item.destination,
-    //     //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
-    //   })
-    //   this.dataSource  = new MatTableDataSource<any>(array);
-    //   this.dataSource.paginator = this.paginator;
-    // })
-
   }
 
   dest: Address = new Address();
@@ -106,8 +80,14 @@ export class OrderAddComponent implements OnInit {
       order.price != null && order.status.id != null
     ) {
       this.orderService.create(order).subscribe(()=>{},
-        error => {alert('error order create')},
-        ()=>{console.log('order created')});
+        error => {
+          this.notificationService.add('createError');
+          setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
+        },
+        ()=>{
+          this.notificationService.add('createOk');
+          setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
+        });
     } else {
       alert('введи все данные');
     }

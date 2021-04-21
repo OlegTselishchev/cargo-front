@@ -6,17 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import { MatTableFilter } from 'mat-table-filter';
 import {MatTableDataSource} from "@angular/material/table";
 
-export class Captain {
-  name: string;
-  surname: string;
-}
-
-export class SpaceCraft {
-  name: string;
-  isConstitutionClass: boolean;
-  captain: Captain;
-}
-
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-address',
@@ -39,7 +29,9 @@ export class AddressComponent implements OnInit {
 
   public addressList: Address[];
 
-  constructor(public addressService: AddressService, public location: Location) { }
+  constructor(public addressService: AddressService,
+              public location: Location,
+              public notificationService: NotificationService) { }
 
   ngOnInit(): void {
    this.getAddressAll();
@@ -50,8 +42,6 @@ export class AddressComponent implements OnInit {
         console.log(item.country + "111");
         array.push({"country":item.country, "city":item.city, "street":item.street,"home":item.home,
           "apartment":item.apartment});
-        // ,"destination":item.destination,
-        //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
       })
       this.dataSource  = new MatTableDataSource<any>(array);
       this.dataSource.paginator = this.paginator;
@@ -67,13 +57,28 @@ export class AddressComponent implements OnInit {
   }
 
   getAddressAll():void{
-    this.addressService.getAddressAll().subscribe((data:Address[]) => this.addressList = data);
+    this.addressService.getAddressAll().subscribe((data:Address[]) => {this.addressList = data;},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);});
   }
 
   delete(id: number) : void {
-    this.addressService.delete(id).subscribe(()=>{},
-      error => {alert('error address delete')},
-      ()=>{this.getAddressAll()});
+      this.addressService.delete(id).subscribe(() => {
+        },
+        error => {
+          this.notificationService.add('deleteError', id);
+          setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
+        },
+        () => {
+          this.getAddressAll();
+          this.notificationService.add('deleteOk', id);
+          setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
+        });
   }
 
   addAddress(): void {
@@ -93,8 +98,15 @@ export class AddressComponent implements OnInit {
       address.apartment != null && address.apartment !== '') {
 
       this.addressService.create(address).subscribe(()=>{},
-        error => {alert('error address clear')},
-        ()=>{this.getAddressAll()}
+        error => {
+          this.notificationService.add('createError');
+          setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
+          },
+        ()=>{
+          this.getAddressAll();
+          this.notificationService.add('createOk');
+          setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
+          }
         );
 
       this.address.country = '';
@@ -102,7 +114,10 @@ export class AddressComponent implements OnInit {
       this.address.street = '';
       this.address.home = '';
       this.address.apartment = '';
-    } else { alert('введите адрес'); }
+    } else {
+      this.notificationService.add('dataError');
+      setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+    }
   }
 
   goBack(): void {
