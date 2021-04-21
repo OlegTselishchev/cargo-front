@@ -5,6 +5,7 @@ import {DialogData} from "../profile/profile.component";
 import {TrailerService} from "../services/trailer.service";
 
 import {Trailer} from "../model/trailer.model";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-add-trailer',
@@ -15,6 +16,7 @@ export class AddTrailerComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private trailerService: TrailerService,
+               public notificationService: NotificationService,
                public dialogRef: MatDialogRef<AddTrailerComponent>,
                @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
@@ -29,6 +31,8 @@ export class AddTrailerComponent implements OnInit {
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close("Yes");
+              this.notificationService.add('successfulUpdate');
+              setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
           }
         },  error => {
             this.dialogRef.close("error");

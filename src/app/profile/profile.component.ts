@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
         this.showClient();
       } else if (result === "error") {
         this.notificationService.add('errorUpdate');
-        setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
+        setTimeout(()=>{this.notificationService.remove('errorUpdate')}, 2000);
       }
     });
   }
@@ -105,6 +105,8 @@ export class ProfileComponent implements OnInit {
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id)
       .subscribe( ()=> {
+        this.notificationService.add('successfulUpdate');
+        setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
         this.showClient()
       },error => {alert('error')});
   }
@@ -112,6 +114,8 @@ export class ProfileComponent implements OnInit {
   public  deleteTrailer(): void{
     this.trailerService.delete(this.profile.car.trailer.id)
         .subscribe( ()=> {
+          this.notificationService.add('successfulUpdate');
+          setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
           this.showClient()
         },error => {alert('error')});
   }

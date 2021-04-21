@@ -139,6 +139,14 @@ export class NotificationService {
       notification.status = false;
       this.notifications.push(notification);
     }
+
+    if (action === 'successfulUpdate') {
+      const notification: Notification = new Notification();
+      notification.message = 'Update was successful';
+      notification.action = action;
+      notification.status = true;
+      this.notifications.push(notification);
+    }
   }
 
   public remove(action: string): void {

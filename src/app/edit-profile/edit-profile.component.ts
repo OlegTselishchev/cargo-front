@@ -37,6 +37,8 @@ export class EditProfileComponent implements OnInit {
       this.usersService.modify(this.profile)
         .subscribe((response) => {
           if (response.status === 200) {
+            this.notificationService.add('successfulUpdate');
+            setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
             this.dialogRef.close("Yes");
           }
         }, error => {

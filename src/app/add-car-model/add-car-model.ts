@@ -1,13 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Car} from "../model/car.model";
-// import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute} from "@angular/router";
 import {CarService} from "../services/car.service";
 import {Client} from "../model/client.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../profile/profile.component";
-import {formatNumber} from "@angular/common";
-import {isNumber} from "util";
 import {NotificationService} from "../services/notification.service";
 
 
@@ -40,6 +37,8 @@ export class AddCarModel implements OnInit {
           .subscribe((response) => {
             if (response.status === 200) {
               this.dialogRef.close("Yes");
+                this.notificationService.add('successfulUpdate');
+                setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
             }
           }, error => {
             this.dialogRef.close("error");
