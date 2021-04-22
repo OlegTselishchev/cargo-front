@@ -1,9 +1,8 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component,OnInit, ViewChild} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {Address} from "../model/address.model";
 import {Location} from "@angular/common";
 import {MatPaginator} from "@angular/material/paginator";
-import { MatTableFilter } from 'mat-table-filter';
 import {MatTableDataSource} from "@angular/material/table";
 
 import {NotificationService} from "../services/notification.service";

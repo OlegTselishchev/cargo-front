@@ -17,7 +17,7 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./box.component.css']
 })
 export class BoxComponent implements OnInit {
-  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','type'];
+  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo'];
   dataSource: any;
 
   public pageSize = 1;
@@ -39,17 +39,14 @@ export class BoxComponent implements OnInit {
   ngOnInit(): void {
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
     this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
-    // this.showBoxAll();
 
     this.boxService.getBoxAll().subscribe((result: Box[])=>{
       let array = [];
       result.forEach(function(item) {
         console.log(item.name + "111");
         array.push({"boxId":item.boxId, "name":item.name, "weight":item.weight,"volume":item.volume,"width":item.width, "height":item.height,
-        "type":item.typeCargo});
-        // ,"destination":item.destination,
-        //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
-      })
+        "typeCargo":item.typeCargo.name});
+        })
       this.dataSource  = new MatTableDataSource<any>(array);
       this.dataSource.paginator = this.paginator;
     })

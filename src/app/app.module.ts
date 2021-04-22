@@ -49,10 +49,8 @@ import {ACCESS_USER_ID} from "./services/auth.service";
 import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 import { AddTrailerComponent } from './add-trailer/add-trailer.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
@@ -93,11 +91,10 @@ export function tokenGetter(){
     ProfileComponent,
     EditProfileComponent,
     AddCarModel,
-    AddTrailerComponent
-  ],
+    AddTrailerComponent,
     NotificationComponent,
     OrderFilterByTypePipe,
-    IconMenuComponent
+    IconMenuComponent],
 
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
