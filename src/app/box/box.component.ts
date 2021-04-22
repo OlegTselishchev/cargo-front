@@ -35,6 +35,7 @@ export class BoxComponent implements OnInit {
   public typeCargoList: TypeCargo[] = [];
   public boxList: Box[] = [];
   public client: Client = null;
+  newBox: Box = new Box();
 
   ngOnInit(): void {
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
@@ -103,6 +104,10 @@ export class BoxComponent implements OnInit {
   }
 
   createBox():void{
+    // this.boxService.create(this.newBox)
+    //   .subscribe((response)=>{
+    //     if(response.)
+    //   })
    if(this.name != null &&
      this.height != null &&
      this.width != null &&
