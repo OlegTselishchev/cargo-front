@@ -1,0 +1,26 @@
+.profile{
+  position: absolute;
+  top: 150px;
+  left: 100px;
+}
+
+.details {
+  position: relative;
+  top: 0px;
+  right: 0px;
+}
+.edit{
+  position: relative;
+  top: -180px;
+  left: 150px;
+}
+.tableOrders{
+  position: relative;
+  top: -125px;
+  left: 750px;
+  width: 600px;
+}
+
+
+
+

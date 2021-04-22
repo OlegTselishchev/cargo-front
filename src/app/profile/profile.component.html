@@ -1,0 +1,56 @@
+<div class="profile">
+  <h1 >{{profile?.firstName}} {{profile?.lastName}}</h1>
+  <b>Details</b><br>
+
+  <div class = "details">
+    <span>Name: {{profile?.firstName}}</span> <br>
+    <span>Last name: {{profile?.lastName}}</span> <br>
+    <span>Middle name: {{profile?.middleName}}</span><br>
+    <span>Email: {{profile?.email}}</span><br>
+    <span>Phone: {{profile?.phone}}</span><br>
+    <span  *ngIf="profile?.car != null;" >Car: {{profile.car?.name}}</span><br>
+    <span  *ngIf="profile?.car?.trailer != null;" >Trailer: {{profile.car?.trailer.name}}</span>
+  </div>
+
+  <div *ngIf="profile?.car == null; else elseBlock" class = "addButton">
+    <button mat-button (click)="addCar()" >add car</button>
+      </div>
+
+  <div class = "deleteButton">
+    <ng-template #elseBlock>
+      <button mat-button (click)=deleteCar() class = "deleteButton">delete car</button>
+<!--      <button mat-button (click)="addTrailer()" >add trailer</button>-->
+    </ng-template>
+  </div>
+
+  <div *ngIf="profile?.car != null && profile?.car?.trailer == null;">
+    <button mat-button (click)="addTrailer()" >add trailer</button>  </div>
+
+  <div *ngIf="profile?.car?.trailer != null;">
+    <button mat-button (click)="deleteTrailer()" >delete trailer</button>
+  </div>
+
+  <div class="edit">
+    <button mat-button (click)="edit()" >Edit</button>
+  </div>
+
+  <div class="tableOrders">
+    <h2>Your orders</h2>
+     <tr>
+       <td style="width: 30px">id</td>
+       <td style="width: 80px">name</td>
+       <td style="width: 60px">status</td>
+       <td style="width: 70px">price</td>
+       <td style="width: 70px">loc_city</td>
+       <td style="width: 70px">dest_city</td>
+       <td style="width: 50px">weight</td>
+     </tr>
+
+    <ng-container *ngFor="let order of orderList">
+      <app-order-list [modelOrder]="order" ></app-order-list>
+      <button (click)="deleteById(order.id)">delete</button>
+    </ng-container>
+  </div>
+
+</div>
+

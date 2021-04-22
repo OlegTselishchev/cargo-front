@@ -91,7 +91,9 @@ export class ClientComponent implements OnInit {
       middleName: this.clientNew.middleName,
       phone: this.clientNew.phone,
       email: this.clientNew.email,
-      driveCategory: this.clientNew.driveCategory };
+      driveCategory: this.clientNew.driveCategory,
+    password: this.clientNew.password};
+
 
     if (client.lastName != null && client.lastName !== '' &&
       client.firstName != null && client.firstName !== '' &&

@@ -14,9 +14,17 @@ import {AuthGuard} from "./guards/auth.guard";
 import {HomeComponent} from "./home/home.component";
 import {IconMenuComponent} from "./icon-menu/icon-menu.component";
 
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'manager', component: ManagerComponent},
+  {path: 'driver', component: DriverComponent},
+  {path: 'orderDetail/:id', component: OrderDetailComponent},
+  {path: 'client', component: ClientComponent},
+  {path: 'address', component: AddressComponent},
+  {path: 'box', component: BoxComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'login', component:SingSingupFormaComponent},
   {path: 'manager', component: ManagerComponent, canActivate: [AuthGuard]},
   {path: 'driver', component: DriverComponent, canActivate: [AuthGuard]},
