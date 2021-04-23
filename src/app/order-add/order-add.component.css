@@ -1,21 +1,28 @@
 
-.cont3{
-  border: solid 2px green;
-  margin: 5px;
-  padding: 5px;
-  height: 100px;
-}
-.y{
-  border: solid 2px blue;
-  margin: 5px;
-  padding: 10px;
-  overflow: auto;
+
+.example-form {
+  min-width: 100px;
+  max-width: 500px;
+  width: 100%;
 }
 
-.cont4 {
-  border: solid 1px black;
-  overflow: auto;
-  height: 120px;
-  margin: 1px;
+.example-full-width {
+  width: 100%;
 }
+
+
+.cont3{
+  border: solid 1px grey;
+  margin: 5px;
+  padding: 5px;
+}
+
+.y{
+  margin: 5px;
+  padding: 5px;
+  overflow: auto;
+  float: left;
+}
+
+
 
