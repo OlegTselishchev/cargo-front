@@ -86,12 +86,15 @@ export class BoxComponent implements OnInit {
      let type: TypeCargo = new TypeCargo();
      type.typeId = this.tId;
 
+     let height = this.height / 100;
+     let width = this.width / 100;
+
      let boxNew: Box = new Box();
      boxNew.name = this.name;
      boxNew.height = this.height;
      boxNew.width = this.width;
      boxNew.weight = this.weight;
-     boxNew.volume = this.width * this.width * this.height;
+     boxNew.volume = height * width * width;
      boxNew.typeCargo = type;
      boxNew.client = this.client;
 

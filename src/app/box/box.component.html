@@ -6,9 +6,9 @@
 
 <div class="cont2">
   <input type="text" placeholder="name" [(ngModel)]="name"/>
-  <input type="text" placeholder="height" [(ngModel)]="height"/>
-  <input type="text" placeholder="width" [(ngModel)]="width"/>
-  <input type="text" placeholder="weight" [(ngModel)]="weight"/>
+  <input type="text" placeholder="height, cm" [(ngModel)]="height"/>
+  <input type="text" placeholder="width, cm" [(ngModel)]="width"/>
+  <input type="text" placeholder="weight, kg" [(ngModel)]="weight"/>
   <label>type</label>
   <select [(ngModel)]="tId">
     <option *ngFor="let t of typeCargoList" value="{{t.typeId}}"> {{t.name}} </option>
@@ -21,10 +21,10 @@
 
     <td style="width: 80px">boxId</td>
     <td style="width: 100px">name</td>
-    <td style="width: 100px">weight</td>
-    <td style="width: 100px">volume</td>
-    <td style="width: 100px">width</td>
-    <td style="width: 100px">height</td>
+    <td style="width: 100px">weight, kg</td>
+    <td style="width: 100px">volume, kbm</td>
+    <td style="width: 100px">width, cm</td>
+    <td style="width: 100px">height, cm</td>
     <td style="width: 200px">type</td>
   </tr>
 
@@ -32,7 +32,7 @@
     <tr *ngFor="let cl of boxList | boxFilterByClientEmail: searchBoxByClientEmail">
 
       <td style="width: 80px">{{cl.boxId}}</td>
-      <td style="width: 100px">{{cl.name}}</td>
+      <td style="width: 120px">{{cl.name}}</td>
       <td style="width: 100px">{{cl.weight}}</td>
       <td style="width: 100px">{{cl.volume}}</td>
       <td style="width: 100px">{{cl.width}}</td>

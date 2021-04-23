@@ -28,6 +28,7 @@ export class DriverComponent implements OnInit {
   public driverEmail: string = this.authService.getAuthEmail();
   public isOrderFull: boolean = true;
 
+
   searchOrderName: string = '';
   searchOrderPrice: string = '';
   searchOrderWeight: string = '';
@@ -74,40 +75,55 @@ export class DriverComponent implements OnInit {
       ()=>{console.log('getStatus-ok')});
   }
 
-  public modifyByIdStatusInWork(id: number): void {
+  public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
 
-    let status: Status = this.statusList.find(x => x.name == 'in_work');
 
-    const order: Order = {
-      id: id,
-      name: null,
-      destination: null,
-      location: null,
-      box: null,
-      price: null,
-      receiver: null,
-      status: status,
-      driver: this.driver
-    };
-      if(id != null){
-        if(order.driver.userId != null && order.status != null){
-          this.orderService.modify(order).subscribe(()=>{},
+    if(this.driver.car.volume >= volume && this.driver.car.liftingCapacity >= weight) {
+
+      let status: Status = this.statusList.find(x => x.name == 'in_work');
+
+      const order: Order = {
+        id: id,
+        name: null,
+        destination: null,
+        location: null,
+        box: null,
+        price: null,
+        receiver: null,
+        status: status,
+        driver: this.driver
+      };
+      if (id != null) {
+        if (order.driver.userId != null && order.status != null) {
+          this.orderService.modify(order).subscribe(() => {
+            },
             error => {
               this.notificationService.add('modifyError', id);
-              setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+              setTimeout(() => {
+                this.notificationService.remove('modifyError')
+              }, 2000);
             },
-            ()=>{this.showAllOrder();
+            () => {
+              this.showAllOrder();
               this.notificationService.add('modifyOk', id);
-              setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
-          });
-        }else {
+              setTimeout(() => {
+                this.notificationService.remove('modifyOk')
+              }, 2000);
+            });
+        } else {
           this.notificationService.add('dataError');
-          setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+          setTimeout(() => {
+            this.notificationService.remove('dataError')
+          }, 2000);
         }
-      }else {
+      } else {
         this.notificationService.add('dataError');
-        setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+        setTimeout(() => {
+          this.notificationService.remove('dataError')
+        }, 2000);
       }
+
+    } else {alert('xxxxxxx')}
   }
 
 

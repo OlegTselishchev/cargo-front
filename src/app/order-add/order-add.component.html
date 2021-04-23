@@ -90,7 +90,7 @@
       >
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume+'см' " (click)="addBox(box)" >
-          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume + 'см'}}
+          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume + 'куб.м'}}
         </mat-option>
       </mat-autocomplete>
     </form>
