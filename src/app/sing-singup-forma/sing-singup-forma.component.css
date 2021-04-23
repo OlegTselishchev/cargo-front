@@ -1,12 +1,14 @@
 /* General configurations */
 * {
   box-sizing: border-box;
+
 }
 
 body {
   /*font-family: "Montserrat", sans-serif;*/
   font-size: 12px;
   line-height: 1em;
+  font-family: "Montserrat", sans-serif;
 }
 
 button {
@@ -15,6 +17,7 @@ button {
   border: 0;
   outline: 0;
   cursor: pointer;
+  font-family: "Montserrat", sans-serif;
 }
 
 input {
@@ -127,6 +130,7 @@ input::placeholder {
   height: 100vh;
   background: url("https://goo.gl/YRxqs1") no-repeat center;
   background-size: cover;
+  font-family: "Montserrat", sans-serif;
 }
 .user_options-container {
   position: relative;
@@ -142,6 +146,7 @@ input::placeholder {
   width: 100%;
   background-color: rgb(41, 150, 243);
   border-radius: 3px;
+
 }
 
 /* Registered and Unregistered user box and text */
@@ -158,6 +163,7 @@ input::placeholder {
   margin-bottom: 15px;
   font-size: 1.66rem;
   line-height: 1em;
+  font-family: "Montserrat", sans-serif;
 }
 
 .user_unregistered-text,
@@ -178,6 +184,7 @@ input::placeholder {
   letter-spacing: 0.2rem;
   -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
 }
 .user_registered-login:hover,
 .user_unregistered-signup:hover {
@@ -204,6 +211,7 @@ input::placeholder {
   transition: transform 0.4s ease-in-out, -webkit-transform 0.4s ease-in-out;
   -webkit-transform: translate3d(100%, -50%, 0);
   transform: translate3d(100%, -50%, 0);
+
 }
 .user_options-forms .user_forms-login {
   -webkit-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
@@ -217,6 +225,7 @@ input::placeholder {
   text-transform: uppercase;
   color: #2196f3;
   letter-spacing: 0.1rem;
+  font-family: "Montserrat", sans-serif;
 }
 .user_options-forms .forms_field:not(:last-of-type) {
   margin-bottom: 20px;
@@ -232,6 +241,7 @@ input::placeholder {
   letter-spacing: 0.1rem;
   -webkit-transition: border-color 0.2s ease-in-out;
   transition: border-color 0.2s ease-in-out;
+
 }
 .user_options-forms .forms_field-input:focus {
   border-color: gray;
@@ -247,6 +257,8 @@ input::placeholder {
   -ms-flex-align: center;
   align-items: center;
   margin-top: 35px;
+  font-family: "Montserrat", sans-serif;
+
 }
 .user_options-forms .forms_buttons-forgot {
   font-family: "Montserrat", sans-serif;
@@ -289,21 +301,25 @@ input::placeholder {
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, -webkit-transform 0.5s ease-in-out;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+
 }
 .user_options-forms .user_forms-signup {
   -webkit-transform: translate3d(120px, 0, 0);
   transform: translate3d(120px, 0, 0);
+
 }
 .user_options-forms .user_forms-signup .forms_buttons {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
+
 }
 .user_options-forms .user_forms-login {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   opacity: 1;
   visibility: visible;
+
 }
 
 /* Triggers */

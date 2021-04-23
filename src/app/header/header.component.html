@@ -1,4 +1,23 @@
 <div class = "header">
+<div *ngIf="isLoggedIn">
+  <button class="user-icon" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>person_outline</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon> contacts</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Setting</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon> local_shipping</mat-icon>
+      <span>My order</span>
+    </button>
+  </mat-menu>
+</div>
 
   <a routerLink="/">
   <div class = "button-logo" style="background: url(./assets/logo2.png);
@@ -44,7 +63,7 @@ background-position: center right;"></div>
   <span class="buttonWhite__line buttonWhite__line--right"></span>
   <span class="buttonWhite__line buttonWhite__line--bottom"></span>
   <span class="buttonWhite__line buttonWhite__line--left"></span>
-  Registration
+  Log In
 </a>
 </div>
 
