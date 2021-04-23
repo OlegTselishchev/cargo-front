@@ -3,7 +3,7 @@
    <button  (click)="createBox()">Create_Box</button>
 </div>
 
-
+<div *ngIf="boxList.length && typeCargoList.length; else noData">
 <div class="cont2">
   <input type="text" placeholder="name" [(ngModel)]="name"/>
   <input type="text" placeholder="height, cm" [(ngModel)]="height"/>
@@ -15,7 +15,7 @@
   </select>
 </div>
 
-<div class="cont3" *ngIf="boxList.length; else noBox">
+<div class="cont3" *ngIf="boxList.length">
 
   <tr>
 
@@ -28,7 +28,7 @@
     <td style="width: 200px">type</td>
   </tr>
 
-  <div class="cont4" *ngIf="boxList.length; else noBox">
+  <div class="cont4" *ngIf="boxList.length">
     <tr *ngFor="let cl of boxList | boxFilterByClientEmail: searchBoxByClientEmail">
 
       <td style="width: 80px">{{cl.boxId}}</td>
@@ -42,10 +42,10 @@
     </tr>
   </div>
 </div>
-
-<div>
-  <ng-template #noBox>
-    <p>No BOX now!</p>
-  </ng-template>
 </div>
+
+<ng-template #noData>
+ <app-loader></app-loader>
+</ng-template>
+
 

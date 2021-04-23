@@ -3,6 +3,8 @@
   <button routerLink="/order">CreateOrder</button>
  </div>
 
+<div *ngIf="orderList.length; else noOrder">
+
 <div class="cont2">
   <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>
   <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>
@@ -11,7 +13,7 @@
   <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>
 </div>
 
-<div class="cont3">
+<div class="cont3" >
 
   <div>
     <tr>
@@ -25,7 +27,7 @@
     </tr>
   </div>
 
-    <div class="cont4" *ngIf="orderList.length; else noOrder">
+    <div class="cont4" *ngIf="orderList.length">
         <ng-container *ngFor="let order of orderList
           | orderFilterByName: searchOrderName
           | orderFilterByPrice: searchOrderPrice
@@ -38,15 +40,16 @@
               <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'close'">delete</button>
               <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'open'">delete</button>
               <button (click)="closeById(order.id)" *ngIf="order.status.name == ('implemented')">close</button>
-
         </ng-container>
     </div>
-
-        <ng-template #noOrder>
-        <p> No order now!</p>
-        </ng-template>
-
 </div>
+</div>
+
+<ng-template #noOrder>
+  <app-loader></app-loader>
+</ng-template>
+
+
 
 
 

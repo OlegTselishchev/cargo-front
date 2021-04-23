@@ -19,7 +19,7 @@
 
 
 
-  <div class="cont3" *ngIf="clientList.length; else noClient">
+<div class="cont3" *ngIf="clientList.length; else noClient">
 
     <tr>
 
@@ -48,7 +48,7 @@
 
 
   <ng-template #noClient>
-    <p>No clients now!</p>
+    <app-loader></app-loader>
   </ng-template>
 
 

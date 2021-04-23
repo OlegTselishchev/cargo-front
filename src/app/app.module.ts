@@ -47,6 +47,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { LoaderComponent } from './loader/loader.component';
 
 
 export function tokenGetter(){
@@ -86,7 +87,8 @@ export function tokenGetter(){
     ProfileComponent,
     EditProfileComponent,
     AddCarModel,
-    AddTrailerComponent
+    AddTrailerComponent,
+    LoaderComponent
   ],
 
   schemas: [

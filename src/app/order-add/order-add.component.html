@@ -6,10 +6,10 @@
   <button routerLink="/address">Address</button>
 </div>
 
-
+<div *ngIf="addressListLoc.length && addressListDest && clientList.length && boxList.length; else noData">
   <div class="y">
     <label>Destination</label>
-    <div *ngIf="addressListDest.length; else noDataAddress">
+    <div *ngIf="addressListDest.length">
 
       <form class="example-form">
         <input type="text"
@@ -32,7 +32,7 @@
 
 <div class="y">
   <label>Location</label>
-  <div *ngIf="addressListLoc.length; else noDataAddress">
+  <div *ngIf="addressListLoc.length">
 
     <form class="example-form">
       <input type="text"
@@ -54,7 +54,7 @@
 
 <div class="y">
   <label>Receiver</label>
-  <div *ngIf="clientList.length; else noDataClient">
+  <div *ngIf="clientList.length">
 
     <form class="example-form">
       <input type="text"
@@ -77,7 +77,7 @@
 
 <div class="y">
   <label>Box</label>
-  <div *ngIf="boxList.length; else noDataBox">
+  <div *ngIf="boxList.length">
 
     <form class="example-form">
       <input type="text"
@@ -96,18 +96,11 @@
     </form>
   </div>
 </div>
+</div>
 
 
-
-<ng-template #noDataBox>
-  No data.
+<ng-template #noData>
+  <app-loader></app-loader>
 </ng-template>
 
-<ng-template #noDataClient>
-  No data.
-</ng-template>
-
-<ng-template #noDataAddress>
-  No data.
-</ng-template>
 

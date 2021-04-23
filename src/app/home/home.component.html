@@ -4,6 +4,8 @@
 <p *ngIf="isLoggedIn"> Success SignIn</p>
 </h1>
 
+<div *ngIf="addressList.length && typeCargoList.length && orderList.length; else noOrder">
+
 <div>
   <label>locCity</label>
   <select [(ngModel)]="locCity" >
@@ -37,7 +39,7 @@
     </tr>
   </div>
 
-  <div class="cont33" *ngIf="orderList; else noOrder">
+  <div class="cont33" *ngIf="orderList.length">
   <ng-container *ngFor="let order of orderList
     | orderPrice: price
     | orderFilterByLocCity: locCity
@@ -47,9 +49,10 @@
     <app-order-list [modelOrder]="order"></app-order-list>
   </ng-container>
   </div>
-
-
-  <ng-template #noOrder>
-    <p> No order now!</p>
-  </ng-template>
 </div>
+
+</div>
+
+<ng-template #noOrder>
+  <app-loader></app-loader>
+</ng-template>
