@@ -7,14 +7,14 @@
 <div *ngIf="addressList.length && typeCargoList.length && orderList.length; else noOrder">
 
 <div>
-  <label>locCity</label>
+  <label>LocationByCity</label>
   <select [(ngModel)]="locCity" >
-    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} </option>
+    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} {{a.street}} </option>
   </select>
 
-  <label>destCity</label>
+  <label>DestinationByCity</label>
   <select [(ngModel)]="destCity">
-    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} </option>
+    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} {{a.street}} </option>
   </select>
 
   <input type="number" placeholder="price" [(ngModel)]="price"/>
@@ -35,7 +35,8 @@
       <td style="width: 80px">price</td>
       <td style="width: 150px">loc_city</td>
       <td style="width: 150px">dest_city</td>
-      <td style="width: 50px">weight</td>
+      <td style="width: 80px">weight, kg</td>
+      <td style="width: 80px">volume, kbm</td>
     </tr>
   </div>
 
