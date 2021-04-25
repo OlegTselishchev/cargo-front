@@ -3,7 +3,7 @@
    <button  (click)="createBox()">Create_Box</button>
 </div>
 
-<div *ngIf="boxList.length && typeCargoList.length; else noData">
+
 <div class="cont2">
   <input type="text" placeholder="name" [(ngModel)]="name"/>
   <input type="text" placeholder="height, cm" [(ngModel)]="height"/>
@@ -15,6 +15,7 @@
   </select>
 </div>
 
+<div *ngIf="boxList.length && typeCargoList.length; else noData">
 <div class="cont3" *ngIf="boxList.length">
 
   <tr>
@@ -34,7 +35,7 @@
       <td style="width: 80px">{{cl.boxId}}</td>
       <td style="width: 120px">{{cl.name}}</td>
       <td style="width: 100px">{{cl.weight}}</td>
-      <td style="width: 100px">{{cl.volume}}</td>
+      <td style="width: 100px">{{cl.volume.toFixed(4)}}</td>
       <td style="width: 100px">{{cl.width}}</td>
       <td style="width: 100px">{{cl.height}}</td>
       <td style="width: 200px">{{cl.typeCargo.name}}</td>

@@ -7,7 +7,7 @@ export class Client{
   middleName: string;
   phone: string;
   email: string;
-  driveCategory: string;
+  driveCategory?: string;
   car?: Car;
   password?: string;
 }

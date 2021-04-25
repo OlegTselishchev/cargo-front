@@ -30,35 +30,55 @@
             </div>
           </fieldset>
           <div class="forms_buttons">
-          <!--  <button type="button" class="forms_buttons-forgot">Forgot password?</button>-->
+
             <input type="button" value="Log In" class="forms_buttons-action" (click)="login()">
           </div>
         </form>
       </div>
 
       <div class="user_forms-signup">
-        <h2 class="forms_title">Sign Up</h2>
-        <form class="forms_form">
-          <fieldset class="forms_fieldset">
 
-           <!-- <div class="forms_field">
-              <input type="text" placeholder="Full Name" class="forms_field-input" required />
-            </div>-->
+        <h2 class="forms_title">Sign Up</h2>
+
+        <form class="forms_form">
+
+          <fieldset class="forms_fieldset">
+            <div class="forms_field">
+              <input type="text" name="lastName" placeholder="Last Name" class="forms_field-input" required [(ngModel)]="lastName"/>
+            </div>
+
+            <div class="forms_field">
+              <input type="text" name="firstName" placeholder="First Name" class="forms_field-input" required [(ngModel)]="firstName"/>
+            </div>
+
+            <div class="forms_field">
+              <input type="text" name="middleName" placeholder="Middle Name" class="forms_field-input" required [(ngModel)]="middleName"/>
+            </div>
+
+            <div class="forms_field">
+              <input type="text" name="phone" placeholder="phone" class="forms_field-input" required [(ngModel)]="phone"/>
+            </div>
 
             <div class="forms_field">
               <input type="email" name="email" placeholder="Email" class="forms_field-input" required [(ngModel)]="email"/>
             </div>
+
             <div class="forms_field">
               <input type="password" name="password1" placeholder="Password" class="forms_field-input" required [(ngModel)]="password1" />
             </div>
+
             <div class="forms_field">
               <input type="password" name="password2" placeholder="Repeat password" class="forms_field-input" required [(ngModel)]="password2"/>
             </div>
+
           </fieldset>
+
           <div class="forms_buttons">
             <input type="button" value="Sign up" class="forms_buttons-action" (click)="reg()">
           </div>
+
         </form>
+
       </div>
     </div>
   </div>

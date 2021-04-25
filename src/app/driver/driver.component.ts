@@ -76,9 +76,15 @@ export class DriverComponent implements OnInit {
   }
 
   public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
+    let carVolume = this.driver.car.volume;
+    let carLiftingCapacity= this.driver.car.liftingCapacity;
 
+    if(this.driver.car.trailer != null){
+      carLiftingCapacity += this.driver.car.trailer.liftingCapacity;
+      carVolume += this.driver.car.trailer.volume;
+    }
 
-    if(this.driver.car.volume >= volume && this.driver.car.liftingCapacity >= weight) {
+    if(carVolume >= volume && carLiftingCapacity >= weight) {
 
       let status: Status = this.statusList.find(x => x.name == 'in_work');
 
@@ -123,7 +129,11 @@ export class DriverComponent implements OnInit {
         }, 2000);
       }
 
-    } else {alert('xxxxxxx')}
+    } else {this.notificationService.add('takeBoxError');
+    setTimeout(()=>{
+      this.notificationService.remove('takeBoxError')
+    }, 2000);
+    }
   }
 
 

@@ -2,7 +2,6 @@
   <button (click)="goBack()">goBack</button>
   <button (click)="create()">Order Create</button>
   <button routerLink="/box">Box</button>
-  <button routerLink="/client">Receiver</button>
   <button routerLink="/address">Address</button>
 </div>
 
@@ -13,7 +12,7 @@
 
       <form class="example-form">
         <input type="text"
-               placeholder="Search destination"
+               placeholder="Search destination by city"
                [formControl]="controlDest"
                [matAutocomplete]="auto"
                style="width: 300px"
@@ -36,7 +35,7 @@
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search location"
+             placeholder="Search location by city"
              [formControl]="controlLoc"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -58,7 +57,7 @@
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search receiver"
+             placeholder="Search user by email"
              [formControl]="controlReceiver"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -81,7 +80,7 @@
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search box"
+             placeholder="Search box by name"
              [formControl]="controlBox"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -89,8 +88,8 @@
              (blur)="clearBox()"
       >
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume+'см' " (click)="addBox(box)" >
-          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume + 'куб.м'}}
+        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
+          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
         </mat-option>
       </mat-autocomplete>
     </form>
