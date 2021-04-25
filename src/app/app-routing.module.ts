@@ -8,7 +8,6 @@ import {OrderAddComponent} from "./order-add/order-add.component";
 import {ClientComponent} from "./client/client.component";
 import {AddressComponent} from "./address/address.component";
 import {BoxComponent} from "./box/box.component";
-import {HeaderComponent} from "./header/header.component";
 import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {HomeComponent} from "./home/home.component";
@@ -17,14 +16,8 @@ import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'manager', component: ManagerComponent},
-  {path: 'driver', component: DriverComponent},
-  {path: 'orderDetail/:id', component: OrderDetailComponent},
-  {path: 'client', component: ClientComponent},
-  {path: 'address', component: AddressComponent},
-  {path: 'box', component: BoxComponent},
-  {path: 'profile', component: ProfileComponent},
   {path: 'login', component:SingSingupFormaComponent},
+  {path: 'profile', component: ProfileComponent,canActivate: [AuthGuard]},
   {path: 'manager', component: ManagerComponent, canActivate: [AuthGuard]},
   {path: 'driver', component: DriverComponent, canActivate: [AuthGuard]},
   {path: 'orderDetail/:id', component: OrderDetailComponent,canActivate: [AuthGuard]},
