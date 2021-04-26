@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ClientService} from "../services/client.service";
 import {Client} from "../model/client.model";
 import {Location} from "@angular/common";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 import {NotificationService} from "../services/notification.service";
 
 @Component({
@@ -11,6 +13,14 @@ import {NotificationService} from "../services/notification.service";
 })
 export class ClientComponent implements OnInit {
 
+  displayedColumns: string[] = ['lastName', 'firstName', 'middleName','phone','category','delUser'];
+  dataSource: any;
+
+  public pageSize = 1;
+
+  @ViewChild
+  (MatPaginator) paginator: MatPaginator;
+
   constructor( public clientService: ClientService,
                public location: Location,
                public notificationService: NotificationService) { }
@@ -19,6 +29,18 @@ export class ClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.showClient();
+    this.clientService.getClientAll().subscribe((result: Client[])=>{
+      let array = [];
+      result.forEach(function(item) {
+        console.log(item.lastName + "111");
+        array.push({"lastName":item.lastName, "firstName":item.firstName, "middleName":item.middleName,"phone":item.phone,
+        "email":item.email,"category":item.driveCategory,"delUser":item.userId});
+        // ,"destination":item.destination,
+        //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
+      })
+      this.dataSource  = new MatTableDataSource<any>(array);
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
   searchByLastName: string = '';
@@ -50,6 +72,15 @@ export class ClientComponent implements OnInit {
         setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
         }
       );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   addClient(): void {

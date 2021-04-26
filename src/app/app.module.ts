@@ -36,15 +36,21 @@ import { ClientFilterByEmailPipe } from './filter/client-filter-by-email.pipe';
 import { OrderFilterByDriverEmailPipe } from './filter/order-filter-by-driver-email.pipe';
 import { OrderPricePipe } from './filter/order-price.pipe';
 import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { IconMenuComponent } from './icon-menu/icon-menu.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
 import { NotificationComponent } from './notification/notification.component';
 import {ACCESS_USER_ID} from "./services/auth.service";
 import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 import { AddTrailerComponent } from './add-trailer/add-trailer.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { LoaderComponent } from './loader/loader.component';
@@ -88,8 +94,9 @@ export function tokenGetter(){
     EditProfileComponent,
     AddCarModel,
     AddTrailerComponent,
-    LoaderComponent
-  ],
+    NotificationComponent,
+    OrderFilterByTypePipe,
+    IconMenuComponent],
 
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
@@ -100,6 +107,7 @@ export function tokenGetter(){
     RouterModule,
     HttpClientModule,
     FormsModule,
+    MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -108,19 +116,26 @@ export function tokenGetter(){
     BrowserAnimationsModule,
     MatAutocompleteModule,
 
-        JwtModule.forRoot({
-                config: {
-                    tokenGetter,
-                    disallowedRoutes:["localhost:9000"]
-                }
-            }
-        )
-    ],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    JwtModule.forRoot({
+        config: {
+          tokenGetter,
+          disallowedRoutes: ["localhost:9000"]
         }
-    ],
-    bootstrap: [AppComponent]
+      }
+    ),
+
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

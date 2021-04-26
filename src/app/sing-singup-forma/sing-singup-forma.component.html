@@ -13,13 +13,13 @@
       <div class="user_options-registered">
         <h2 class="user_registered-title">Have an account?</h2>
         <p class="user_registered-text">Hello again. Let's go!</p>
-        <button class="user_registered-login" id="login-button"(click)="_clickSignup()">Login</button>
+        <button class="user_registered-login" id="login-button"(click)="_clickSignup()">Log in</button>
       </div>
     </div>
 
     <div class="user_options-forms" id="user_options-forms"[ngClass]="{'signup-click': toggleForm, 'login-click': !toggleForm}">
       <div class="user_forms-login">
-        <h2 class="forms_title">Login</h2>
+        <h2 class="forms_title">Log in</h2>
         <form class="forms_form" >
           <fieldset class="forms_fieldset">
             <div class="forms_field">
@@ -30,8 +30,7 @@
             </div>
           </fieldset>
           <div class="forms_buttons">
-
-            <input type="button" value="Log In" class="forms_buttons-action" (click)="login()">
+            <input type="button" value="Log in" class="forms_buttons-action" (click)="login()">
           </div>
         </form>
       </div>
@@ -58,7 +57,7 @@
             <div class="forms_field">
               <input type="text" name="phone" placeholder="phone" class="forms_field-input" required [(ngModel)]="phone"/>
             </div>
-
+          
             <div class="forms_field">
               <input type="email" name="email" placeholder="Email" class="forms_field-input" required [(ngModel)]="email"/>
             </div>

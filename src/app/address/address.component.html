@@ -1,9 +1,5 @@
-
 <div class="cont1">
-  <input type="text" placeholder="FilterAddressByCity" [(ngModel)]="searchByCity" />
-  <input type="text"  placeholder="FilterAddressByStreet"  [(ngModel)]="searchByStreet" />
-  <button (click)="addAddress()">Add</button>
-  <button (click)="goBack()">goBack</button>
+  <a class="button-2" (click)="goBack()">Back</a>
 </div>
 
 <div class="cont2">
@@ -12,27 +8,49 @@
   <input type="text" placeholder="add_street" [(ngModel)]="address.street"/>
   <input type="text" placeholder="add_home" [(ngModel)]="address.home"/>
   <input type="text" placeholder="add_apartment" [(ngModel)]="address.apartment"/>
+  <a class="button-1" (click)="addAddress()">Add</a>
 </div>
 
-<div class="cont3">
-      <tr>
-        <td style="width: 70px">country</td>
-        <td style="width: 120px">city</td>
-        <td style="width: 120px">street</td>
-        <td style="width: 90px">№_home</td>
-        <td style="width: 70px">№_apart</td>
-        <td style="width: 70px">delete</td>
-      </tr>
-  <div class="cont4" *ngIf="addressList; else noAddress">
-    <tr *ngFor="let cl of addressList | addressFilterByStreet: searchByStreet | addressFilterByCity: searchByCity">
-      <td style="width: 70px">{{cl.country}}</td>
-      <td style="width: 120px">{{cl.city}}</td>
-      <td style="width: 120px">{{cl.street}}</td>
-      <td style="width: 90px">{{cl.home}}</td>
-      <td style="width: 70px">{{cl.apartment}}</td>
-      <td style="width: 70px"><button (click)="delete(cl.addressId)">x</button></td>
-    </tr>
-  </div>
+<div  class="mat-elevation-z8 test"  *ngIf="addressList; else noAddress" >
+  <mat-form-field class="search">
+    <mat-label>SEARCH</mat-label>
+    <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef> Country </th>
+      <td mat-cell *matCellDef="let element"> {{element?.country}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef> City </th>
+      <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="street">
+      <th mat-header-cell *matHeaderCellDef> Street </th>
+      <td mat-cell *matCellDef="let element"> {{element.street}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="home">
+      <th mat-header-cell *matHeaderCellDef> Home </th>
+      <td mat-cell *matCellDef="let element"> {{element.home}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="apartment">
+      <th mat-header-cell *matHeaderCellDef> Apartment </th>
+      <td mat-cell *matCellDef="let element"> {{element.apartment}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator   showFirstLastButtons
+                   [length]="10"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[1, 5, 10]">
+  </mat-paginator >
 
 </div>
 
