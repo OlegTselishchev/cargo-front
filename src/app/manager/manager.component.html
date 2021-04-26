@@ -1,32 +1,46 @@
-
+<div class="bid-table">
 <div class="cont1">
-  <button routerLink="/order">CreateOrder</button>
- </div>
-
-<div class="cont2">
-  <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>
-  <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>
-  <input type="text" placeholder="filterByWeight" [(ngModel)]="searchOrderWeight"/>
-  <input type="text" placeholder="filterByLoc_city" [(ngModel)]="searchOrderLocCity"/>
-  <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>
+  <a routerLink = "/order" class = "button">
+    CreateOrder
+  </a>
 </div>
 
-<div class="cont3">
+<div  class="mat-elevation-z8 test" >
+  <table mat-table [dataSource]="dataSource">
 
-  <div>
-    <tr>
-      <td style="width: 30px">id</td>
-      <td style="width: 80px">name</td>
-      <td style="width: 130px">status</td>
-      <td style="width: 80px">price</td>
-      <td style="width: 150px">loc_city</td>
-      <td style="width: 150px">dest_city</td>
-      <td style="width: 70px">weight, kg</td>
-    </tr>
-  </div>
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+    </ng-container>
 
-    <div class="cont4" *ngIf="orderList.length; else noOrder">
-        <ng-container *ngFor="let order of orderList
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>О
+
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+  </table>
+
+  <mat-paginator   showFirstLastButtons
+                   [length]="10"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[1, 5, 10]">
+  </mat-paginator >
+
+  <div class="cont4" *ngIf="orderList.length;">
+    <ng-container *ngFor="let order of orderList
           | orderFilterByName: searchOrderName
           | orderFilterByPrice: searchOrderPrice
           | orderFilterByWeight: searchOrderWeight
@@ -34,19 +48,16 @@
           | orderFilterByDestCity: searchOrderDestCity
           |orderFilterByBoxClientEmail: searchOrderByBoxClientEmail
           ">
-              <app-order-list [modelOrder]="order" ></app-order-list>
-              <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'close'">delete</button>
-              <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'open'">delete</button>
-              <button (click)="closeById(order.id)" *ngIf="order.status.name == ('implemented')">close</button>
+      <app-order-list [modelOrder]="order" ></app-order-list>
+      <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'close'">delete</button>
+      <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'open'">delete</button>
+      <button (click)="closeById(order.id)" *ngIf="order.status.name == ('implemented')">close</button>
 
-        </ng-container>
-    </div>
+    </ng-container>
 
-        <ng-template #noOrder>
-        <p> No order now!</p>
-        </ng-template>
+  </div>
 
 </div>
 
-
+</div>
 
