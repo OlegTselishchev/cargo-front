@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component,OnInit, ViewChild} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {Address} from "../model/address.model";
 import {Location} from "@angular/common";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
+
 import {NotificationService} from "../services/notification.service";
 
 @Component({
@@ -10,6 +13,14 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
+
+  displayedColumns: string[] = ['country', 'city', 'street','home','apartment'];
+  dataSource: any;
+
+  public pageSize = 1;
+
+  @ViewChild
+  (MatPaginator) paginator: MatPaginator;
 
   public address: Address = new Address();
   public searchByStreet: string = '';
@@ -23,6 +34,25 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
    this.getAddressAll();
+
+    this.addressService.getAddressAll().subscribe((result: Address[])=>{
+      let array = [];
+      result.forEach(function(item) {
+        console.log(item.country + "111");
+        array.push({"country":item.country, "city":item.city, "street":item.street,"home":item.home,
+          "apartment":item.apartment});
+      })
+      this.dataSource  = new MatTableDataSource<any>(array);
+      this.dataSource.paginator = this.paginator;
+    })
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   getAddressAll():void{
