@@ -28,7 +28,6 @@ export class DriverComponent implements OnInit {
   public driverEmail: string = this.authService.getAuthEmail();
   public isOrderFull: boolean = true;
 
-
   searchOrderName: string = '';
   searchOrderPrice: string = '';
   searchOrderWeight: string = '';
@@ -78,13 +77,16 @@ export class DriverComponent implements OnInit {
   public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
     let carVolume = this.driver.car.volume;
     let carLiftingCapacity= this.driver.car.liftingCapacity;
+    let trailerLiftingCapacity = 0;
+    let trailerVolume = 0;
 
     if(this.driver.car.trailer != null){
-      carLiftingCapacity += this.driver.car.trailer.liftingCapacity;
-      carVolume += this.driver.car.trailer.volume;
+      trailerLiftingCapacity = this.driver.car.trailer.liftingCapacity;
+      trailerVolume = this.driver.car.trailer.volume;
     }
-
-    if(carVolume >= volume && carLiftingCapacity >= weight) {
+    
+      if((carVolume >= volume && carLiftingCapacity >= weight) ||
+      (trailerVolume >= volume && trailerLiftingCapacity >= weight)) {
 
       let status: Status = this.statusList.find(x => x.name == 'in_work');
 

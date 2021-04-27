@@ -17,6 +17,10 @@ export class ClientService {
     return this.http.get(this.urlClient);
   }
 
+  public getClientAllByLastNameNotNull() {
+    return this.http.get(this.urlClient + 'notnull');
+  }
+
   public getClientByEmail(email: string) {
     return this.http.get(this.urlClient + 'email/' + email);
   }

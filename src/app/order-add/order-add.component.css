@@ -16,7 +16,6 @@
   float: left;
 }
 
-
 .cont3 {
   width: 60%;
   padding: 5px;
@@ -24,7 +23,6 @@
   border: solid 2px #ffffff;
   overflow: auto;
   text-decoration:none;
-
 }
 
 .button{
@@ -49,6 +47,6 @@
   background-color: #2196f3;
 }
 
-{box-sizing: border-box;}
+* {box-sizing: border-box;}
 
 
