@@ -28,7 +28,6 @@ export class DriverComponent implements OnInit {
   public driverEmail: string = this.authService.getAuthEmail();
   public isOrderFull: boolean = true;
 
-
   searchOrderName: string = '';
   searchOrderPrice: string = '';
   searchOrderWeight: string = '';
@@ -76,8 +75,6 @@ export class DriverComponent implements OnInit {
   }
 
   public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
-
-
     if(this.driver.car.volume >= volume && this.driver.car.liftingCapacity >= weight) {
 
       let status: Status = this.statusList.find(x => x.name == 'in_work');
