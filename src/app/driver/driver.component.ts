@@ -75,6 +75,7 @@ export class DriverComponent implements OnInit {
   }
 
   public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
+
     let carVolume = this.driver.car.volume;
     let carLiftingCapacity= this.driver.car.liftingCapacity;
     let trailerLiftingCapacity = 0;
@@ -130,7 +131,6 @@ export class DriverComponent implements OnInit {
           this.notificationService.remove('dataError')
         }, 2000);
       }
-
     } else {this.notificationService.add('takeBoxError');
     setTimeout(()=>{
       this.notificationService.remove('takeBoxError')

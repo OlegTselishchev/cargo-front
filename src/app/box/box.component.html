@@ -8,7 +8,6 @@
   <input class="window" type="text" placeholder="height, cm" [(ngModel)]="height"/>
   <input class="window" type="text" placeholder="width, cm" [(ngModel)]="width"/>
   <input class="window" type="text" placeholder="weight, kg" [(ngModel)]="weight"/>
-
   <label>type</label>
   <select [(ngModel)]="tId">
     <option *ngFor="let t of typeCargoList" value="{{t.typeId}}"> {{t.name}} </option>
