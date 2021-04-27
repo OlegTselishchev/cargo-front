@@ -2,17 +2,17 @@
   <button (click)="goBack()">goBack</button>
   <button (click)="create()">Order Create</button>
   <button routerLink="/box">Box</button>
-  <button routerLink="/client">Receiver</button>
   <button routerLink="/address">Address</button>
 </div>
 
+<div *ngIf="addressListLoc.length && addressListDest && clientList.length && boxList.length; else noData">
   <div class="y">
     <label>Destination</label>
-    <div *ngIf="addressListDest.length; else noDataAddress">
+    <div *ngIf="addressListDest.length">
 
       <form class="example-form">
         <input type="text"
-               placeholder="Search destination"
+               placeholder="Search destination by city"
                [formControl]="controlDest"
                [matAutocomplete]="auto"
                style="width: 300px"
@@ -31,11 +31,11 @@
 
 <div class="y">
   <label>Location</label>
-  <div *ngIf="addressListLoc.length; else noDataAddress">
+  <div *ngIf="addressListLoc.length">
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search location"
+             placeholder="Search location by city"
              [formControl]="controlLoc"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -53,11 +53,11 @@
 
 <div class="y">
   <label>Receiver</label>
-  <div *ngIf="clientList.length; else noDataClient">
+  <div *ngIf="clientList.length">
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search receiver"
+             placeholder="Search user by email"
              [formControl]="controlReceiver"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -76,11 +76,11 @@
 
 <div class="y">
   <label>Box</label>
-  <div *ngIf="boxList.length; else noDataBox">
+  <div *ngIf="boxList.length">
 
     <form class="example-form">
       <input type="text"
-             placeholder="Search box"
+             placeholder="Search box by name"
              [formControl]="controlBox"
              [matAutocomplete]="auto"
              style="width: 300px"
@@ -88,23 +88,17 @@
              (blur)="clearBox()"
       >
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume+'см' " (click)="addBox(box)" >
-          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume + 'куб.м'}}
+        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
+          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
         </mat-option>
       </mat-autocomplete>
     </form>
   </div>
 </div>
+</div>
 
-<ng-template #noDataBox>
-  No data.
+<ng-template #noData>
+  <app-loader></app-loader>
 </ng-template>
 
-<ng-template #noDataClient>
-  No data.
-</ng-template>
-
-<ng-template #noDataAddress>
-  No data.
-</ng-template>
 

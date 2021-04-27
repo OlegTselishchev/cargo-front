@@ -53,6 +53,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { LoaderComponent } from './loader/loader.component';
+
 
 
 export function tokenGetter(){

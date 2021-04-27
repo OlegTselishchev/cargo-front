@@ -103,7 +103,7 @@ export class OrderAddComponent implements OnInit {
 
   private _filterRec(value: string): Client[] {
     const filterValue = this._normalizeValue(value);
-    return this.clientList.filter(client => this._normalizeValue(client.lastName).includes(filterValue));
+    return this.clientList.filter(client => this._normalizeValue(client.email).includes(filterValue));
   }
 
   private _filterBox(value: string): Box[] {
@@ -205,13 +205,14 @@ export class OrderAddComponent implements OnInit {
       }, 2000);
     }
     this.box.boxId = null;
-    this.box.name = '';
     this.loc.addressId = null;
-    this.loc.city = '';
     this.dest.addressId = null;
-    this.dest.city = '';
     this.receiver.userId = null;
-    this.receiver.lastName = '';
+
+    this.inputBox = '';
+    this.inputRec = '';
+    this.inputDest = '';
+    this.inputLoc = '';
   }
 
   goBack(): void {
@@ -232,7 +233,7 @@ export class OrderAddComponent implements OnInit {
   }
 
   showClient(): void {
-    this.clientService.getClientAllByLastNameNotNull().subscribe((data: Client[]) => {
+    this.clientService.getClientAll().subscribe((data: Client[]) => {
       this.clientList = data
     });
   }

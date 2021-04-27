@@ -1,10 +1,10 @@
-
+<div *ngIf="orderList.length && statusList && driver; else noData">
 <div class="cont1">
   <div>
-
     <label>driver:  </label>
-    <input type="text" placeholder="lastName"
-           value="{{driver.lastName}} {{driver.firstName}} {{driver.middleName}}" />
+    <input type="text"
+           value="{{driver.lastName}} {{driver.firstName}} {{driver.middleName}}"
+            style="width: 250px"/>
     <button (click)="myOrder()">My_Orders</button>
     <button (click)="fullOrders()">Full_Orders</button>
   </div>
@@ -18,14 +18,15 @@
     <td style="width: 70px">Телефон</td>
     <td style="width: 120px">Эл.адрес</td>
     <td style="width: 70px">Машина</td>
-    <td style="width: 120px">Грузоподемность</td>
-    <td style="width: 100px">Объем</td>
-
+    <td style="width: 80px">Груз.под.</td>
+    <td style="width: 80px">Объем</td>
+    <td style="width: 80px" *ngIf="driver.car.trailer">Трейлер</td>
+    <td style="width: 80px" *ngIf="driver.car.trailer">Груз.под.</td>
+    <td style="width: 100px" *ngIf="driver.car.trailer">Объем</td>
   </tr>
 </div>
 
-
-  <div *ngIf="driver.car; else noOrder">
+  <div *ngIf="driver.car">
     <tr>
         <td style="width: 30px">{{driver.userId}}</td>
         <td style="width: 100px">{{driver.lastName}}</td>
@@ -34,20 +35,22 @@
         <td style="width: 70px">{{driver.phone}}</td>
         <td style="width: 120px">{{driver.email}}</td>
         <td style="width: 70px">{{driver.car.name}}</td>
-        <td style="width: 120px">{{driver.car.liftingCapacity +  'кг'}}</td>
-        <td style="width: 100px">{{driver.car.volume + ' куб.м'}}</td>
+        <td style="width: 80px">{{driver.car.liftingCapacity +  ' кг'}}</td>
+        <td style="width: 80px">{{driver.car.volume + ' куб.м'}}</td>
+        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.name}}</td>
+        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.liftingCapacity + ' кг'}}</td>
+        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.volume + ' куб.м'}}</td>
     </tr>
   </div>
 </div>
 
 
-
 <div class="cont2">
-  <input type="text" placeholder="name" [(ngModel)]="searchOrderName"/>
-  <input type="text" placeholder="price" [(ngModel)]="searchOrderPrice"/>
-  <input type="text" placeholder="weight" [(ngModel)]="searchOrderWeight"/>
-  <input type="text" placeholder="loc_city" [(ngModel)]="searchOrderLocCity"/>
-  <input type="text" placeholder="dest_city" [(ngModel)]="searchOrderDestCity"/>
+  <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>
+  <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>
+  <input type="text" placeholder="filterByWeight" [(ngModel)]="searchOrderWeight"/>
+  <input type="text" placeholder="filterByLoc_city" [(ngModel)]="searchOrderLocCity"/>
+  <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>
 </div>
 
 
@@ -61,11 +64,12 @@
       <td style="width: 80px">price</td>
       <td style="width: 150px">loc_city</td>
       <td style="width: 150px">dest_city</td>
-      <td style="width: 70px">weight, kg</td>
+      <td style="width: 90px">weight, kg</td>
+      <td style="width: 100px">volume, kbm</td>
     </tr>
   </div>
 
-  <div class="cont33" *ngIf="orderList.length; else noOrder">
+  <div class="cont33" *ngIf="orderList.length">
 
     <div *ngIf="isOrderFull">
     <ng-container *ngFor="let order of orderList
@@ -103,9 +107,10 @@
 
   </div>
 </div>
+</div>
 
-  <ng-template #noOrder>
-    <p> No order now!</p>
+  <ng-template #noData>
+    <app-loader></app-loader>
   </ng-template>
 
 

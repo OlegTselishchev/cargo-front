@@ -132,6 +132,14 @@ export class NotificationService {
       this.notifications.push(notification);
     }
 
+    if (action === 'takeBoxError') {
+      const notification: Notification = new Notification();
+      notification.message = 'Inconsistency in the weight or volume of the box';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
+
     if (action === 'errorUpdate') {
       const notification: Notification = new Notification();
       notification.message = 'You have some issues with back. Please, try again';
