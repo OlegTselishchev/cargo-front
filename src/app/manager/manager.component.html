@@ -1,24 +1,9 @@
 <div class="bid-table">
 <div class="cont1">
+  
   <a routerLink = "/order" class = "button">
     CreateOrder
   </a>
-  <a routerLink = "/box" class = "button">
-    Box
-  </a>
-  <a routerLink = "/client" class = "button">
-    Receiver
-  </a>
-  <a routerLink = "/address" class = "button">
-    Address
-  </a>
-  <a routerLink = "/car" class = "button">
-    Car
-  </a>
-  <a routerLink = "/trailer" class = "button">
-    Trailer
-  </a>
-
 </div>
 
 <div  class="mat-elevation-z8 test" >
@@ -45,8 +30,6 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-
   </table>
 
   <mat-paginator   showFirstLastButtons
@@ -68,12 +51,7 @@
       <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'close'">delete</button>
       <button (click)="deleteById(order.id)" *ngIf="order.status.name == 'open'">delete</button>
       <button (click)="closeById(order.id)" *ngIf="order.status.name == ('implemented')">close</button>
-
     </ng-container>
-
   </div>
-
-</div>
-
 </div>
 
