@@ -52,6 +52,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 
 export function tokenGetter(){
@@ -112,6 +113,7 @@ export function tokenGetter(){
     MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    MatAutocompleteModule,
 
     JwtModule.forRoot({
         config: {

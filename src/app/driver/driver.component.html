@@ -4,15 +4,14 @@
 
     <label>driver:  </label>
     <input type="text" placeholder="lastName"
-           [(ngModel)]="searchDriverLastName"
-           value="{{driver1.lastName}} {{driver1.firstName}} {{driver1.middleName}}" />
+           value="{{driver.lastName}} {{driver.firstName}} {{driver.middleName}}" />
     <button (click)="myOrder()">My_Orders</button>
     <button (click)="fullOrders()">Full_Orders</button>
   </div>
 
 <div>
   <tr>
-    <td style="width: 30px" >Id</td>
+    <td style="width: 30px">Id</td>
     <td style="width: 100px">Фамилия</td>
     <td style="width: 100px">Имя</td>
     <td style="width: 120px">Отчество</td>
@@ -24,18 +23,16 @@
 </div>
 
 
-  <div>
-    <tr *ngFor="let c of clientList | clientFilterByEmail: searchDriverByEmail">
-      <a (click)="add(c.userId, c.lastName, c.firstName, c.middleName)" *ngIf="c.car">
-        <td style="width: 30px" >{{c.userId}}</td>
-        <td style="width: 100px">{{c.lastName}}</td>
-        <td style="width: 100px">{{c.firstName}}</td>
-        <td style="width: 120px">{{c.middleName}}</td>
-        <td style="width: 70px">{{c.phone}}</td>
-        <td style="width: 120px">{{c.email}}</td>
-        <td style="width: 70px">{{c.car.name}}</td>
-        <td style="width: 70px">{{c.car.liftingCapacity}}</td>
-      </a>
+  <div *ngIf="driver.car; else noOrder">
+    <tr>
+        <td style="width: 30px">{{driver.userId}}</td>
+        <td style="width: 100px">{{driver.lastName}}</td>
+        <td style="width: 100px">{{driver.firstName}}</td>
+        <td style="width: 120px">{{driver.middleName}}</td>
+        <td style="width: 70px">{{driver.phone}}</td>
+        <td style="width: 120px">{{driver.email}}</td>
+        <td style="width: 70px">{{driver.car.name}}</td>
+        <td style="width: 70px">{{driver.car.liftingCapacity}}</td>
     </tr>
   </div>
 </div>
@@ -91,7 +88,7 @@
     | orderFilterByLocCity: searchOrderLocCity
     | orderFilterByDestCity: searchOrderDestCity
     ">
-        <div *ngIf="((order.driver != null) && (order.driver.email == searchDriverByEmail) && (order.status.name == 'in_work'))">
+        <div *ngIf="((order.driver != null) && (order.driver.email == driverEmail) && (order.status.name == 'in_work'))">
           <app-order-list [modelOrder]="order"></app-order-list>
 
         <button (click)="modifyByIdStatusImplemented(order.id)" style="width: 120px" *ngIf="statusList.length">implemented{{order.id}}</button>
@@ -102,10 +99,10 @@
     </div>
 
   </div>
-
+</div>
 
   <ng-template #noOrder>
     <p> No order now!</p>
   </ng-template>
 
-</div>
+
