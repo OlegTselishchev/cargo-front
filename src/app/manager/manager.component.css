@@ -28,9 +28,8 @@
   color: rgba(255, 255, 255, 0.85);
   background-color: #2196f3;
 }
-  
+
 .id-table{
-  margin-left: 50%;
 }
 
 table {
@@ -39,9 +38,8 @@ table {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
   letter-spacing: 0.1rem;
-
-
 }
+
 .test{
   width: 60%;
 }

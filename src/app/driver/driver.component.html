@@ -18,7 +18,9 @@
     <td style="width: 70px">Телефон</td>
     <td style="width: 120px">Эл.адрес</td>
     <td style="width: 70px">Машина</td>
-    <td style="width: 70px">Грузоподемность</td>
+    <td style="width: 120px">Грузоподемность</td>
+    <td style="width: 100px">Объем</td>
+
   </tr>
 </div>
 
@@ -32,7 +34,8 @@
         <td style="width: 70px">{{driver.phone}}</td>
         <td style="width: 120px">{{driver.email}}</td>
         <td style="width: 70px">{{driver.car.name}}</td>
-        <td style="width: 70px">{{driver.car.liftingCapacity}}</td>
+        <td style="width: 120px">{{driver.car.liftingCapacity +  'кг'}}</td>
+        <td style="width: 100px">{{driver.car.volume + ' куб.м'}}</td>
     </tr>
   </div>
 </div>
@@ -58,7 +61,7 @@
       <td style="width: 80px">price</td>
       <td style="width: 150px">loc_city</td>
       <td style="width: 150px">dest_city</td>
-      <td style="width: 50px">weight</td>
+      <td style="width: 70px">weight, kg</td>
     </tr>
   </div>
 
@@ -75,7 +78,7 @@
       <div *ngIf="order.status.name == 'open'">
       <app-order-list [modelOrder]="order"></app-order-list>
 
-      <button (click)="modifyByIdStatusInWork(order.id)" style="width: 70px" *ngIf="statusList.length">take{{order.id}}</button>
+      <button (click)="modifyByIdStatusInWork(order.id, order.box.weight, order.box.volume)" style="width: 70px" *ngIf="statusList.length">take{{order.id}}</button>
       </div>
     </ng-container>
     </div>
