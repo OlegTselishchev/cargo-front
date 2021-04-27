@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {TrailerService} from "../services/trailer.service";
 import {NotificationService} from "../services/notification.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../profile/profile.component";

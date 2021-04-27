@@ -106,46 +106,6 @@ export class BoxComponent implements OnInit {
     this.location.back();
   }
 
-  // createBox():void{
-
-   //  // this.boxService.create(this.newBox)
-   //  //   .subscribe((response)=>{
-   //  //     if(response.)
-   //  //   })
-   // if(this.name != null &&
-   //   this.height != null &&
-   //   this.width != null &&
-   //   this.weight != null &&
-   //   this.client != null &&
-   //   this.tId != null
-   // ){
-   //   let type: TypeCargo = new TypeCargo();
-   //   type.typeId = this.tId;
-   //
-   //   let boxNew: Box = new Box();
-   //   boxNew.name = this.name;
-   //   boxNew.height = this.height;
-   //   boxNew.width = this.width;
-   //   boxNew.weight = this.weight;
-   //   boxNew.volume = this.width * this.width * this.height;
-   //   boxNew.typeCargo = type;
-   //   boxNew.client = this.client;
-   //
-   //   this.boxService.create(boxNew).subscribe(()=>{},
-   //     error => {
-   //       this.notificationService.add('createError');
-   //       setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
-   //     },
-   //     ()=>{this.showBoxAll();
-   //       this.notificationService.add('createOk');
-   //       setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
-   //   });
-   //
-   // }else {
-   //   this.notificationService.add('dataError');
-   //   setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-   // }
-
   createBox() {
     const addBox = this.dialog.open(CreateBoxComponent)
     addBox.afterClosed().subscribe(result => {
@@ -155,9 +115,6 @@ export class BoxComponent implements OnInit {
       }
     });
   };
-
-
-
 
   delete(id: number):void{
     this.boxService.deleteById(id).subscribe(() => {
