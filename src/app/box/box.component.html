@@ -5,14 +5,15 @@
 
 <div class="cont2">
   <input class="window" type="text" placeholder="name" [(ngModel)]="name"/>
-  <input class="window" type="text" placeholder="height" [(ngModel)]="height"/>
-  <input class="window" type="text" placeholder="width" [(ngModel)]="width"/>
-  <input class="window" type="text" placeholder="weight" [(ngModel)]="weight"/>
+  <input class="window" type="text" placeholder="height, cm" [(ngModel)]="height"/>
+  <input class="window" type="text" placeholder="width, cm" [(ngModel)]="width"/>
+  <input class="window" type="text" placeholder="weight, kg" [(ngModel)]="weight"/>
   <label>type</label>
   <select [(ngModel)]="tId">
     <option *ngFor="let t of typeCargoList" value="{{t.typeId}}"> {{t.name}} </option>
   </select>
 </div>
+
 
 <div  class="mat-elevation-z8 test">
   <mat-form-field class="search">
@@ -66,4 +67,9 @@
                    [pageSizeOptions]="[1, 5, 10]">
   </mat-paginator >
 </div>
+
+<ng-template #noData>
+ <app-loader></app-loader>
+</ng-template>
+
 

@@ -1,93 +1,104 @@
 <div class="cont3">
-  <a class="button" (click)="create()">Create</a>
-  <a class="button"  (click)="goBack()">Back</a>
+  <button (click)="goBack()">goBack</button>
+  <button (click)="create()">Order Create</button>
+  <button routerLink="/box">Box</button>
+  <button routerLink="/address">Address</button>
+</div>
 
-  <p>
-    <label>destination: </label>
-    <input type="text" placeholder="destination"
-           [(ngModel)]="searchDest"
-           value="{{dest.city}}"/>
+<div *ngIf="addressListLoc.length && addressListDest && clientList.length && boxList.length; else noData">
+  <div class="y">
+    <label>Destination</label>
+    <div *ngIf="addressListDest.length">
+
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search destination by city"
+               [formControl]="controlDest"
+               [matAutocomplete]="auto"
+               style="width: 300px"
+               [(ngModel)]="inputDest"
+               (blur)="clearDest()"
+               >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let dest of filteredAddressDest | async" [value]="dest.city+' '+dest.street+' '+dest.home+' '+dest.apartment" (click)="addDestination(dest)" >
+            {{dest.city}} {{dest.street}} {{dest.home}} {{dest.apartment}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+  </div>
 
 
-    <label> location: </label>
-    <input type="text" placeholder="location"
-           [(ngModel)]="searchLoc"
-           value="{{loc.city}}"/>
+<div class="y">
+  <label>Location</label>
+  <div *ngIf="addressListLoc.length">
 
-    <label>box: </label>
-    <input type="text" placeholder="box"
-           [(ngModel)]="searchBox"
-           value="{{box.name}}"/>
-
-
-    <label> receiver: </label>
-    <input type="text" placeholder="receiver"
-           [(ngModel)]="searchRec"
-           value="{{receiver.lastName}}"/>
-  </p>
+    <form class="example-form">
+      <input type="text"
+             placeholder="Search location by city"
+             [formControl]="controlLoc"
+             [matAutocomplete]="auto"
+             style="width: 300px"
+             [(ngModel)]="inputLoc"
+             (blur)="clearLoc()"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let loc of filteredAddressLoc | async" [value]="loc.city+' '+loc.street+' '+loc.home+' '+loc.apartment" (click)="addLocation(loc)" >
+          {{loc.city}} {{loc.street}} {{loc.home}} {{loc.apartment}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>
+  </div>
 </div>
 
 <div class="y">
+  <label>Receiver</label>
+  <div *ngIf="clientList.length">
 
-  <div class="cont4" *ngIf="addressList.length; else noDataAddress">
-    <tr *ngFor="let l of addressList | addressFilterByCity: searchDest">
-      <a (click)="addDest(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
-        <td style="width: 50px">{{l.country}}</td>
-        <td style="width: 100px">{{l.city}}</td>
-        <td style="width: 120px">{{l.street}}</td>
-        <td style="width: 50px">{{l.home}}</td>
-        <td style="width: 50px">{{l.apartment}}</td>
-      </a>
-    </tr>
+    <form class="example-form">
+      <input type="text"
+             placeholder="Search user by email"
+             [formControl]="controlReceiver"
+             [matAutocomplete]="auto"
+             style="width: 300px"
+             [(ngModel)]="inputRec"
+             (blur)="clearReceiver()"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let rec of filteredReceiver | async" [value]="rec.lastName+' '+rec.firstName+' '+rec.middleName" (click)="addReceiver(rec)" >
+          {{rec.lastName}} {{rec.firstName}} {{rec.middleName}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>
   </div>
-
-  <div class="cont4" *ngIf="addressList.length; else noDataAddress">
-    <tr *ngFor="let l of addressList | addressFilterByCity: searchLoc">
-      <a (click)="addLoc(l.addressId, l.country, l.city, l.street, l.home, l.apartment)">
-        <td style="width: 50px">{{l.country}}</td>
-        <td style="width: 100px">{{l.city}}</td>
-        <td style="width: 120px">{{l.street}}</td>
-        <td style="width: 50px">{{l.home}}</td>
-        <td style="width: 50px">{{l.apartment}}</td>
-      </a>
-    </tr>
-  </div>
-
-  <div class="cont4" *ngIf="boxList.length; else noDataBox">
-    <tr *ngFor="let b of boxList | boxFilterByName: searchBox | boxFilterByClientEmail:searchBoxClientEmail">
-      <a (click)="addBox(b.boxId, b.name)">
-        <td style="width: 100px">{{b.name}}</td>
-        <td style="width: 80px">{{b.weight}}</td>
-        <td style="width: 100px">{{b.volume}}</td>
-        <td style="width: 200px">{{b.typeCargo.name}}</td>
-      </a>
-    </tr>
-  </div>
-
-  <div class="cont4" *ngIf="clientList.length; else noDataClient">
-    <tr *ngFor="let c of clientList | clientFilterByLastN: searchRec">
-      <a (click)="addReceiver(c.userId, c.lastName, c.firstName)">
-        <td style="width: 100px">{{c.lastName}}</td>
-        <td style="width: 100px">{{c.firstName}}</td>
-        <td style="width: 120px">{{c.middleName}}</td>
-        <td style="width: 70px">{{c.phone}}</td>
-        <td style="width: 120px">{{c.email}}</td>
-      </a>
-    </tr>
-  </div>
-
 </div>
 
 
-<ng-template #noDataBox>
-  No data.
+<div class="y">
+  <label>Box</label>
+  <div *ngIf="boxList.length">
+
+    <form class="example-form">
+      <input type="text"
+             placeholder="Search box by name"
+             [formControl]="controlBox"
+             [matAutocomplete]="auto"
+             style="width: 300px"
+             [(ngModel)]="inputBox"
+             (blur)="clearBox()"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
+          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
+        </mat-option>
+      </mat-autocomplete>
+    </form>
+  </div>
+</div>
+</div>
+
+<ng-template #noData>
+  <app-loader></app-loader>
 </ng-template>
 
-<ng-template #noDataClient>
-  No data.
-</ng-template>
-
-<ng-template #noDataAddress>
-  No data.
-</ng-template>
 

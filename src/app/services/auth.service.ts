@@ -4,12 +4,13 @@ import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Auth} from "../model/auth.model";
 import {NotificationService} from "./notification.service";
-import {ProfileComponent} from "../profile/profile.component";
+import {Client} from "../model/client.model";
 
 export const ACCESS_TOKEN_KEY = 'token_key';
 export const ACCESS_USER_EMAIL = 'user_email';
 export const ACCESS_USER_ID = 'user_id';
 export const ACCESS_IS_DRIVER = 'isDriver';
+export const ACCESS_ROLE = 'role';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
@@ -29,6 +30,7 @@ export class AuthService {
          localStorage.setItem(ACCESS_USER_EMAIL, resp.email);
          localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
          localStorage.setItem(ACCESS_USER_ID, resp.id);
+         localStorage.setItem(ACCESS_ROLE, resp.role);
            this.router.navigate(['/profile']);
        },
        error => {
@@ -42,7 +44,7 @@ export class AuthService {
 
   }
 
-  public reg(regUser: Auth): void {
+  public reg(regUser: Client): void {
     this.http.post(this.urlReg, regUser).subscribe(() => {
       },
       error => {
@@ -86,6 +88,10 @@ export class AuthService {
 
   public getIsDriver(): string {
     return localStorage.getItem(ACCESS_IS_DRIVER);
+  }
+
+  public getRole(): string {
+    return localStorage.getItem(ACCESS_ROLE);
   }
 
   public  logout(){

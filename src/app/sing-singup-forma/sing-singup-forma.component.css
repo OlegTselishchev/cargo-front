@@ -195,10 +195,10 @@ input::placeholder {
 /* Login and signup forms */
 .user_options-forms {
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 30px;
   width: calc(50% - 30px);
-  min-height: 450px;
+  min-height: 510px;
   padding: 70px 40px;
   background-color: #fff;
   border-radius: 3px;
@@ -291,7 +291,7 @@ input::placeholder {
 .user_options-forms .user_forms-signup,
 .user_options-forms .user_forms-login {
   position: absolute;
-  top: 70px;
+  top: 15px;
   left: 40px;
   width: calc(100% - 80px);
   opacity: 0;

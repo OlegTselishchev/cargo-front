@@ -7,7 +7,7 @@ import {ClientService} from "../services/client.service";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
 import {NotificationService} from "../services/notification.service";
-import {Notification} from "../model/notification.model";
+
 
 @Component({
   selector: 'app-driver',
@@ -23,13 +23,10 @@ export class DriverComponent implements OnInit {
               public notificationService: NotificationService) { }
 
   public statusList: Status[] = [];
-  public clientList: Client[] = [];
   public orderList: Order[] = [];
-
-  driver1: Client = new Client();
-  searchDriverLastName: string = '';
-  searchDriverByEmail: string = this.authService.getAuthEmail();
-  isOrderFull: boolean = true;
+  public driver: Client = new Client();
+  public driverEmail: string = this.authService.getAuthEmail();
+  public isOrderFull: boolean = true;
 
   searchOrderName: string = '';
   searchOrderPrice: string = '';
@@ -40,8 +37,8 @@ export class DriverComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllOrder();
-    this.showClientAll();
     this.showStatusAll();
+    this.showClientByEmail();
   }
 
   showAllOrder(): void {
@@ -56,14 +53,17 @@ export class DriverComponent implements OnInit {
       });
   }
 
-  showClientAll(): void{
-    this.clientService.getClientAll().subscribe((data:Client[])=>{this.clientList = data},
+
+
+  showClientByEmail():void{
+    this.clientService.getClientByEmail(this.driverEmail).subscribe((data: Client)=>{this.driver = data},
       error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      this.notificationService.add('getError');
+      setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
       },
-      ()=>{console.log('getClient-ok')});
+      ()=>{console.log('getClientByEmail-ok')})
   }
+
 
   showStatusAll(): void{
     this.statusService.getStatus().subscribe((data: Status[])=> {this.statusList = data},
@@ -74,40 +74,68 @@ export class DriverComponent implements OnInit {
       ()=>{console.log('getStatus-ok')});
   }
 
-  public modifyByIdStatusInWork(id: number): void {
+  public modifyByIdStatusInWork(id: number, weight: number, volume: number): void {
 
-    let status: Status = this.statusList.find(x => x.name == 'in_work');
+    let carVolume = this.driver.car.volume;
+    let carLiftingCapacity= this.driver.car.liftingCapacity;
+    let trailerLiftingCapacity = 0;
+    let trailerVolume = 0;
 
-    const order: Order = {
-      id: id,
-      name: null,
-      destination: null,
-      location: null,
-      box: null,
-      price: null,
-      receiver: null,
-      status: status,
-      driver: this.driver1
-    };
-      if(id != null){
-        if(order.driver.userId != null && order.status != null){
-          this.orderService.modify(order).subscribe(()=>{},
+    if(this.driver.car.trailer != null){
+      trailerLiftingCapacity = this.driver.car.trailer.liftingCapacity;
+      trailerVolume = this.driver.car.trailer.volume;
+    }
+    
+      if((carVolume >= volume && carLiftingCapacity >= weight) ||
+      (trailerVolume >= volume && trailerLiftingCapacity >= weight)) {
+
+      let status: Status = this.statusList.find(x => x.name == 'in_work');
+
+      const order: Order = {
+        id: id,
+        name: null,
+        destination: null,
+        location: null,
+        box: null,
+        price: null,
+        receiver: null,
+        status: status,
+        driver: this.driver
+      };
+      if (id != null) {
+        if (order.driver.userId != null && order.status != null) {
+          this.orderService.modify(order).subscribe(() => {
+            },
             error => {
               this.notificationService.add('modifyError', id);
-              setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+              setTimeout(() => {
+                this.notificationService.remove('modifyError')
+              }, 2000);
             },
-            ()=>{this.showAllOrder();
+            () => {
+              this.showAllOrder();
               this.notificationService.add('modifyOk', id);
-              setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
-          });
-        }else {
+              setTimeout(() => {
+                this.notificationService.remove('modifyOk')
+              }, 2000);
+            });
+        } else {
           this.notificationService.add('dataError');
-          setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+          setTimeout(() => {
+            this.notificationService.remove('dataError')
+          }, 2000);
         }
-      }else {
+      } else {
         this.notificationService.add('dataError');
-        setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+        setTimeout(() => {
+          this.notificationService.remove('dataError')
+        }, 2000);
       }
+    } else {this.notificationService.add('takeBoxError');
+    setTimeout(()=>{
+      this.notificationService.remove('takeBoxError')
+    }, 2000);
+    }
   }
 
 
@@ -129,7 +157,7 @@ export class DriverComponent implements OnInit {
         price: null,
         receiver: null,
         status: status,
-        driver: this.driver1
+        driver: this.driver
       };
       if (id != null) {
         if (order.driver.userId != null && order.status != null) {
@@ -189,10 +217,10 @@ export class DriverComponent implements OnInit {
   }
 
   add(id: number, ln: string, fn: string, mn: string): void {
-    this.driver1.userId = id;
-    this.driver1.lastName = ln;
-    this.driver1.firstName = fn;
-    this.driver1.middleName = mn;
+    this.driver.userId = id;
+    this.driver.lastName = ln;
+    this.driver.firstName = fn;
+    this.driver.middleName = mn;
   }
 
   myOrder(): void {
