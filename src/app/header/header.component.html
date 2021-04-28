@@ -46,5 +46,14 @@ background-position: center right;"></div>
   <span class="buttonWhite__line buttonWhite__line--left"></span>
   Registration
 </a>
+  <a [matMenuTriggerFor]="menu" class = "button" *ngIf="isLoggedIn">
+    <span class="button__line button__line--top"></span>
+    <span class="button__line button__line--right"></span>
+    <span class="button__line button__line--bottom"></span>
+    <span class="button__line button__line--left"></span>Menu</a>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/profile">profile</button>
+    <button mat-menu-item routerLink="/maps">maps</button>
+  </mat-menu>
 </div>
 

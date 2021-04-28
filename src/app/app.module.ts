@@ -46,12 +46,14 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {MatMenuModule} from "@angular/material/menu";
 
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
 }
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,6 +105,7 @@ export function tokenGetter(){
     MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    MatMenuModule,
 
         JwtModule.forRoot({
                 config: {
