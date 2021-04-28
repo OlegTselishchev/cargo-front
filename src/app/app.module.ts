@@ -53,6 +53,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {CreateBoxComponent} from "./create-box/create-box.component";
 import {LoaderComponent} from "./loader/loader.component";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { LoaderComponent } from './loader/loader.component';
+
 
 
 export function tokenGetter(){
@@ -97,6 +100,7 @@ export function tokenGetter(){
     LoaderComponent,
   ],
 
+
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
 
@@ -117,6 +121,7 @@ export function tokenGetter(){
     MatSelectModule,
     MatMenuModule,
     MatIconModule,
+    MatAutocompleteModule,
 
     JwtModule.forRoot({
         config: {
