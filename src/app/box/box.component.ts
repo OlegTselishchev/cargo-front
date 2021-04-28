@@ -10,6 +10,8 @@ import {Client} from "../model/client.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {NotificationService} from "../services/notification.service";
+import {CreateBoxComponent} from "../create-box/create-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-box',
@@ -27,6 +29,7 @@ export class BoxComponent implements OnInit {
 
   constructor(public location: Location,
               public boxService: BoxService,
+              public dialog: MatDialog,
               public authService: AuthService,
               public typeService: TypeCargoService,
               public clientService: ClientService,
@@ -103,48 +106,16 @@ export class BoxComponent implements OnInit {
     this.location.back();
   }
 
-  createBox():void{
-    // this.boxService.create(this.newBox)
-    //   .subscribe((response)=>{
-    //     if(response.)
-    //   })
-   if(this.name != null &&
-     this.height != null &&
-     this.width != null &&
-     this.weight != null &&
-     this.client != null &&
-     this.tId != null
-   ){
-     let type: TypeCargo = new TypeCargo();
-     type.typeId = this.tId;
+  createBox() {
+    const addBox = this.dialog.open(CreateBoxComponent)
+    addBox.afterClosed().subscribe(result => {
+      if (result === "Yes") {
+        this.showBoxAll();
+      } else if (result === "error") {
+      }
+    });
+  };
 
-     let height = this.height / 100;
-     let width = this.width / 100;
-
-     let boxNew: Box = new Box();
-     boxNew.name = this.name;
-     boxNew.height = this.height;
-     boxNew.width = this.width;
-     boxNew.weight = this.weight;
-     boxNew.volume = height * width * width;
-     boxNew.typeCargo = type;
-     boxNew.client = this.client;
-
-     this.boxService.create(boxNew).subscribe(()=>{},
-       error => {
-         this.notificationService.add('createError');
-         setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
-       },
-       ()=>{this.showBoxAll();
-         this.notificationService.add('createOk');
-         setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
-     });
-
-   }else {
-     this.notificationService.add('dataError');
-     setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-   }
-  }
 
   delete(id: number):void{
     this.boxService.deleteById(id).subscribe(() => {

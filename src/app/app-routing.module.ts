@@ -11,7 +11,7 @@ import {BoxComponent} from "./box/box.component";
 import {SingSingupFormaComponent} from "./sing-singup-forma/sing-singup-forma.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {HomeComponent} from "./home/home.component";
-import {IconMenuComponent} from "./icon-menu/icon-menu.component";
+
 
 import {ProfileComponent} from "./profile/profile.component";
 
@@ -26,7 +26,6 @@ const routes: Routes = [
   {path: 'client', component: ClientComponent, canActivate: [AuthGuard]},
   {path: 'address', component: AddressComponent, canActivate: [AuthGuard]},
   {path: 'box', component: BoxComponent, canActivate: [AuthGuard]},
-  // {path:'/user', component:IconMenuComponent,canActivate: [AuthGuard]}
 ];
 
 @NgModule({
