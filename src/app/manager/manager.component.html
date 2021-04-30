@@ -1,30 +1,25 @@
-<div class="bid-table">
-<div class="cont1">
-  
-  <a routerLink = "/order" class = "button">
-    CreateOrder
-  </a>
-</div>
-
 <div  class="mat-elevation-z8 test" >
+  <div class="bid-table">
+    <div class="cont1">
+
+      <a routerLink = "/order" class = "button">
+        Create order
+      </a>
+    </div>
   <table mat-table [dataSource]="dataSource">
 
-    <!-- Position Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> id </th>
+      <th mat-header-cell *matHeaderCellDef> Id </th>
       <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-
-    <!-- Weight Column -->
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef> price </th>
+      <th mat-header-cell *matHeaderCellDef> Price </th>
       <td mat-cell *matCellDef="let element"> {{element.price}} </td>
     </ng-container>
 
@@ -35,7 +30,7 @@
   <mat-paginator   showFirstLastButtons
                    [length]="10"
                    [pageSize]="pageSize"
-                   [pageSizeOptions]="[1, 5, 10]">
+                   [pageSizeOptions]="[1, 3, 7]">
   </mat-paginator >
 
   <div class="cont4" *ngIf="orderList.length;">
@@ -55,3 +50,4 @@
   </div>
 </div>
 
+</div>
