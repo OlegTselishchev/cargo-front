@@ -148,7 +148,6 @@ export class BoxComponent implements OnInit {
    }
   }
 
-
   delete(id: number):void{
     this.boxService.deleteById(id).subscribe(() => {
       },
