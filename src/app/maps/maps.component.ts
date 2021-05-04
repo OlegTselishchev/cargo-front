@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 
 @Component({
   selector: 'app-maps',
@@ -22,6 +23,13 @@ export class MapsComponent implements OnInit {
       center: [37.6164917, 55.7528143], // starting position
       zoom: 12
     });
+
+    this.map.addControl(
+        new MapboxDirections({
+          accessToken: mapboxgl.accessToken
+        }),
+        'top-left'
+    );
 
   }
 
