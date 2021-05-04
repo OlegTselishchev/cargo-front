@@ -1,3 +1,4 @@
+
 .header{
   padding: 30px;
   text-align: center;
@@ -14,7 +15,9 @@ body{
   justify-content: center;
   align-items: center;
   height: 10vh;
+
   background-color: #333;
+
 }
 
 .button{
@@ -31,6 +34,7 @@ body{
   letter-spacing: 2px;
   overflow: hidden;
   transition: 0.2s;
+
 }
 
 .button__line{
@@ -186,18 +190,17 @@ body{
 }
 
 .user-icon{
-  bottom: 64px;
-  left: -7%;
+  box-shadow: 0 0  10px #ffffff, 0 0 40px #ffffff, 0 0 80px #ffffff;
   background-color: #ffffff;
   color: #2196f3;
   border-color: #2196f3;
   border-radius: 4px;
   margin-left: 99%;
+  /*position:relative;*/
 }
 .mat-icon{
   color: #2196f3;
 }
-
 
 
 

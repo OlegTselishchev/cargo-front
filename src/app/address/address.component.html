@@ -1,19 +1,19 @@
+<div class="cont1">
+  <a class="button-2" (click)="goBack()">Back</a>
+</div>
+
+<div class="cont2">
+  <input type="text" placeholder="add_country" [(ngModel)]="address.country"/>
+  <input type="text" placeholder="add_city" [(ngModel)]="address.city"/>
+  <input type="text" placeholder="add_street" [(ngModel)]="address.street"/>
+  <input type="text" placeholder="add_home" [(ngModel)]="address.home"/>
+  <input type="text" placeholder="add_apartment" [(ngModel)]="address.apartment"/>
+  <a class="button-1" (click)="addAddress()">Add</a>
+</div>
+
 <div  class="mat-elevation-z8 test"  *ngIf="addressList; else noAddress" >
-
-  <div class="cont1">
-    <a a routerLink="/order" class="button-2" (click)="goBack()">Back</a>
-  </div>
-
-  <div class="cont2">
-    <input type="text" placeholder="add_country" [(ngModel)]="address.country"/>
-    <input type="text" placeholder="add_city" [(ngModel)]="address.city"/>
-    <input type="text" placeholder="add_street" [(ngModel)]="address.street"/>
-    <input type="text" placeholder="add_home" [(ngModel)]="address.home"/>
-    <input type="text" placeholder="add_apartment" [(ngModel)]="address.apartment"/>
-    <a class="button-1" (click)="addAddress()">Add</a>
-  </div>
   <mat-form-field class="search">
-    <mat-label>Search</mat-label>
+    <mat-label>SEARCH</mat-label>
     <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
   </mat-form-field>
   <table mat-table [dataSource]="dataSource">
@@ -49,7 +49,7 @@
   <mat-paginator   showFirstLastButtons
                    [length]="10"
                    [pageSize]="pageSize"
-                   [pageSizeOptions]="[1, 3, 7]">
+                   [pageSizeOptions]="[1, 5, 10]">
   </mat-paginator >
 
 </div>

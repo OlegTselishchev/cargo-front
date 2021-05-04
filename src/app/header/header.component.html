@@ -1,7 +1,26 @@
 <div class = "header">
+<div *ngIf="isLoggedIn">
+  <button class="user-icon" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>person_outline</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink = "/profile">
+      <mat-icon> contacts</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item routerLink = "/order">
+      <mat-icon> local_shipping</mat-icon>
+      <span>My order</span>
+    </button>
+    <button mat-menu-item routerLink = "/" (click)="logout()" *ngIf="isLoggedIn" >
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Log Out</span>
+    </button>
+  </mat-menu>
+</div>
+
   <a routerLink="/">
   <div class = "button-logo" style="background: url(./assets/logo2.png);
-  margin-left: 3%;
   background-blend-mode: overlay;
     position: fixed;
     display: -webkit-inline-flex;
@@ -36,28 +55,5 @@ background-position: center right;"></div>
   <span class="buttonWhite__line buttonWhite__line--left"></span>
   Log In
 </a>
-  <div *ngIf="isLoggedIn">
-    <button class="user-icon" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-      <mat-icon>person_outline</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink = "/profile">
-        <mat-icon> contacts</mat-icon>
-        <span>Profile</span>
-      </button>
-      <button mat-menu-item routerLink = "/order">
-        <mat-icon> local_shipping</mat-icon>
-        <span>My order</span>
-      </button>
-      <button mat-menu-item routerLink = "/" (click)="logout()" *ngIf="isLoggedIn" >
-        <mat-icon>power_settings_new</mat-icon>
-        <span>Log Out</span>
-      </button>
-    </mat-menu>
-  </div>
-
-
 </div>
-
-
 
