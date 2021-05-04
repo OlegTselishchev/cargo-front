@@ -7,7 +7,6 @@ import {ClientService} from "../services/client.service";
 import {AuthService} from "../services/auth.service";
 import {StatusService} from "../services/status.service";
 import {NotificationService} from "../services/notification.service";
-import {Box} from "../model/box.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 

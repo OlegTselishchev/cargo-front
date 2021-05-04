@@ -30,25 +30,14 @@ export class ManagerComponent implements OnInit {
 
   public statusList: Status[] = [];
   public orderListByBoxClientIdAndStatusNotClose: Order[] = [];
-  //public orderListByBoxClientIdAndStatusClose: Order[] = [];
   STATUS_CLOSE:string = 'close';
   isLauderOrder: boolean = false;
   isLauderStatus: boolean = false;
 
-  // searchOrderName: string = '';
-  // searchOrderPrice: string = '';
-  //
-  // searchOrderWeight: string = '';
-  // searchOrderLocCity: string = '';
-  // searchOrderDestCity: string = '';
-  // searchOrderByBoxClientEmail: string = this.authService.getAuthEmail();
 
   ngOnInit(): void {
     this.fillTableOrder();
     this.getStatus();
-   // this.showAllOrderByBoxClientIdAndNotStatus();
-    //this.showAllOrderByBoxClientIdAndStatus()
-
   }
 
   fillTableOrder(){
@@ -73,32 +62,6 @@ export class ManagerComponent implements OnInit {
         ()=>{this.isLauderOrder = false},
         ()=>{this.isLauderOrder = true});
   }
-
-  // showAllOrderByBoxClientIdAndNotStatus(): void {
-  //   this.orderService.getOrderListByBoxClientIdAndNotStatus(this.authService.getClientId(), this.STATUS_CLOSE).subscribe((data:Order[])=>{this.orderListByBoxClientIdAndStatusNotClose = data},
-  //     error => {
-  //       this.notificationService.add('getError');
-  //       setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-  //     },
-  //     ()=>{
-  //       this.notificationService.add('getOk');
-  //       setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
-  //     });
-  // }
-
-  // showAllOrderByBoxClientIdAndStatus(): void {
-  //   this.orderService.getOrderListByBoxClientIdAndStatus(this.authService.getClientId(), this.STATUS_CLOSE).subscribe((data:Order[])=>{this.orderListByBoxClientIdAndStatusClose = data},
-  //     error => {
-  //       this.notificationService.add('getError');
-  //       setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-  //     },
-  //     ()=>{
-  //       this.notificationService.add('getOk');
-  //       setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
-  //     });
-  // }
-
-
 
   getStatus(): void{
     this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data},
@@ -149,8 +112,6 @@ export class ManagerComponent implements OnInit {
             setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
           },
           ()=>{
-            //this.showAllOrderByBoxClientIdAndNotStatus();
-            //this.showAllOrderByBoxClientIdAndStatus();
             this.fillTableOrder();
             this.notificationService.add('modifyOk', id);
             setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
