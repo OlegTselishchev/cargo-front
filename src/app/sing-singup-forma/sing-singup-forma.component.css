@@ -1,11 +1,8 @@
-/* General configurations */
 * {
   box-sizing: border-box;
-
 }
 
 body {
-  /*font-family: "Montserrat", sans-serif;*/
   font-size: 12px;
   line-height: 1em;
   font-family: "Montserrat", sans-serif;
@@ -29,6 +26,7 @@ input {
 input[type="submit"] {
   cursor: pointer;
 }
+
 input::-webkit-input-placeholder {
   font-size: 0.85rem;
   font-family: "Montserrat", sans-serif;
@@ -36,6 +34,7 @@ input::-webkit-input-placeholder {
   letter-spacing: 0.1rem;
   color: #ccc;
 }
+
 input::-moz-placeholder {
   font-size: 0.85rem;
   font-family: "Montserrat", sans-serif;
@@ -43,6 +42,7 @@ input::-moz-placeholder {
   letter-spacing: 0.1rem;
   color: #ccc;
 }
+
 input:-ms-input-placeholder {
   font-size: 0.85rem;
   font-family: "Montserrat", sans-serif;
@@ -58,7 +58,6 @@ input::placeholder {
   color: #ccc;
 }
 
-/* Animations */
 @-webkit-keyframes bounceLeft {
   0% {
     -webkit-transform: translate3d(100%, -50%, 0);
@@ -115,7 +114,7 @@ input::placeholder {
     transform: translate3d(100%, -50%, 0);
   }
 }
-/* Page background */
+
 .user {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -148,7 +147,6 @@ input::placeholder {
 
 }
 
-/* Registered and Unregistered user box and text */
 .user_options-registered,
 .user_options-unregistered {
   width: 50%;
@@ -192,32 +190,30 @@ input::placeholder {
   box-shadow: 0px 0px 40px 16px rgb(0, 204, 255);
 }
 
-/* Login and signup forms */
 .user_options-forms {
   position: absolute;
-  top: 20%;
-  left: 30px;
+  top: 50%;
+  left:30px;
   width: calc(50% - 30px);
-  min-height: 510px;
   padding: 70px 40px;
   background-color: #fff;
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   -webkit-transition: -webkit-transform 0.4s ease-in-out;
   transition: -webkit-transform 0.4s ease-in-out;
-  transition: transform 0.4s ease-in-out;
   transition: transform 0.4s ease-in-out, -webkit-transform 0.4s ease-in-out;
   -webkit-transform: translate3d(100%, -50%, 0);
   transform: translate3d(100%, -50%, 0);
-
 }
+
 .user_options-forms .user_forms-login {
   -webkit-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
 }
 .user_options-forms .forms_title {
-  margin-bottom: 45px;
+  margin-bottom: 5px;
+  text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1em;
@@ -227,7 +223,8 @@ input::placeholder {
   font-family: "Montserrat", sans-serif;
 }
 .user_options-forms .forms_field:not(:last-of-type) {
-  margin-bottom: 20px;
+  margin-bottom: 1px;
+
 }
 .user_options-forms .forms_field-input {
   width: 100%;
@@ -242,6 +239,8 @@ input::placeholder {
   transition: border-color 0.2s ease-in-out;
 
 }
+
+
 .user_options-forms .forms_field-input:focus {
   border-color: gray;
 }
@@ -270,6 +269,7 @@ input::placeholder {
   color: #b3b3b3;
 }
 .user_options-forms .forms_buttons-action {
+  margin-left: 70%;
   background-color: #2196f3;
   border-radius: 3px;
   padding: 10px 35px;
@@ -286,12 +286,25 @@ input::placeholder {
   background-color: #59acec;
   color: rgba(34, 34, 34, 0.85);
   background-color: #ffffff;
-  box-shadow: 0px 0px 40px 16px rgb(0, 204, 255);
+  box-shadow: 0px 0px 60px 4px rgb(0, 204, 255);
 }
-.user_options-forms .user_forms-signup,
-.user_options-forms .user_forms-login {
+.user_options-forms .user_forms-signup{
   position: absolute;
   top: 15px;
+  left: 40px;
+  width: calc(100% - 80px);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, -webkit-transform 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, -webkit-transform 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+
+}
+.user_options-forms .user_forms-login{
+  margin-bottom: 40%;
+  position: absolute;
+  top: 85px;
   left: 40px;
   width: calc(100% - 80px);
   opacity: 0;
@@ -318,13 +331,12 @@ input::placeholder {
   transform: translate3d(0, 0, 0);
   opacity: 1;
   visibility: visible;
-
 }
 
-/* Triggers */
 .user_options-forms.signup-click {
   -webkit-animation: bounceLeft 1s forwards;
   animation: bounceLeft 1s forwards;
+  min-height:360px;
 }
 .user_options-forms.signup-click .user_forms-signup {
   opacity: 1;
@@ -341,6 +353,7 @@ input::placeholder {
 .user_options-forms.login-click {
   -webkit-animation: bounceRight 1s forwards;
   animation: bounceRight 1s forwards;
+  min-height:280px;
 }
 .user_options-forms.login-click .user_forms-signup {
   opacity: 0;
