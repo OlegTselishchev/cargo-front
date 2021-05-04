@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AddressService} from "../services/address.service";
 import {ClientService} from "../services/client.service";
 import {BoxService} from "../services/box.service";

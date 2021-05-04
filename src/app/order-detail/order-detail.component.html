@@ -39,8 +39,8 @@
 
     <div *ngIf="ord.box; else noBox">
     <p>
-      Box: {{ord.box.boxId}} {{ord.box.name}} {{ord.box.height}} {{ord.box.width}}
-      {{ord.box.weight}} {{ord.box.volume}}
+      Box: {{ord.box.boxId}} {{ord.box.name}}  {{ord.box.height + 'cm'}}  {{ord.box.width + 'cm'}}
+      {{ord.box.weight + 'kg'}}  {{ord.box.volume.toFixed(4) + 'kbm'}}
     </p>
       <div  *ngIf="ord.box; else noBoxOwner">
         <p>
