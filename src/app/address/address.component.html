@@ -1,4 +1,5 @@
 
+
 <div>
 <!--<div *ngIf="isLauderAddress; else noData">-->
 
@@ -18,9 +19,8 @@
 
 
 <div  class="mat-elevation-z8 test">
-
   <mat-form-field class="search">
-    <mat-label>SEARCH</mat-label>
+    <mat-label>Search</mat-label>
     <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
   </mat-form-field>
 
@@ -69,10 +69,8 @@
   <mat-paginator   showFirstLastButtons
                    [length]="10"
                    [pageSize]="pageSize"
-                   [pageSizeOptions]="[1, 5, 10]">
-  </mat-paginator>
-</div>
-
+                   [pageSizeOptions]="[1, 3, 7]">
+  </mat-paginator >
 </div>
 
 <ng-template #noData>

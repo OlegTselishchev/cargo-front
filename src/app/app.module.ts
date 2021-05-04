@@ -39,7 +39,6 @@ import { OrderFilterByTypePipe } from './filter/order-filter-by-type.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { IconMenuComponent } from './icon-menu/icon-menu.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {MatMenuModule} from "@angular/material/menu";
@@ -52,6 +51,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {CreateBoxComponent} from "./create-box/create-box.component";
+import {LoaderComponent} from "./loader/loader.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { LoaderComponent } from './loader/loader.component';
 
@@ -101,6 +102,7 @@ export function tokenGetter(){
         LoaderComponent
     ],
 
+
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
 
@@ -113,10 +115,14 @@ export function tokenGetter(){
     MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
     MatAutocompleteModule,
 
     JwtModule.forRoot({
@@ -127,12 +133,6 @@ export function tokenGetter(){
       }
     ),
 
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatIconModule
   ],
   providers: [
     {

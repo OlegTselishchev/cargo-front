@@ -9,6 +9,8 @@ import {Client} from "../model/client.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {NotificationService} from "../services/notification.service";
+import {CreateBoxComponent} from "../create-box/create-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -27,6 +29,7 @@ export class BoxComponent implements OnInit {
 
   constructor(public location: Location,
               public boxService: BoxService,
+              public dialog: MatDialog,
               public authService: AuthService,
               public typeService: TypeCargoService,
               public notificationService: NotificationService
