@@ -53,7 +53,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {CreateBoxComponent} from "./create-box/create-box.component";
 import {LoaderComponent} from "./loader/loader.component";
-// import { LoginTestMaximComponent } from './login-test-maxim/login-test-maxim.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+
 
 
 export function tokenGetter(){
@@ -96,10 +97,7 @@ export function tokenGetter(){
     AddTrailerComponent,
     CreateBoxComponent,
     LoaderComponent,
-    // LoginTestMaximComponent,
-
   ],
-
 
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
@@ -121,6 +119,7 @@ export function tokenGetter(){
     MatSelectModule,
     MatMenuModule,
     MatIconModule,
+    MatAutocompleteModule,
 
     JwtModule.forRoot({
         config: {
