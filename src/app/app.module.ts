@@ -55,7 +55,6 @@ import {CreateBoxComponent} from "./create-box/create-box.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
-
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
 }
@@ -97,7 +96,6 @@ export function tokenGetter(){
     CreateBoxComponent,
     LoaderComponent,
   ],
-
 
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],
