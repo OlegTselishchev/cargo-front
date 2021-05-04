@@ -31,7 +31,7 @@ export class AuthService {
          localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
          localStorage.setItem(ACCESS_USER_ID, resp.id);
          localStorage.setItem(ACCESS_ROLE, resp.role);
-         this.router.navigate(['/profile']);
+           this.router.navigate(['/profile']);
        },
        error => {
          this.notificationService.add('loginError');
