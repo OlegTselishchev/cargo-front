@@ -24,13 +24,11 @@ export class MapsComponent implements OnInit {
       zoom: 12
     });
 
-    this.map.addControl(
-        new MapboxDirections({
-          accessToken: mapboxgl.accessToken
-        }),
-        'top-left'
-    );
-
+    // this.map.addControl(
+    //     new MapboxDirections({
+    //       accessToken: mapboxgl.accessToken
+    //     }),
+    //     'top-left'
+    // );
   }
-
 }
