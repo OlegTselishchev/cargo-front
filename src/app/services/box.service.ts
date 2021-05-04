@@ -20,10 +20,6 @@ export class BoxService {
     return this.http.get(this.boxUrl + id);
   }
 
-  public getBoxByClientId(id: string){
-    return this.http.get(this.boxUrl + 'byClientId/' + id);
-  }
-
   public create(box: Box) {
     return this.http.post(this.boxUrl, box,{observe: 'response'});
   }

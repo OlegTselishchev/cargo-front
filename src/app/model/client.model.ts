@@ -10,5 +10,4 @@ export class Client{
   driveCategory?: string;
   car?: Car;
   password?: string;
-
 }

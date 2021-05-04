@@ -14,7 +14,7 @@ import {NotificationService} from "../services/notification.service";
 })
 export class AddressComponent implements OnInit {
 
-  displayedColumns: string[] = ['addressId','country', 'city', 'street','home','apartment', 'delete'];
+  displayedColumns: string[] = ['country', 'city', 'street','home','apartment'];
   dataSource: any;
 
   public pageSize = 1;
@@ -23,31 +23,29 @@ export class AddressComponent implements OnInit {
   (MatPaginator) paginator: MatPaginator;
 
   public address: Address = new Address();
+  public searchByStreet: string = '';
+  public searchByCity: string = '';
+
+  public addressList: Address[];
 
   constructor(public addressService: AddressService,
               public location: Location,
               public notificationService: NotificationService) { }
 
-  isLauderAddress: boolean = false;
-
   ngOnInit(): void {
-    this.fillTableAddress();
-  }
+   this.getAddressAll();
 
-  fillTableAddress():void{
     this.addressService.getAddressAll().subscribe((result: Address[])=>{
       let array = [];
       result.forEach(function(item) {
-        array.push({"addressId":item.addressId, "country":item.country, "city":item.city, "street":item.street,"home":item.home,
+        console.log(item.country + "111");
+        array.push({"country":item.country, "city":item.city, "street":item.street,"home":item.home,
           "apartment":item.apartment});
       })
       this.dataSource  = new MatTableDataSource<any>(array);
       this.dataSource.paginator = this.paginator;
-    },
-      ()=>{this.isLauderAddress = false},
-      ()=>{this.isLauderAddress = true})
+    })
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -55,6 +53,17 @@ export class AddressComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getAddressAll():void{
+    this.addressService.getAddressAll().subscribe((data:Address[]) => {this.addressList = data;},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);});
   }
 
   delete(id: number) : void {
@@ -65,27 +74,35 @@ export class AddressComponent implements OnInit {
           setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
         },
         () => {
-          this.fillTableAddress();
+          this.getAddressAll();
           this.notificationService.add('deleteOk', id);
           setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
         });
   }
 
   addAddress(): void {
-    if (
-      this.address.country != null && this.address.country != '' &&
-      this.address.city != null && this.address.city != '' &&
-      this.address.street != null && this.address.street != '' &&
-      this.address.home != null && this.address.home !='' &&
-      this.address.apartment != null && this.address.apartment !=''
-    ){
-      this.addressService.create(this.address).subscribe(()=>{},
+
+    const address: Address = {
+      country: this.address.country,
+      city: this.address.city,
+      street: this.address.street,
+      home: this.address.home,
+      apartment: this.address.apartment
+    };
+
+    if (address.city != null && address.city !== '' &&
+      address.country != null && address.country !== '' &&
+      address.street != null && address.street !== '' &&
+      address.home != null && address.home !== '' &&
+      address.apartment != null && address.apartment !== '') {
+
+      this.addressService.create(address).subscribe(()=>{},
         error => {
           this.notificationService.add('createError');
           setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
           },
         ()=>{
-          this.fillTableAddress();
+          this.getAddressAll();
           this.notificationService.add('createOk');
           setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
           }

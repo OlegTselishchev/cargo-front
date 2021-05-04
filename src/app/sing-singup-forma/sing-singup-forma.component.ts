@@ -20,8 +20,8 @@ export class SingSingupFormaComponent implements OnInit {
   middleName;
   phone;
   email;
-  passwordPrimary;
-  passwordSecondary;
+  password1;
+  password2;
 
   constructor(public authService: AuthService,
               public notificationService: NotificationService) { }
@@ -47,11 +47,11 @@ export class SingSingupFormaComponent implements OnInit {
       && this.middleName != null && this.middleName != ''
       && this.phone != null && this.phone != ''
       && this.email != null && this.email != ''
-      && this.passwordPrimary != null && this.passwordPrimary != ''
-      && this.passwordSecondary != null && this.passwordSecondary != ''){
-      if(this.passwordPrimary == this.passwordSecondary) {
+      && this.password1 != null && this.password1 != ''
+      && this.password2 != null && this.password2 != ''){
+      if(this.password1 == this.password2) {
         this.regUser.email = this.email;
-        this.regUser.password = this.passwordPrimary;
+        this.regUser.password = this.password1;
         this.regUser.lastName = this.lastName;
         this.regUser.firstName = this.firstName;
         this.regUser.middleName = this.middleName;

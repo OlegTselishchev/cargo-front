@@ -35,6 +35,8 @@ export class ClientComponent implements OnInit {
         console.log(item.lastName + "111");
         array.push({"lastName":item.lastName, "firstName":item.firstName, "middleName":item.middleName,"phone":item.phone,
         "email":item.email,"category":item.driveCategory,"delUser":item.userId});
+        // ,"destination":item.destination,
+        //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
       })
       this.dataSource  = new MatTableDataSource<any>(array);
       this.dataSource.paginator = this.paginator;

@@ -4,6 +4,7 @@ import {BoxService} from "../services/box.service";
 import {AuthService} from "../services/auth.service";
 import {Box} from "../model/box.model";
 import {TypeCargoService} from "../services/typeCargo.service";
+import {ClientService} from "../services/client.service";
 import {TypeCargo} from "../model/typeCargo.model";
 import {Client} from "../model/client.model";
 import {MatTableDataSource} from "@angular/material/table";
@@ -12,14 +13,13 @@ import {NotificationService} from "../services/notification.service";
 import {CreateBoxComponent} from "../create-box/create-box.component";
 import {MatDialog} from "@angular/material/dialog";
 
-
 @Component({
   selector: 'app-box',
   templateUrl: './box.component.html',
   styleUrls: ['./box.component.css']
 })
 export class BoxComponent implements OnInit {
-  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo', 'delete'];
+  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo'];
   dataSource: any;
 
   public pageSize = 1;
@@ -32,48 +32,29 @@ export class BoxComponent implements OnInit {
               public dialog: MatDialog,
               public authService: AuthService,
               public typeService: TypeCargoService,
-              public notificationService: NotificationService
-             ) { }
+              public clientService: ClientService,
+              public notificationService: NotificationService) { }
 
   public typeCargoList: TypeCargo[] = [];
   public boxList: Box[] = [];
-
-  tId = null;
-  name = null;
-  height = null;
-  width = null;
-  weight = null;
-
-  isLoadingBox: boolean = false;
-  isLoadingType: boolean = false;
+  public client: Client = null;
+  newBox: Box = new Box();
 
   ngOnInit(): void {
-    this.fillTableBox();
-    this.showTypeAll();
-  }
+    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
+    this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
 
-
-  fillTableBox():void{
-    this.boxService.getBoxByClientId(this.authService.getClientId()).subscribe((result: Box[])=>{
+    this.boxService.getBoxAll().subscribe((result: Box[])=>{
       let array = [];
       result.forEach(function(item) {
-        array.push({
-          "boxId":item.boxId,
-          "name":item.name,
-          "weight":item.weight,
-          "volume":item.volume.toFixed(4),
-          "width":item.width,
-          "height":item.height,
-          "typeCargo":item.typeCargo.name});
-      })
+        console.log(item.name + "111");
+        array.push({"boxId":item.boxId, "name":item.name, "weight":item.weight,"volume":item.volume,"width":item.width, "height":item.height,
+        "typeCargo":item.typeCargo.name});
+        })
       this.dataSource  = new MatTableDataSource<any>(array);
       this.dataSource.paginator = this.paginator;
-    },
-      ()=>{this.isLoadingBox = false},
-      ()=>{this.isLoadingBox = true});
-
+    })
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -83,70 +64,57 @@ export class BoxComponent implements OnInit {
     }
   }
 
-  showTypeAll():void{
-    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
+  tId = null;
+  name = null;
+  height = null;
+  width = null;
+  weight = null;
+  searchBoxByClientEmail: string = this.authService.getAuthEmail();
+
+  showBoxAll():void{
+    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data,
       error => {
-        this.isLoadingType = false;
         this.notificationService.add('getError');
         setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
       },
-      ()=>{
-        this.isLoadingType = true;
-        console.log('getType - OK')});
+      ()=> {
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
+      });
+  }
+
+  showTypeAll():void{
+    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
+      error => {
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{console.log('getType - OK')});
+  }
+
+  showClientByEmail():void{
+    this.clientService.getClientByEmail(this.authService.getAuthEmail())
+      .subscribe((data:Client)=>{this.client = data},
+        error => {
+          this.notificationService.add('getError');
+          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+        },
+        ()=>{console.log('getClientByEmail - OK')});
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  createBox():void{
-    let client: Client = new Client();
-    client.userId = +this.authService.getClientId();
-
-   if(this.name != null &&
-     this.height != null &&
-     this.width != null &&
-     this.weight != null &&
-     client.userId != null &&
-     this.tId != null
-   ){
-     let type: TypeCargo = new TypeCargo();
-     type.typeId = this.tId;
-
-     let height = this.height / 100;
-     let width = this.width / 100;
-
-     let boxNew: Box = new Box();
-     boxNew.name = this.name;
-     boxNew.height = this.height;
-     boxNew.width = this.width;
-     boxNew.weight = this.weight;
-     boxNew.volume = height * width * width;
-     boxNew.typeCargo = type;
-     boxNew.client = client;
-
-     this.boxService.create(boxNew).subscribe(()=>{},
-       error => {
-         this.notificationService.add('createError');
-         setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
-       },
-       ()=>{
-         this.fillTableBox();
-         this.notificationService.add('createOk');
-         setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
-     });
-     this.name = null;
-     this.width = null;
-     this.weight = null;
-     this.height = null;
-     this.tId = null;
-
-
-   }else {
-     this.notificationService.add('dataError');
-     setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-   }
-  }
+  createBox() {
+    const addBox = this.dialog.open(CreateBoxComponent)
+    addBox.afterClosed().subscribe(result => {
+      if (result === "Yes") {
+        this.showBoxAll();
+      } else if (result === "error") {
+      }
+    });
+  };
 
   delete(id: number):void{
     this.boxService.deleteById(id).subscribe(() => {
@@ -156,7 +124,7 @@ export class BoxComponent implements OnInit {
         setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
       },
       () => {
-        this.fillTableBox();
+        this.showBoxAll();
         this.notificationService.add('deleteOk', id);
         setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
       });
