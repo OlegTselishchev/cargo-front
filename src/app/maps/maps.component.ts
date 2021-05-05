@@ -22,9 +22,11 @@ export class MapsComponent implements OnInit {
 
   order: Order = new Order();
   public map: mapboxgl.Map;
+  orderList: Order[];
 
 
   ngOnInit(): void {
+    this.showAllOrder;
 
     // this.showOrder(100);
 
@@ -38,23 +40,57 @@ export class MapsComponent implements OnInit {
       zoom: 11
     });
 
-    const directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      controls: {inputs: false, instructions: false}
-    });
+  //   const directions = new MapboxDirections({
+  //     accessToken: mapboxgl.accessToken,
+  //     controls: {inputs: false, instructions: false}
+  //   });
+  //
+  //   this.map.addControl(directions,'top-left');
+  //
+  //   this.map.on('load',  function() {
+  //     directions.setOrigin([49.33539479859789 , 53.53522587333123]); // can be address in form setOrigin("12, Elm Street, NY")
+  //     directions.setDestination([49.3031469 , 53.5116653]); // can be address
+  //   })
+  //
+  //   const marker = new mapboxgl.Marker({
+  //     draggable: false
+  //   })
+  //       .setLngLat([49.28035, 53.515266])
+  //       .addTo(this.map);
+  }
 
-    this.map.addControl(directions,'top-left');
+  createMarkers(){
+    for (var i = 0; i < this.orderList.length; i++) {
 
-    this.map.on('load',  function() {
-      directions.setOrigin([49.33539479859789 , 53.53522587333123]); // can be address in form setOrigin("12, Elm Street, NY")
-      directions.setDestination([49.3031469 , 53.5116653]); // can be address
-    })
+      var html = '<h1>' + this.orderList[i].name +'</h1><br>'+
+          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" >details</a>';
 
-    const marker = new mapboxgl.Marker({
-      draggable: false
-    })
-        .setLngLat([49.28035, 53.515266])
-        .addTo(this.map);
+      var popup = new mapboxgl.Popup({ offset: 25 })
+          .setHTML(html);
+
+      var el = document.createElement('div');
+      el.id = 'marker';
+
+      const marker = new mapboxgl.Marker({
+        draggable: false
+      })
+          .setLngLat([this.orderList[i].location.lng, this.orderList[i].location.lat])
+          .setPopup(popup)
+          .addTo(this.map);
+    }
+  }
+
+  showAllOrder(): void {
+    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
+        error => {
+          this.notificationService.add('getError');
+          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+        },
+        (result = 'complete')=>{
+          this.createMarkers();
+          this.notificationService.add('getOk');
+          setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
+        });
   }
 }
 
