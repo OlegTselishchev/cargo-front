@@ -1,15 +1,19 @@
-<div  class="mat-elevation-z8 test">
+
+
+<div  class="mat-elevation-z8 test" [hidden]="!isLoaderBox && !isLoaderType">
 
   <div class="cont1">
     <a class="button" (click)="createBox()">Create</a>
-    <a routerLink="/order" class = "button">Back</a>
+    <a class="button" (click)="goBack()">Back</a>
   </div>
 
   <mat-form-field class="search">
     <mat-label>SEARCH</mat-label>
     <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
   </mat-form-field>
+
   <table mat-table [dataSource]="dataSource">
+
     <ng-container matColumnDef="boxId">
       <th mat-header-cell *matHeaderCellDef> Box id </th>
       <td mat-cell *matCellDef="let element"> {{element.boxId}} </td>
@@ -45,6 +49,11 @@
       <td mat-cell *matCellDef="let element"> {{element.typeCargo}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element"> <button (click)="delete(element.boxId)">x</button> </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -58,3 +67,7 @@
 </div>
 
 
+
+<ng-container *ngIf="!isLoaderBox && !isLoaderType">
+  <app-loader></app-loader>
+</ng-container>
