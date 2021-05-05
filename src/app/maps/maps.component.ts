@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import {OrderService} from "../services/order.service";
 import {NotificationService} from "../services/notification.service";
 import {Router} from "@angular/router";
@@ -33,18 +32,6 @@ export class MapsComponent implements OnInit {
 
     this.createMap()
   }
-
-      // const directions = new MapboxDirections({
-      //   accessToken: mapboxgl.accessToken,
-      //   controls: {inputs: false, instructions: false}
-      // });
-      //
-      // this.map.addControl(directions,'top-left');
-      //
-      // this.map.on('load',  function() {
-      //   directions.setOrigin([49.33539479859789 , 53.53522587333123]); // can be address in form setOrigin("12, Elm Street, NY")
-      //   directions.setDestination([49.3031469 , 53.5116653]); // can be address
-      // })
 
   public createMap(){
     this.map = new mapboxgl.Map({

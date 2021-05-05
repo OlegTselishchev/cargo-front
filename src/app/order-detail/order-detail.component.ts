@@ -18,19 +18,35 @@ export class OrderDetailComponent implements OnInit {
               public location: Location,
               public orderService: OrderService) { }
 
-  public orderList: Order[] = [];
-  public orderDet: Order[] = [];
+
   public map: mapboxgl.Map;
+  public orderDet: Order;
+  public idOrder: number;
 
   ngOnInit(): void {
-    this.getOrderList();
-
+    this.idOrder = parseInt (this.route.snapshot.paramMap.get('id'))
+    this.getOrderDetails();
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
     this.createMap()
     this.createDirectional()
+
   }
+
+  getOrderDetails(): void {
+    this.orderService.showOrderById(this.idOrder).subscribe(data => {
+      this.orderDet = data;
+    }, error => {
+      console.log("error get profile");
+    });
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+
 
   createDirectional() {
     const directions = new MapboxDirections({
@@ -56,22 +72,4 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-
-
-
-
-  getOrderList(): void{
-    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
-      error => {alert('error get order')},
-      ()=>{this.getOrderDetails()});
-  }
-
-  getOrderDetails(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.orderDet = this.orderList.filter(o => o.id == id);
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
 }
