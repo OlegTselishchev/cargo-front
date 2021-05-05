@@ -22,14 +22,12 @@ export class MapsComponent implements OnInit {
 
   order: Order = new Order();
   public map: mapboxgl.Map;
-  orderList: Order[];
+  public orderList: Order[] = [];
 
 
   ngOnInit(): void {
+
     this.showAllOrder;
-
-    // this.showOrder(100);
-
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
@@ -40,24 +38,30 @@ export class MapsComponent implements OnInit {
       zoom: 11
     });
 
-  //   const directions = new MapboxDirections({
-  //     accessToken: mapboxgl.accessToken,
-  //     controls: {inputs: false, instructions: false}
-  //   });
-  //
-  //   this.map.addControl(directions,'top-left');
-  //
-  //   this.map.on('load',  function() {
-  //     directions.setOrigin([49.33539479859789 , 53.53522587333123]); // can be address in form setOrigin("12, Elm Street, NY")
-  //     directions.setDestination([49.3031469 , 53.5116653]); // can be address
-  //   })
-  //
-  //   const marker = new mapboxgl.Marker({
-  //     draggable: false
-  //   })
-  //       .setLngLat([49.28035, 53.515266])
-  //       .addTo(this.map);
-  }
+      // const directions = new MapboxDirections({
+      //   accessToken: mapboxgl.accessToken,
+      //   controls: {inputs: false, instructions: false}
+      // });
+      //
+      // this.map.addControl(directions,'top-left');
+      //
+      // this.map.on('load',  function() {
+      //   directions.setOrigin([49.33539479859789 , 53.53522587333123]); // can be address in form setOrigin("12, Elm Street, NY")
+      //   directions.setDestination([49.3031469 , 53.5116653]); // can be address
+      // })
+
+
+
+    var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+        'Construction on the Washington Monument began in 1848.'
+    );
+// create the marker
+    new mapboxgl.Marker()
+        .setLngLat([49.28035, 53.515266])
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(this.map);
+    }
+
 
   createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
@@ -67,10 +71,6 @@ export class MapsComponent implements OnInit {
 
       var popup = new mapboxgl.Popup({ offset: 25 })
           .setHTML(html);
-
-      var el = document.createElement('div');
-      el.id = 'marker';
-
       const marker = new mapboxgl.Marker({
         draggable: false
       })
