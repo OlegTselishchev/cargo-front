@@ -227,8 +227,9 @@ input::placeholder {
 
 }
 .user_options-forms .forms_field-input {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
+  width: 70%;
+  margin-left: 15%;
+  border-bottom: 1px solid #cccccc;
   padding: 6px 20px 6px 0;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
