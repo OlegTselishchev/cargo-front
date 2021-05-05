@@ -63,7 +63,7 @@ export class MapsComponent implements OnInit {
     }
 
 
-  createMarkers(){
+  public createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
 
       var html = '<h1>' + this.orderList[i].name +'</h1><br>'+
@@ -80,7 +80,7 @@ export class MapsComponent implements OnInit {
     }
   }
 
-  showAllOrder(): void {
+  public showAllOrder(): void {
     this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
         error => {
           this.notificationService.add('getError');
