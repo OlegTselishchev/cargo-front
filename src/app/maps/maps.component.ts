@@ -27,16 +27,12 @@ export class MapsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.showAllOrder;
+    this.showAllOrder();
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
-    this.map = new mapboxgl.Map({
-      container: 'map-mapbox', // container id
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [49.3859888, 53.5431899], // starting position
-      zoom: 11
-    });
+    this.createMap()
+  }
 
       // const directions = new MapboxDirections({
       //   accessToken: mapboxgl.accessToken,
@@ -50,18 +46,14 @@ export class MapsComponent implements OnInit {
       //   directions.setDestination([49.3031469 , 53.5116653]); // can be address
       // })
 
-
-
-    var popup = new mapboxgl.Popup({ offset: 25 }).setText(
-        'Construction on the Washington Monument began in 1848.'
-    );
-// create the marker
-    new mapboxgl.Marker()
-        .setLngLat([49.28035, 53.515266])
-        .setPopup(popup) // sets a popup on this marker
-        .addTo(this.map);
-    }
-
+  public createMap(){
+    this.map = new mapboxgl.Map({
+      container: 'map-mapbox', // container id
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [49.3859888, 53.5431899], // starting position
+      zoom: 11
+    });
+  }
 
   public createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
