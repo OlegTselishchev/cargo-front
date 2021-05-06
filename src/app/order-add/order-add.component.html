@@ -78,8 +78,7 @@
 
 <div class="y">
   <label>Box</label>
-  <div *ngIf="boxList.length">
-
+  <div *ngIf="boxList.length; else noBox">
     <form class="example-form">
       <input type="text"
              placeholder="Search box by name"
@@ -90,7 +89,7 @@
              (blur)="clearBox()"
       >
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
+        <mat-option *ngFor="let box of filteredBox | async" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
           {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
         </mat-option>
       </mat-autocomplete>
@@ -104,4 +103,8 @@
   <app-loader></app-loader>
 </ng-container>
 
-
+<ng-template #noBox>
+  <div>
+    You have no box! <a class="button-2" (click)="createBox()"> Create Box</a>
+  </div>
+</ng-template>
