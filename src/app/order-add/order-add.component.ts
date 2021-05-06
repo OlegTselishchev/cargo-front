@@ -44,7 +44,10 @@ export class OrderAddComponent implements OnInit {
   box: Box = new Box();
   receiver: Client = new Client();
 
-  isLocActive: boolean = false;
+  isLoaderAddress: boolean = false;
+  isLoaderBox: boolean = false;
+  isLoaderClient: boolean = false;
+  isLoaderStatus: boolean = false;
 
   searchBoxClientEmail: string = this.authService.getAuthEmail();
 
@@ -222,26 +225,34 @@ export class OrderAddComponent implements OnInit {
   showBox(): void {
     this.boxService.getBoxAll().subscribe((data: Box[]) => {
       this.boxList = data
-    });
+    },
+      ()=>{this.isLoaderBox = false;},
+      ()=>{this.isLoaderBox = true;});
   }
 
   showAddress(): void {
     this.addressService.getAddressAll().subscribe((data: Address[]) => {
       this.addressListDest = data;
       this.addressListLoc = data;
-    });
+    },
+      ()=>{this.isLoaderAddress = false;},
+      ()=>{this.isLoaderAddress = true;});
   }
 
   showClient(): void {
     this.clientService.getClientAll().subscribe((data: Client[]) => {
       this.clientList = data
-    });
+    },
+      ()=>{this.isLoaderClient = false;},
+      ()=>{this.isLoaderClient = true;});
   }
 
   showStatus(): void {
     this.statusService.getStatus().subscribe((data: Status[]) => {
       this.statusList = data
-    });
+    },
+      ()=>{this.isLoaderStatus = false;},
+      ()=>{this.isLoaderStatus = true;});
   }
 
 }

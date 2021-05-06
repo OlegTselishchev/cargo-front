@@ -15,7 +15,7 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'price'];
+  displayedColumns: string[] = ['id', 'name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'del/close'];
   dataSource: any;
 
   public pageSize = 1;
@@ -29,54 +29,58 @@ export class ManagerComponent implements OnInit {
               public notificationService: NotificationService) { }
 
   public statusList: Status[] = [];
-  public orderList: Order[] = [];
-
-  searchOrderName: string = '';
-  searchOrderPrice: string = '';
-  searchOrderWeight: string = '';
-  searchOrderLocCity: string = '';
-  searchOrderDestCity: string = '';
-  searchOrderByBoxClientEmail: string = this.authService.getAuthEmail();
+  public orderListByBoxClientIdAndStatusNotClose: Order[] = [];
+  STATUS_CLOSE:string = 'close';
+  isLoaderOrder: boolean = false;
+  isLoaderStatus: boolean = false;
 
   ngOnInit(): void {
-    // this.showAllOrder();
-    this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data});
-
-    this.orderService.getOrderList().subscribe((result: Order[])=>{
-      let array = [];
-      result.forEach(function(item) {
-        console.log(item.name + "111");
-        array.push({"id":item.id, "name":item.name, "price":item.price});
-      // ,"destination":item.destination,
-      //     "location":item.location, "box":item.box, "receiver":item.receiver, "status":item.status,"driver":item.driver
-      })
-      this.dataSource  = new MatTableDataSource<any>(array);
-      this.dataSource.paginator = this.paginator;
-    })
-
-    this.showAllOrder();
+    this.fillTableOrder();
     this.getStatus();
   }
 
-  showAllOrder(): void {
-    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
-      error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-      },
-      ()=>{
-        this.notificationService.add('getOk');
-        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
-      });
+  fillTableOrder(){
+    this.orderService.getOrderListByBoxClientIdAndNotStatus(this.authService.getClientId(), this.STATUS_CLOSE)
+      .subscribe((result: Order[])=>{
+          let array = [];
+          result.forEach(function(item) {
+            array.push({
+              "id":item.id,
+              "name":item.name,
+              "status": item.status,
+              "location":item.location.city,
+              "destination":item.destination.city,
+              "weight":item.box.weight,
+              "volume":item.box.volume.toFixed(4),
+              "price":item.price,
+              "del/close":item.status})
+          })
+          this.dataSource  = new MatTableDataSource<any>(array);
+          this.dataSource.paginator = this.paginator;
+        },
+        ()=>{this.isLoaderOrder = false},
+        ()=>{this.isLoaderOrder = true});
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   getStatus(): void{
     this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data},
       error => {
+      this.isLoaderStatus = false;
         this.notificationService.add('getError');
         setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
       },
-      ()=>{console.log('getStatus-ok')});
+      ()=>{
+      this.isLoaderStatus = true;
+      console.log('getStatus-ok')});
   }
 
   public deleteById(id: number): void {
@@ -85,7 +89,8 @@ export class ManagerComponent implements OnInit {
         this.notificationService.add('deleteError', id);
         setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
       },
-      ()=>{this.showAllOrder();
+      ()=>{
+      this.fillTableOrder()
         this.notificationService.add('deleteOk', id);
         setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
     });
@@ -113,7 +118,8 @@ export class ManagerComponent implements OnInit {
             this.notificationService.add('modifyError', id);
             setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
           },
-          ()=>{this.showAllOrder();
+          ()=>{
+            this.fillTableOrder()
             this.notificationService.add('modifyOk', id);
             setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
         });
