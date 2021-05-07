@@ -1,116 +1,157 @@
-<div *ngIf="orderList.length && statusList && driver; else noData">
-<div class="cont1">
-  <div>
-    <label>driver:  </label>
-    <input type="text"
-           value="{{driver.lastName}} {{driver.firstName}} {{driver.middleName}}"
-            style="width: 250px"/>
-    <button (click)="myOrder()">My_Orders</button>
-    <button (click)="fullOrders()">Full_Orders</button>
+
+
+<div class="mat-elevation-z8 test" [hidden]="!isLouderStatus &&
+ !isLoaderDriver && !isLoaderOrderStatusOpen && !isLoaderOrderStatusImplement">
+
+  <div class="cont1">
+    <a class="button" (click)="myOrder()">My Orders</a>
+    <a class="button" (click)="fullOrders()">Full Orders</a>
   </div>
 
-<div>
-  <tr>
-    <td style="width: 30px">Id</td>
-    <td style="width: 100px">Фамилия</td>
-    <td style="width: 100px">Имя</td>
-    <td style="width: 120px">Отчество</td>
-    <td style="width: 70px">Телефон</td>
-    <td style="width: 120px">Эл.адрес</td>
-    <td style="width: 70px">Машина</td>
-    <td style="width: 80px">Груз.под.</td>
-    <td style="width: 80px">Объем</td>
-    <td style="width: 80px" *ngIf="driver.car.trailer">Трейлер</td>
-    <td style="width: 80px" *ngIf="driver.car.trailer">Груз.под.</td>
-    <td style="width: 100px" *ngIf="driver.car.trailer">Объем</td>
-  </tr>
-</div>
+  <div *ngIf="isOrderFull">
 
-  <div *ngIf="driver.car">
-    <tr>
-        <td style="width: 30px">{{driver.userId}}</td>
-        <td style="width: 100px">{{driver.lastName}}</td>
-        <td style="width: 100px">{{driver.firstName}}</td>
-        <td style="width: 120px">{{driver.middleName}}</td>
-        <td style="width: 70px">{{driver.phone}}</td>
-        <td style="width: 120px">{{driver.email}}</td>
-        <td style="width: 70px">{{driver.car.name}}</td>
-        <td style="width: 80px">{{driver.car.liftingCapacity +  ' кг'}}</td>
-        <td style="width: 80px">{{driver.car.volume + ' куб.м'}}</td>
-        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.name}}</td>
-        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.liftingCapacity + ' кг'}}</td>
-        <td style="width: 80px" *ngIf="driver.car.trailer">{{driver.car.trailer.volume + ' куб.м'}}</td>
-    </tr>
-  </div>
-</div>
+    <mat-form-field class="search">
+      <mat-label>SEARCH</mat-label>
+      <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
+    </mat-form-field>
 
+    <table mat-table [dataSource]="dataSource">
 
-<div class="cont2">
-  <input type="text" placeholder="filterByName" [(ngModel)]="searchOrderName"/>
-  <input type="text" placeholder="filterByPrice" [(ngModel)]="searchOrderPrice"/>
-  <input type="text" placeholder="filterByWeight" [(ngModel)]="searchOrderWeight"/>
-  <input type="text" placeholder="filterByLoc_city" [(ngModel)]="searchOrderLocCity"/>
-  <input type="text" placeholder="filterByDest_city" [(ngModel)]="searchOrderDestCity"/>
-</div>
-
-
-<div class="cont3">
-
-  <div>
-    <tr>
-      <td style="width: 30px">id</td>
-      <td style="width: 80px">name</td>
-      <td style="width: 130px">status</td>
-      <td style="width: 80px">price</td>
-      <td style="width: 150px">loc_city</td>
-      <td style="width: 150px">dest_city</td>
-      <td style="width: 90px">weight, kg</td>
-      <td style="width: 100px">volume, kbm</td>
-    </tr>
-  </div>
-
-  <div class="cont33" *ngIf="orderList.length">
-
-    <div *ngIf="isOrderFull">
-    <ng-container *ngFor="let order of orderList
-    | orderFilterByName: searchOrderName
-    | orderFilterByPrice: searchOrderPrice
-    | orderFilterByWeight: searchOrderWeight
-    | orderFilterByLocCity: searchOrderLocCity
-    | orderFilterByDestCity: searchOrderDestCity
-    ">
-      <div *ngIf="order.status.name == 'open'">
-      <app-order-list [modelOrder]="order"></app-order-list>
-
-      <button (click)="modifyByIdStatusInWork(order.id, order.box.weight, order.box.volume)" style="width: 70px" *ngIf="statusList.length">take{{order.id}}</button>
-      </div>
-    </ng-container>
-    </div>
-
-    <div *ngIf="!isOrderFull">
-      <ng-container *ngFor="let order of orderList
-    | orderFilterByName: searchOrderName
-    | orderFilterByPrice: searchOrderPrice
-    | orderFilterByWeight: searchOrderWeight
-    | orderFilterByLocCity: searchOrderLocCity
-    | orderFilterByDestCity: searchOrderDestCity
-    ">
-        <div *ngIf="((order.driver != null) && (order.driver.email == driverEmail) && (order.status.name == 'in_work'))">
-          <app-order-list [modelOrder]="order"></app-order-list>
-
-        <button (click)="modifyByIdStatusImplemented(order.id)" style="width: 120px" *ngIf="statusList.length">implemented{{order.id}}</button>
-        <button (click)="back(order.id)" style="width: 70px" *ngIf="statusList.length">back</button>
-        </div>
-
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> <a routerLink="/orderDetail/{{element.id}}">{{element.id}}</a> </td>
       </ng-container>
-    </div>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="loc">
+        <th mat-header-cell *matHeaderCellDef> Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.loc}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dest">
+        <th mat-header-cell *matHeaderCellDef> Destination </th>
+        <td mat-cell *matCellDef="let element"> {{element.dest}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="volume">
+        <th mat-header-cell *matHeaderCellDef> Volume </th>
+        <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="take">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element"> <button (click)="modifyByIdStatusInWork(element.id, element.weight, element.volume )">Take</button> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator   showFirstLastButtons
+                     [length]="10"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[1, 3, 7]">
+    </mat-paginator>
 
   </div>
-</div>
+
+
+  <div *ngIf="!isOrderFull">
+
+    <mat-form-field class="search">
+      <mat-label>SEARCH</mat-label>
+      <input  matInput (keyup)="applyFilter1($event)" placeholder="Ввод:" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource1">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> <a routerLink="/orderDetail/{{element.id}}">{{element.id}} </a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="loc">
+        <th mat-header-cell *matHeaderCellDef> Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.loc}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dest">
+        <th mat-header-cell *matHeaderCellDef> Destination </th>
+        <td mat-cell *matCellDef="let element"> {{element.dest}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="volume">
+        <th mat-header-cell *matHeaderCellDef> Volume </th>
+        <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef> Weight </th>
+        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="impl">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"> <button (click)="modifyByIdStatusImplemented(element.id)">Impl{{element.id}}</button> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="back">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"> <button (click)="modifyStatusOpen(element.id)">Back{{element.id}}</button> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+    </table>
+
+    <mat-paginator   showFirstLastButtons
+                     [length]="10"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[1, 3, 7]">
+    </mat-paginator>
+  </div>
+
 </div>
 
-  <ng-template #noData>
-    <app-loader></app-loader>
-  </ng-template>
+
+<ng-container *ngIf="!isLouderStatus && !isLoaderDriver && !isLoaderOrderStatusOpen && !isLoaderOrderStatusImplement">
+  <app-loader></app-loader>
+</ng-container>
 
 

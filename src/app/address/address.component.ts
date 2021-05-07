@@ -6,6 +6,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 
 import {NotificationService} from "../services/notification.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateAddressComponent} from "../create-address/create-address.component";
 
 @Component({
   selector: 'app-address',
@@ -14,7 +16,7 @@ import {NotificationService} from "../services/notification.service";
 })
 export class AddressComponent implements OnInit {
 
-  displayedColumns: string[] = ['country', 'city', 'street','home','apartment'];
+  displayedColumns: string[] = ['addressId','country', 'city', 'street','home','apartment', 'delete'];
   dataSource: any;
 
   public pageSize = 1;
@@ -22,30 +24,37 @@ export class AddressComponent implements OnInit {
   @ViewChild
   (MatPaginator) paginator: MatPaginator;
 
-  public address: Address = new Address();
-  public searchByStreet: string = '';
-  public searchByCity: string = '';
-
-  public addressList: Address[];
-
   constructor(public addressService: AddressService,
               public location: Location,
-              public notificationService: NotificationService) { }
+              public notificationService: NotificationService,
+              public dialog: MatDialog) { }
+
+  public isLoaderAddress: boolean = false;
 
   ngOnInit(): void {
-   this.getAddressAll();
-
-    this.addressService.getAddressAll().subscribe((result: Address[])=>{
-      let array = [];
-      result.forEach(function(item) {
-        console.log(item.country + "111");
-        array.push({"country":item.country, "city":item.city, "street":item.street,"home":item.home,
-          "apartment":item.apartment});
-      })
-      this.dataSource  = new MatTableDataSource<any>(array);
-      this.dataSource.paginator = this.paginator;
-    })
+    this.fillTableAddress();
   }
+
+  fillTableAddress():void{
+    this.addressService.getAddressAll().subscribe((result: Address[])=>{
+        let array = [];
+        result.forEach(function(item) {
+          array.push({"addressId":item.addressId, "country":item.country, "city":item.city, "street":item.street,"home":item.home,
+            "apartment":item.apartment});
+        })
+        this.dataSource  = new MatTableDataSource<any>(array);
+        this.dataSource.paginator = this.paginator;
+      },
+      ()=>{
+      this.isLoaderAddress = false;
+      this.notificationService.add('getError');
+      setTimeout(()=>{this.notificationService.remove('getError')}, 2000)},
+      ()=>{
+      this.isLoaderAddress = true;
+      this.notificationService.add('getOk');
+      setTimeout(()=>{this.notificationService.remove('getOk')}, 2000)})
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -55,16 +64,6 @@ export class AddressComponent implements OnInit {
     }
   }
 
-  getAddressAll():void{
-    this.addressService.getAddressAll().subscribe((data:Address[]) => {this.addressList = data;},
-      error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-      },
-      ()=>{
-        this.notificationService.add('getOk');
-        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);});
-  }
 
   delete(id: number) : void {
       this.addressService.delete(id).subscribe(() => {
@@ -74,49 +73,20 @@ export class AddressComponent implements OnInit {
           setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
         },
         () => {
-          this.getAddressAll();
+          this.fillTableAddress();
           this.notificationService.add('deleteOk', id);
           setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
         });
   }
 
-  addAddress(): void {
-
-    const address: Address = {
-      country: this.address.country,
-      city: this.address.city,
-      street: this.address.street,
-      home: this.address.home,
-      apartment: this.address.apartment
-    };
-
-    if (address.city != null && address.city !== '' &&
-      address.country != null && address.country !== '' &&
-      address.street != null && address.street !== '' &&
-      address.home != null && address.home !== '' &&
-      address.apartment != null && address.apartment !== '') {
-
-      this.addressService.create(address).subscribe(()=>{},
-        error => {
-          this.notificationService.add('createError');
-          setTimeout(()=>{this.notificationService.remove('createError')}, 2000);
-          },
-        ()=>{
-          this.getAddressAll();
-          this.notificationService.add('createOk');
-          setTimeout(()=>{this.notificationService.remove('createOk')}, 2000);
-          }
-        );
-
-      this.address.country = '';
-      this.address.city = '';
-      this.address.street = '';
-      this.address.home = '';
-      this.address.apartment = '';
-    } else {
-      this.notificationService.add('dataError');
-      setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-    }
+  createAddress():void{
+    const addAddress = this.dialog.open(CreateAddressComponent)
+    addAddress.afterClosed().subscribe(result => {
+      if (result === "Yes") {
+        this.fillTableAddress();
+      } else if (result === "error") {
+      }
+    });
   }
 
   goBack(): void {

@@ -26,6 +26,7 @@
   margin-left: 350px;
   background-color: white;
 }
+
 input{
   font-family: "Montserrat", sans-serif;
 }
@@ -62,7 +63,7 @@ table {
 * {box-sizing: border-box;}
 
 .test{
-  width: 60%;
+  width: 90%;
 }
 .mat-elevation-z8{
 background-color: white;

@@ -15,6 +15,8 @@ import {NotificationService} from "../services/notification.service";
 import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
+import {CreateBoxComponent} from "../create-box/create-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-order-add',
@@ -30,7 +32,8 @@ export class OrderAddComponent implements OnInit {
               public location: Location,
               public authService: AuthService,
               public statusService: StatusService,
-              public notificationService: NotificationService) {
+              public notificationService: NotificationService,
+              public dialog: MatDialog,) {
   }
 
   public addressListDest: Address[] = [];
@@ -44,9 +47,12 @@ export class OrderAddComponent implements OnInit {
   box: Box = new Box();
   receiver: Client = new Client();
 
-  isLocActive: boolean = false;
+  isLoaderAddress: boolean = false;
+  isLoaderBox: boolean = false;
+  isLoaderClient: boolean = false;
+  isLoaderStatus: boolean = false;
 
-  searchBoxClientEmail: string = this.authService.getAuthEmail();
+  //searchBoxClientEmail: string = this.authService.getAuthEmail();
 
 
   controlDest = new FormControl();
@@ -220,8 +226,12 @@ export class OrderAddComponent implements OnInit {
   }
 
   showBox(): void {
-    this.boxService.getBoxAll().subscribe((data: Box[]) => {
+    this.boxService.getBoxByClientId(this.authService.getClientId()).subscribe((data: Box[]) => {
       this.boxList = data
+    },
+      ()=>{this.isLoaderBox = false;},
+      ()=>{
+      this.isLoaderBox = true;
     });
   }
 
@@ -229,20 +239,36 @@ export class OrderAddComponent implements OnInit {
     this.addressService.getAddressAll().subscribe((data: Address[]) => {
       this.addressListDest = data;
       this.addressListLoc = data;
-    });
+    },
+      ()=>{this.isLoaderAddress = false;},
+      ()=>{this.isLoaderAddress = true;});
   }
 
   showClient(): void {
     this.clientService.getClientAll().subscribe((data: Client[]) => {
       this.clientList = data
-    });
+    },
+      ()=>{this.isLoaderClient = false;},
+      ()=>{this.isLoaderClient = true;});
   }
 
   showStatus(): void {
     this.statusService.getStatus().subscribe((data: Status[]) => {
       this.statusList = data
-    });
+    },
+      ()=>{this.isLoaderStatus = false;},
+      ()=>{this.isLoaderStatus = true;});
   }
+
+  createBox() {
+    const addBox = this.dialog.open(CreateBoxComponent)
+    addBox.afterClosed().subscribe(result => {
+      if (result === "Yes") {
+        this.showBox();
+      } else if (result === "error") {
+      }
+    });
+  };
 
 }
 

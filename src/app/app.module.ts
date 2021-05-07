@@ -54,8 +54,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {CreateBoxComponent} from "./create-box/create-box.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-
-
+import { CreateAddressComponent } from './create-address/create-address.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
@@ -97,6 +96,7 @@ export function tokenGetter(){
     AddTrailerComponent,
     CreateBoxComponent,
     LoaderComponent,
+    CreateAddressComponent,
   ],
 
   schemas: [
