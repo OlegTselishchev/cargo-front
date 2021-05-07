@@ -43,17 +43,7 @@ export class BoxComponent implements OnInit {
   ngOnInit(): void {
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
     this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
-
-    this.boxService.getBoxAll().subscribe((result: Box[])=>{
-      let array = [];
-      result.forEach(function(item) {
-        console.log(item.name + "111");
-        array.push({"boxId":item.boxId, "name":item.name, "weight":item.weight,"volume":item.volume,"width":item.width, "height":item.height,
-        "typeCargo":item.typeCargo.name});
-        })
-      this.dataSource  = new MatTableDataSource<any>(array);
-      this.dataSource.paginator = this.paginator;
-    })
+    this.showBoxAll();
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -72,34 +62,16 @@ export class BoxComponent implements OnInit {
   searchBoxByClientEmail: string = this.authService.getAuthEmail();
 
   showBoxAll():void{
-    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data,
-      error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-      },
-      ()=> {
-        this.notificationService.add('getOk');
-        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
-      });
-  }
-
-  showTypeAll():void{
-    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
-      error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-      },
-      ()=>{console.log('getType - OK')});
-  }
-
-  showClientByEmail():void{
-    this.clientService.getClientByEmail(this.authService.getAuthEmail())
-      .subscribe((data:Client)=>{this.client = data},
-        error => {
-          this.notificationService.add('getError');
-          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-        },
-        ()=>{console.log('getClientByEmail - OK')});
+    this.boxService.getBoxAll().subscribe((result: Box[])=>{
+      let array = [];
+      result.forEach(function(item) {
+        console.log(item.name + "111");
+        array.push({"boxId":item.boxId, "name":item.name, "weight":item.weight,"volume":item.volume,"width":item.width, "height":item.height,
+          "typeCargo":item.typeCargo.name});
+      })
+      this.dataSource  = new MatTableDataSource<any>(array);
+      this.dataSource.paginator = this.paginator;
+    })
   }
 
   goBack(): void {

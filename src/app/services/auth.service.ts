@@ -11,6 +11,7 @@ export const ACCESS_USER_EMAIL = 'user_email';
 export const ACCESS_USER_ID = 'user_id';
 export const ACCESS_IS_DRIVER = 'isDriver';
 export const ACCESS_ROLE = 'role';
+// export  const ACCESS_BOX = 'box';
 
 @Injectable({providedIn:'root'})
 export class AuthService {
@@ -31,6 +32,7 @@ export class AuthService {
          localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
          localStorage.setItem(ACCESS_USER_ID, resp.id);
          localStorage.setItem(ACCESS_ROLE, resp.role);
+         // localStorage.setItem(ACCESS_BOX,resp.id);
            this.router.navigate(['/profile']);
        },
        error => {
@@ -81,6 +83,9 @@ export class AuthService {
   public getAuthEmail(): string {
     return localStorage.getItem(ACCESS_USER_EMAIL);
   }
+//   public  getBox() : string{
+//     return  localStorage.getItem(ACCESS_BOX);
+// }
 
   public getClientId(): string {
     return localStorage.getItem(ACCESS_USER_ID);
