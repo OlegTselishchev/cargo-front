@@ -12,7 +12,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddTrailerComponent} from "../add-trailer/add-trailer.component";
 import {TrailerService} from "../services/trailer.service";
 import {NotificationService} from "../services/notification.service";
-import {Box} from "../model/box.model";
 
 @Component({
   selector: 'app-profile',
@@ -125,6 +124,3 @@ export class ProfileComponent implements OnInit {
 export interface DialogData {
   profile: Client;
 }
-// export interface DialogData {
-//   profile2: Box;
-// }

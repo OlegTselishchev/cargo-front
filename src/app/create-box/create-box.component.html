@@ -15,7 +15,7 @@
     <input class="window" type="text" placeholder="weight" [(ngModel)]="newBox.weight" [ngModelOptions]="{standalone: true}"/>
     </p>
     <label>type</label>
-    <select [formControl]="test" [(ngModel)]="newBox.typeCargo">
+    <select [formControl]="fControl" [(ngModel)]="newBox.typeCargo">
       <option *ngFor="let t of typeCargoList" [value]="t.typeId"> {{t.name}}</option>
     </select>
   </form>

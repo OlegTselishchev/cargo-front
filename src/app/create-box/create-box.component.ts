@@ -30,7 +30,7 @@ export class CreateBoxComponent implements OnInit {
   }
   public typeCargoList: TypeCargo[] = [];
   newBox: Box = new Box();
-  test = new FormControl();
+  fControl = new FormControl();
   public currentId: number = parseInt (this.authService.getClientId());
   profile: Client = new Client();
 
@@ -54,7 +54,7 @@ export class CreateBoxComponent implements OnInit {
 
   onSubmit() {
     this.newBox.typeCargo = new TypeCargo();
-    this.newBox.typeCargo.typeId = this.test.value;
+    this.newBox.typeCargo.typeId = this.fControl.value;
     this.calculateVolume();
     this.boxService.create(this.newBox)
       .subscribe((response) => {
