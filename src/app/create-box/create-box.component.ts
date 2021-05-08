@@ -25,7 +25,7 @@ export class CreateBoxComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
   }
   public typeCargoList: TypeCargo[] = [];
-  newBox: Box;
+  public newBox: Box;
 
   tId = null;
   name = null;
@@ -38,6 +38,7 @@ export class CreateBoxComponent implements OnInit {
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
     this.newBox.client.userId = parseInt(this.authService.getClientId());
   }
+
   onSubmit() {
     this.boxService.create(this.newBox)
       .subscribe((response) => {

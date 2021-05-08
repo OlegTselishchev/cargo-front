@@ -15,6 +15,22 @@ export class OrderService {
     return this.http.get(this.urlOrder);
   }
 
+  public getOrderListByBoxClientIdAndNotStatus(id: string, status: string ){
+    return this.http.get(this.urlOrder + 'boxClientIdAndNotStatus/' + id + '/' + status);
+  }
+
+  public getOrderListByBoxClientIdAndStatus(id: string, status: string ){
+    return this.http.get(this.urlOrder + 'boxClientIdAndStatus/' + id + '/' + status);
+  }
+
+  public getOrderListByDriverIdAndStatus(id: string, status: string ){
+    return this.http.get(this.urlOrder + 'driverIdAndStatus/' + id + '/' + status);
+  }
+
+  public getOrderListByStatus(status: string ){
+    return this.http.get(this.urlOrder + 'status/' + status);
+  }
+
   public delete(id: number) {
     return this.http.delete(this.urlOrder + id);
   }

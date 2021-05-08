@@ -1,11 +1,13 @@
+<ng-container *ngIf="isLoaderAddress && isLoaderBox && isLoaderClient && isLoaderStatus">
+
 <div class="cont3">
-  <button (click)="goBack()">goBack</button>
-  <button (click)="create()">Order Create</button>
-  <button routerLink="/box">Box</button>
-  <button routerLink="/address">Address</button>
+  <button class="button" (click)="goBack()">goBack</button>
+  <button class="button" (click)="create()">Order Create</button>
+  <button class="button" routerLink="/box">Box</button>
+  <button class="button" routerLink="/address">Address</button>
 </div>
 
-<div *ngIf="addressListLoc.length && addressListDest && clientList.length && boxList.length; else noData">
+<div>
   <div class="y">
     <label>Destination</label>
     <div *ngIf="addressListDest.length">
@@ -76,8 +78,7 @@
 
 <div class="y">
   <label>Box</label>
-  <div *ngIf="boxList.length">
-
+  <div *ngIf="boxList.length; else noBox">
     <form class="example-form">
       <input type="text"
              placeholder="Search box by name"
@@ -88,7 +89,7 @@
              (blur)="clearBox()"
       >
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let box of filteredBox | async | boxFilterByClientEmail: searchBoxClientEmail" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
+        <mat-option *ngFor="let box of filteredBox | async" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
           {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
         </mat-option>
       </mat-autocomplete>
@@ -96,9 +97,14 @@
   </div>
 </div>
 </div>
+</ng-container>
 
-<ng-template #noData>
+<ng-container *ngIf="!isLoaderAddress && !isLoaderBox && !isLoaderClient && !isLoaderStatus">
   <app-loader></app-loader>
+</ng-container>
+
+<ng-template #noBox>
+  <div>
+    You have no box! <a class="button-2" (click)="createBox()"> Create Box</a>
+  </div>
 </ng-template>
-
-

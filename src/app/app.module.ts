@@ -55,8 +55,7 @@ import {CreateBoxComponent} from "./create-box/create-box.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { MapsComponent } from './maps/maps.component';
-
-
+import { CreateAddressComponent } from './create-address/create-address.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
@@ -99,8 +98,8 @@ export function tokenGetter(){
     CreateBoxComponent,
     LoaderComponent,
     MapsComponent,
+    CreateAddressComponent,
   ],
-
 
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA],

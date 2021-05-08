@@ -1,0 +1,27 @@
+
+<div class="body-box">
+  <h1 mat-dialog-title>CREATE ADDRESS</h1>
+  <div mat-dialog-content>
+    <form>
+      <p>
+        <input class="window" type="text"  name="country" placeholder="country" [(ngModel)]="newAddress.country"/>
+      </p>
+      <p>
+        <input class="window" type="text"  name="city" placeholder="city" [(ngModel)]="newAddress.city"/>
+      </p>
+      <p>
+        <input class="window" type="text"  name="street" placeholder="street" [(ngModel)]="newAddress.street"/>
+      </p>
+      <p>
+        <input class="window" type="text" name="home" placeholder="home" [(ngModel)]="newAddress.home"/>
+      </p>
+      <p>
+        <input class="window" type="text"  name="apartment" placeholder="apartment" [(ngModel)]="newAddress.apartment"/>
+      </p>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button class="button-create-box-popup" mat-button (click)="onNoClick()">Close</button>
+    <button class="button-create-box-popup" mat-button (click)="onSubmit()">Save</button>
+  </div>
+</div>
