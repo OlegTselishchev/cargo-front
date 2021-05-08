@@ -31,6 +31,7 @@ export class AuthService {
          localStorage.setItem(ACCESS_IS_DRIVER, resp.driver);
          localStorage.setItem(ACCESS_USER_ID, resp.id);
          localStorage.setItem(ACCESS_ROLE, resp.role);
+         // localStorage.setItem(ACCESS_BOX,resp.id);
            this.router.navigate(['/profile']);
        },
        error => {

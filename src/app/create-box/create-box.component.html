@@ -3,20 +3,20 @@
 <div mat-dialog-content>
   <form>
     <p>
-    <input class="window" type="text" name="name" placeholder="name" [(ngModel)]="name"/>
+    <input class="window" type="text" placeholder="name" [(ngModel)]="newBox.name" [ngModelOptions]="{standalone: true}"/>
     </p>
     <p>
-    <input class="window" type="text" name="height" placeholder="height" [(ngModel)]="height"/>
+    <input class="window" type="text" placeholder="height" [(ngModel)]="newBox.height" [ngModelOptions]="{standalone: true}"/>
     </p>
     <p>
-    <input class="window" type="text" name="width" placeholder="width" [(ngModel)]="width"/>
+    <input class="window" type="text" placeholder="width" [(ngModel)]="newBox.width" [ngModelOptions]="{standalone: true}"/>
     </p>
     <p>
-    <input class="window" type="text" name="weight" placeholder="weight" [(ngModel)]="weight"/>
+    <input class="window" type="text" placeholder="weight" [(ngModel)]="newBox.weight" [ngModelOptions]="{standalone: true}"/>
     </p>
     <label>type</label>
-    <select [(ngModel)]="tId">
-      <option *ngFor="let t of typeCargoList" value="{{t.typeId}}"> {{t.name}} </option>
+    <select [formControl]="fControl" [(ngModel)]="newBox.typeCargo">
+      <option *ngFor="let t of typeCargoList" [value]="t.typeId"> {{t.name}}</option>
     </select>
   </form>
 </div>
