@@ -45,8 +45,19 @@ export class MapsComponent implements OnInit {
   public createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
 
-      var html = '<h1>' + this.orderList[i].name +'</h1><br>'+
-          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" >details</a>';
+      var html = '<h2>' + this.orderList[i].box.name +'</h2>'+
+          '<b>To:</b><br> ' +
+          '<b>Country: </b> ' +
+          '<span>' + this.orderList[i].location.country + ' </span>' +
+          '<b>City: </b> ' +
+          '<span>' + this.orderList[i].location.city + ' </span><br>' +
+          '<b>Street: </b> ' +
+          '<span>' + this.orderList[i].location.street+ ' </span><br> ' +
+          '<b>Home: </b> ' +
+          '<span>' + this.orderList[i].location.home+ ' </span> ' +
+          '<b>Apartment: </b> ' +
+          '<span>' + this.orderList[i].location.apartment + '</span><br>' +
+          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" ><b>details</ b></a>';
 
       var popup = new mapboxgl.Popup({ offset: 25 })
           .setHTML(html);

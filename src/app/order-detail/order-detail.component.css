@@ -1,5 +1,46 @@
 #map-mapbox {
-    width: 75%;
-    height: 75%;
-    background-color: red;
+    width: 700px;
+    height: 450px;
+    background-color: black;
+    top: 10%;
+    left: 15%;
+    border: thick double #32a1ce;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: minmax(500px, auto);
+}
+
+.boxInformation{
+    display: grid;
+    grid-gap: 10px;
+    font-size: 15px;
+}
+
+.orderInformation{
+    display: grid;
+    grid-gap: 10px;
+    font-size: 15px;
+}
+
+.information{
+    display: grid;
+    grid-gap: 30px;
+    margin-left: 7%;
+    font-size: 15px;
+}
+
+.hr-shadow {
+    margin: 20px 0;
+    padding: 0;
+    height: 10px;
+    border: none;
+    border-top: 1px solid #333;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+
+.heading{
+    font-size: 20px;
 }
