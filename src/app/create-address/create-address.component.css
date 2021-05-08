@@ -24,7 +24,7 @@ form{
   border-width: 0 0 1px 0;
   border-color: white;
   outline: none;
-  color: gray;
+  color: #2196f3;
 
 
 }
@@ -47,6 +47,7 @@ form{
 }
 
 .button-create-box-popup:hover{
+  background-color: #59acec;
   color: rgba(255, 255, 255, 0.85);
   background-color: #2196f3;
 }

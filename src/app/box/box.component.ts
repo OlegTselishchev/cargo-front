@@ -6,7 +6,6 @@ import {Box} from "../model/box.model";
 import {TypeCargoService} from "../services/typeCargo.service";
 import {ClientService} from "../services/client.service";
 import {TypeCargo} from "../model/typeCargo.model";
-import {Client} from "../model/client.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {NotificationService} from "../services/notification.service";
@@ -19,7 +18,7 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./box.component.css']
 })
 export class BoxComponent implements OnInit {
-  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo'];
+  displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo', 'delete'];
   dataSource: any;
 
   public pageSize = 1;
@@ -37,24 +36,35 @@ export class BoxComponent implements OnInit {
 
   public typeCargoList: TypeCargo[] = [];
   public boxList: Box[] = [];
-  public client: Client = null;
-  newBox: Box = new Box();
+
+  public isLoaderBox: boolean = false;
+  public isLoaderType: boolean = false;
 
   ngOnInit(): void {
-    this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data});
-    this.clientService.getClientByEmail(this.authService.getAuthEmail()).subscribe((data:Client)=>{this.client = data});
-
-    this.boxService.getBoxAll().subscribe((result: Box[])=>{
-      let array = [];
-      result.forEach(function(item) {
-        console.log(item.name + "111");
-        array.push({"boxId":item.boxId, "name":item.name, "weight":item.weight,"volume":item.volume,"width":item.width, "height":item.height,
-        "typeCargo":item.typeCargo.name});
-        })
-      this.dataSource  = new MatTableDataSource<any>(array);
-      this.dataSource.paginator = this.paginator;
-    })
+    this.fillTableBox();
+    this.showTypeAll();
   }
+
+  fillTableBox():void{
+    this.boxService.getBoxByClientId(this.authService.getClientId()).subscribe((result: Box[])=>{
+        let array = [];
+        result.forEach(function(item) {
+          array.push({
+            "boxId":item.boxId,
+            "name":item.name,
+            "weight":item.weight,
+            "volume":item.volume.toFixed(4),
+            "width":item.width,
+            "height":item.height,
+            "typeCargo":item.typeCargo.name});
+        })
+        this.dataSource  = new MatTableDataSource<any>(array);
+        this.dataSource.paginator = this.paginator;
+      },
+      ()=>{this.isLoaderBox = false},
+      ()=>{this.isLoaderBox = true});
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -64,42 +74,17 @@ export class BoxComponent implements OnInit {
     }
   }
 
-  tId = null;
-  name = null;
-  height = null;
-  width = null;
-  weight = null;
-  searchBoxByClientEmail: string = this.authService.getAuthEmail();
-
-  showBoxAll():void{
-    this.boxService.getBoxAll().subscribe((data: Box[]) => this.boxList = data,
-      error => {
-        this.notificationService.add('getError');
-        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-      },
-      ()=> {
-        this.notificationService.add('getOk');
-        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000);
-      });
-  }
-
   showTypeAll():void{
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
       error => {
+        this.isLoaderType = false;
         this.notificationService.add('getError');
         setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
       },
-      ()=>{console.log('getType - OK')});
-  }
-
-  showClientByEmail():void{
-    this.clientService.getClientByEmail(this.authService.getAuthEmail())
-      .subscribe((data:Client)=>{this.client = data},
-        error => {
-          this.notificationService.add('getError');
-          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
-        },
-        ()=>{console.log('getClientByEmail - OK')});
+      ()=>{
+        this.isLoaderType = true;
+        this.notificationService.add('getOk');
+        setTimeout(()=>{this.notificationService.remove('getOk')}, 2000)});
   }
 
   goBack(): void {
@@ -110,7 +95,7 @@ export class BoxComponent implements OnInit {
     const addBox = this.dialog.open(CreateBoxComponent)
     addBox.afterClosed().subscribe(result => {
       if (result === "Yes") {
-        this.showBoxAll();
+        this.fillTableBox();
       } else if (result === "error") {
       }
     });
@@ -124,7 +109,7 @@ export class BoxComponent implements OnInit {
         setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
       },
       () => {
-        this.showBoxAll();
+        this.fillTableBox();
         this.notificationService.add('deleteOk', id);
         setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
       });

@@ -1,4 +1,4 @@
-
+<div [hidden]="!isLoaderOrderList">
 <div *ngIf="orderDet.length; else noOrder">
   <div *ngFor="let ord of orderDet" class="block1">
     <strong>OrderId - {{ord.id}}:  {{ord.name}}   {{ord.price}}</strong>
@@ -103,6 +103,8 @@
   <p> No Destination!</p>
 </ng-template>
 
-<ng-template #load>
-  <p> load_order_details</p>
-</ng-template>
+</div>
+
+<ng-container *ngIf="!isLoaderOrderList">
+  <app-loader></app-loader>
+</ng-container>
