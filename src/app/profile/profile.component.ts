@@ -107,9 +107,6 @@ export class ProfileComponent implements OnInit {
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id)
         .subscribe(() => {
-            // this.notificationService.add('successfulUpdate');
-            // setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
-            // this.showClient()
           }, error => {
             this.notificationService.add('deleteError', this.profile.car.id);
             setTimeout(() => {
