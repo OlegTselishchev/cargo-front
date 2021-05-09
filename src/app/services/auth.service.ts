@@ -22,7 +22,7 @@ export class AuthService {
 
   private urlLog: string = 'http://localhost:9000/login';
   private urlReg: string = 'http://localhost:9000/reg';
-
+  private userAuth: Auth = new Auth();
 
   public login(auth: Auth): void {
      this.http.post(this.urlLog, auth).subscribe((resp:any)=>{
@@ -45,6 +45,9 @@ export class AuthService {
   }
 
   public reg(regUser: Client): void {
+    this.userAuth.email = regUser.email;
+    this.userAuth.password = regUser.password;
+
     this.http.post(this.urlReg, regUser).subscribe(() => {
       },
       error => {
@@ -54,6 +57,7 @@ export class AuthService {
         }, 2000);
       },
       () => {
+        this.login(this.userAuth);
         this.notificationService.add('regOk');
         setTimeout(() => {
           this.notificationService.remove('regOk')
@@ -88,6 +92,10 @@ export class AuthService {
 
   public getIsDriver(): string {
     return localStorage.getItem(ACCESS_IS_DRIVER);
+  }
+
+  public setIsDriver(isDriver: string): void{
+    localStorage.setItem(ACCESS_IS_DRIVER, isDriver);
   }
 
   public getRole(): string {

@@ -33,10 +33,12 @@ export class ProfileComponent implements OnInit {
   profile: Client = new Client();
   car: Car;
   orderList: Order [] = [];
+  orderListByDriverId: Order[] = [];
+  STATUS_IN_WORK: string = 'in_work';
 
   ngOnInit(): void {
     this.showClient();
-    this.showOrders()
+    this.showOrders();
   }
 
   addTrailer (){
@@ -104,11 +106,24 @@ export class ProfileComponent implements OnInit {
 
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id)
-      .subscribe( ()=> {
-        this.notificationService.add('successfulUpdate');
-        setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
-        this.showClient()
-      },error => {alert('error')});
+        .subscribe(() => {
+            // this.notificationService.add('successfulUpdate');
+            // setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
+            // this.showClient()
+          }, error => {
+            this.notificationService.add('deleteError', this.profile.car.id);
+            setTimeout(() => {
+              this.notificationService.remove('deleteError')
+            }, 2000);
+          },
+          () => {
+            this.authService.setIsDriver('false');
+            this.notificationService.add('deleteOk', this.profile.car.id);
+            setTimeout(() => {
+              this.notificationService.remove('deleteOk')
+            }, 2000);
+            this.showClient();
+          });
   }
 
   public  deleteTrailer(): void{
@@ -118,6 +133,20 @@ export class ProfileComponent implements OnInit {
           setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
           this.showClient()
         },error => {alert('error')});
+  }
+
+  public showOrderListByDriverId(): void{
+    this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_IN_WORK)
+      .subscribe((data:Order[])=>{this.orderListByDriverId = data;},
+        ()=>{this.notificationService.add('getError');
+                setTimeout(()=>{this.notificationService.remove('getError')}, 2000);},
+      ()=>{
+      if(this.orderListByDriverId[0] == null){
+        this.deleteCar();
+      }else {this.notificationService.add('deleteCarError');
+        setTimeout(()=>{this.notificationService.remove('deleteCarError')}, 2000);
+      }
+      });
   }
 }
 
