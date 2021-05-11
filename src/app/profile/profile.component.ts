@@ -132,7 +132,7 @@ export class ProfileComponent implements OnInit {
         },error => {alert('error')});
   }
 
-  public showOrderListByDriverId(): void{
+  public checkPossibilityOfDelete(): void{
     this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_IN_WORK)
       .subscribe((data:Order[])=>{this.orderListByDriverId = data;},
         ()=>{this.notificationService.add('getError');
