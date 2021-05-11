@@ -3,16 +3,19 @@
 <div mat-dialog-content>
   <form>
     <p>
-    <input class="window" type="text" placeholder="name" [(ngModel)]="newBox.name" [ngModelOptions]="{standalone: true}"/>
+    <input class="window" type="text" placeholder="name" [(ngModel)]="newBox.name" [ngModelOptions]="{standalone: true} "/>
     </p>
     <p>
-    <input class="window" type="text" placeholder="height" [(ngModel)]="newBox.height" [ngModelOptions]="{standalone: true}"/>
+    <input class="window" type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"
+           placeholder="height" [(ngModel)]="newBox.height" [ngModelOptions]="{standalone: true}"/>
     </p>
     <p>
-    <input class="window" type="text" placeholder="width" [(ngModel)]="newBox.width" [ngModelOptions]="{standalone: true}"/>
+    <input class="window" type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"
+           placeholder="width" [(ngModel)]="newBox.width" [ngModelOptions]="{standalone: true}"/>
     </p>
     <p>
-    <input class="window" type="text" placeholder="weight" [(ngModel)]="newBox.weight" [ngModelOptions]="{standalone: true}"/>
+    <input class="window" type="text" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"
+           placeholder="weight" [(ngModel)]="newBox.weight" [ngModelOptions]="{standalone: true}"/>
     </p>
     <label>type</label>
     <select [formControl]="fControl" [(ngModel)]="newBox.typeCargo">
