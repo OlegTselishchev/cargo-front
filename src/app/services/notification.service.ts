@@ -132,6 +132,14 @@ export class NotificationService {
       this.notifications.push(notification);
     }
 
+    if (action === 'deleteCarError') {
+      const notification: Notification = new Notification();
+      notification.message = 'you cannot delete car. you have not completed orders.';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
+
     if (action === 'takeBoxError') {
       const notification: Notification = new Notification();
       notification.message = 'Inconsistency in the weight or volume of the box';
