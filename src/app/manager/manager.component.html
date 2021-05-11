@@ -12,7 +12,7 @@
     <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
   </mat-form-field>
 
-  <table mat-table [dataSource]="dataSource">
+  <table class="table" mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Id </th>

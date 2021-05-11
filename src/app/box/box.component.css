@@ -2,6 +2,10 @@
   margin-left: 5%;
 }
 
+.table tr:hover td{
+  background-color: #f5f4f4;
+}
+
 .cont1 {
   width: 60%;
   padding: 5px;
@@ -23,7 +27,7 @@
 
 .search{
   font-family: "Montserrat", sans-serif;
-  margin-left: 350px;
+  margin-left: 550px;
   background-color: white;
 }
 
@@ -55,11 +59,17 @@ input{
 
 table {
   width: 100%;
-  font-size: 0.85rem;
+
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
   letter-spacing: 0.1rem;
 }
+table th{
+  font-size: 14px;
+  color: #020101;
+  font-weight: bold;
+}
+
 * {box-sizing: border-box;}
 
 .test{
