@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { OrderService} from "../services/order.service";
 import {Client} from "../model/client.model";
 import {Order} from "../model/order.model";
@@ -28,7 +28,7 @@ export class DriverComponent implements OnInit {
   displayedColumns1: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back'];
   dataSource1: any;
 
-  public pageSize = 1;
+  public pageSize = 7;
   @ViewChild('mapElement')
   mapElement: ElementRef;
   @ViewChild
@@ -39,7 +39,8 @@ export class DriverComponent implements OnInit {
               public clientService: ClientService,
               private authService: AuthService,
               public statusService: StatusService,
-              public notificationService: NotificationService) { }
+              public notificationService: NotificationService,
+              public cdr: ChangeDetectorRef) { }
 
   public statusList: Status[] = [];
   public orderList: Order[] = [];
@@ -59,30 +60,32 @@ export class DriverComponent implements OnInit {
     this.showStatusAll();
     this.showClientByEmail();
     this.fillTableOrderByStatusOpen();
-    this.fillTableOrderByDriverIdAndStatusInWork();
+    // this.fillTableOrderByDriverIdAndStatusInWork();
+    // this.createMap();
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
 
   }
 
-  // ngAfterViewInit(){
-  //   this.map = new mapboxgl.Map({
-  //     container: this.mapElement.nativeElement, // container id
-  //     style: 'mapbox://styles/mapbox/streets-v11',
-  //     center: [49.3859888, 53.5431899], // starting position
-  //     zoom: 11
-  //   });
-  //   this.map.addControl(
-  //       new mapboxgl.GeolocateControl({
-  //         positionOptions: {
-  //           enableHighAccuracy: false
-  //         },
-  //         trackUserLocation: true,
-  //         fitBoundsOptions: {maxZoom:11}
-  //       })
-  //   );
-  // }
+  ngAfterViewInit(){
+    console.log(this.mapElement)
+    this.map = new mapboxgl.Map({
+      container: this.mapElement.nativeElement, // container id
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [49.3859888, 53.5431899], // starting position
+      zoom: 11
+    });
+    this.map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: false
+          },
+          trackUserLocation: true,
+          fitBoundsOptions: {maxZoom:11}
+        })
+    );
+  }
 
   fillTableOrderByStatusOpen():void{
     this.orderService.getOrderListByStatus(this.STATUS_OPEN).subscribe((result: Order[])=>{
@@ -102,9 +105,7 @@ export class DriverComponent implements OnInit {
           this.orderList = result;
         this.dataSource  = new MatTableDataSource<any>(array);
         this.dataSource.paginator = this.paginator;
-        // this.createMap()
-        //   this.createMarkers();
-          // this.createMarkers();
+          this.createMarkers();
       },()=>{this.isLoaderOrderStatusOpen = false},
       ()=>{this.isLoaderOrderStatusOpen = true});
   }
@@ -336,7 +337,6 @@ export class DriverComponent implements OnInit {
   }
 
   // public createMap() {
-  //
   //   this.map = new mapboxgl.Map({
   //     container: this.mapElement.nativeElement, // container id
   //     style: 'mapbox://styles/mapbox/streets-v11',
