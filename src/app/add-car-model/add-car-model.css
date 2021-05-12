@@ -1,0 +1,61 @@
+.body-box{
+    color: #2196f3;
+    width: 450px;
+    text-align: center;
+}
+
+.mat-dialog-title{
+    font-family: "Montserrat", sans-serif;
+}
+form{
+    display: grid;
+    grid-gap: 15px;
+    width: 100%;
+    /*padding: 5px;*/
+    margin-left: -10px;
+    background-color: white;
+    border: solid 2px #ffffff;
+    overflow: auto;
+    text-decoration:none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+
+}
+.window{
+    text-align: center;
+    width: 50%;
+    font-family: "Montserrat", sans-serif;
+    border-width: 0 0 1px 0;
+    border-color: white;
+    outline: none;
+    color: gray;
+    font-size: 18px;
+
+}
+.window:hover{
+    border-width: 0 0 1px 0;
+    border-color: rgb(33, 150, 243);
+}
+
+.button-create-box-popup{
+    background-color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    color: #2196f3;
+    margin-left: 30%;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+    text-decoration:none;
+}
+
+.button-create-box-popup:hover{
+    color: rgba(255, 255, 255, 0.85);
+    background-color: #2196f3;
+}
+
+select{
+    border:none;
+    color: #2196f3;
+}

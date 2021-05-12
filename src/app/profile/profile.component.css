@@ -8,8 +8,10 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  /*grid-template-rows: minmax(600px, auto);*/
   grid-gap: 15px;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 1%;
+
 }
 
 .grid > div:nth-child(1){
@@ -64,7 +66,7 @@
 .button{
   background-color: #ffffff;
   border-radius: 3px;
-  /*padding:3px 3px;*/
+  padding:5px 10px;
   margin-left: 25%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
@@ -93,10 +95,10 @@
 }
 
 .buttonDeleteTrailer{
-  background-color: #ffffff;
+  background-color: white;
   border-radius: 3px;
-  /*padding:3px 3px;*/
-  margin-left: 26%;
+  padding:5px 10px;
+  margin-left: 27%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
@@ -117,8 +119,8 @@
 .buttonAddTrailer{
   background-color: #ffffff;
   border-radius: 3px;
-  /*padding:3px 3px;*/
-  margin-left: 31%;
+  padding:5px 10px;
+  margin-left: 32%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
@@ -139,8 +141,8 @@
 .buttonAddCar{
   background-color: #ffffff;
   border-radius: 3px;
-  /*padding:3px 3px;*/
-  margin-left: 35%;
+  padding:5px 10px;
+  margin-left: 37%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
@@ -161,8 +163,8 @@
 .editButton{
   background-color: #ffffff;
   border-radius: 3px;
-  /*padding:3px 3px;*/
-  margin-left: 30%;
+  padding:5px 10px;
+  margin-left: 31%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
@@ -184,8 +186,8 @@
 .buttonDeleteCar{
   background-color: #ffffff;
   border-radius: 3px;
-  /*padding:3px 3px;*/
-  margin-left: 31%;
+  padding:5px 10px;
+  margin-left: 32%;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;

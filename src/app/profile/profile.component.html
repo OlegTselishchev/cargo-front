@@ -3,7 +3,7 @@
     <div class="profile">
       <div class="heading">
         <b>Profile:</b>
-        <button mat-button class="editButton" (click)="edit()">Edit</button>
+        <a class="editButton" (click)="edit()">Edit</a>
         <hr align="left" width="300" size="4" color="#ff9900"/>
       </div>
       <div class="profileInformation">
@@ -28,8 +28,8 @@
     <div class="car">
       <div class="heading">
         <b>Car:</b>
-        <button *ngIf="profile.car != null" mat-button class="buttonDeleteCar" (click)="deleteCar()">Delete</button>
-        <button *ngIf="profile.car == null" mat-button class="buttonAddCar" (click)="addCar()">Add</button>
+        <a *ngIf="profile.car != null"  class="buttonDeleteCar" (click)="deleteCar()">Delete</a>
+        <a *ngIf="profile.car == null"  class="buttonAddCar" (click)="addCar()">Add</a>
         <hr align="left" width="300" size="4" color="#ff9900"/>
       </div>
       <div class="carInformation" *ngIf="profile.car != null">
@@ -39,19 +39,19 @@
         </div>
         <div>
           <b>Volume: </b>
-          <span>{{profile.car.volume}}</span><br>
+          <span>{{profile.car.volume}} kbm</span><br>
         </div>
         <div>
           <b>LiftingCapacity: </b>
-          <span>{{profile.car.liftingCapacity}}</span><br>
+          <span>{{profile.car.liftingCapacity}} kg</span><br>
         </div>
       </div>
     </div>
     <div class="trailer" *ngIf="profile.car != null">
       <div class="heading">
         <b>Trailer:</b>
-        <button *ngIf="profile.car?.trailer != null" mat-button class="buttonDeleteTrailer" (click)="deleteTrailer()">Delete</button>
-        <button *ngIf="profile.car?.trailer == null" mat-button class="buttonAddTrailer" (click)="addTrailer()">Add</button>
+        <a *ngIf="profile.car?.trailer != null"  class="buttonDeleteTrailer" (click)="deleteTrailer()">Delete</a>
+        <a *ngIf="profile.car?.trailer == null"  class="buttonAddTrailer" (click)="addTrailer()">Add</a>
         <hr align="left" width="300" size="4" color="#ff9900"/>
       </div>
       <div class="trailerInformation" *ngIf="profile.car?.trailer != null">
@@ -65,20 +65,14 @@
         </div>
         <div>
           <b>liftingCapacity: </b>
-          <span>{{profile.car.trailer?.liftingCapacity}}</span><br>
+          <span>{{profile.car.trailer?.liftingCapacity}} kg</span><br>
         </div>
         <div>
           <b>volume: </b>
-          <span>{{profile.car.trailer?.volume}}</span><br>
+          <span>{{profile.car.trailer?.volume}} kbm</span><br>
         </div>
       </div>
     </div>
-<!--    <div class="cont1" *ngIf="profile?.car == null">-->
-<!--      <button mat-button class="button" (click)="addCar()">New car</button>-->
-<!--    </div>-->
-<!--    <div class="cont1" *ngIf="profile.car?.trailer == null">-->
-<!--      <button mat-button class="button" (click)="addTrailer()">New trailer</button>-->
-<!--    </div>-->
   </div>
 
   <div class="orderHistory">

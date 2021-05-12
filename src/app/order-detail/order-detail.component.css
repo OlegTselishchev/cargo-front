@@ -11,6 +11,8 @@
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     grid-template-rows: minmax(500px, auto);
+    font-family: "Montserrat", sans-serif;
+
 }
 
 .boxInformation{
