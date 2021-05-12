@@ -64,7 +64,6 @@ export class BoxComponent implements OnInit {
       ()=>{this.isLoaderBox = false},
       ()=>{this.isLoaderBox = true});
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
