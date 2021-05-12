@@ -54,7 +54,11 @@ export class MapsComponent implements OnInit {
   public createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
 
-      var html = '<h2>' + this.orderList[i].box.name +'</h2>'+
+      var html = '<style>' +
+          '.text {font-family: Montserrat, sans-serif;}' +
+          '</style>' +
+          '<div class="text">' +
+          '<h2 style="font-family: Montserrat, sans-serif" >' + this.orderList[i].box.name +'</h2>'+
           '<b>To:</b><br> ' +
           '<b>Country: </b> ' +
           '<span>' + this.orderList[i].location.country + ' </span>' +
@@ -66,7 +70,8 @@ export class MapsComponent implements OnInit {
           '<span>' + this.orderList[i].location.home+ ' </span> ' +
           '<b>Apartment: </b> ' +
           '<span>' + this.orderList[i].location.apartment + '</span><br>' +
-          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" ><b>details</ b></a>';
+          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" ><b>details</ b></a>' +
+          '</div>';
 
       var popup = new mapboxgl.Popup({ offset: 25 })
           .setHTML(html);
