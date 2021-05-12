@@ -30,7 +30,7 @@ export class MapsComponent implements OnInit {
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
-    this.createMap()
+    this.createMap();
   }
 
   public createMap(){
@@ -40,6 +40,15 @@ export class MapsComponent implements OnInit {
       center: [49.3859888, 53.5431899], // starting position
       zoom: 11
     });
+    this.map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: false
+          },
+          trackUserLocation: true,
+          fitBoundsOptions: {maxZoom:11}
+        })
+    )
   }
 
   public createMarkers(){
@@ -71,7 +80,8 @@ export class MapsComponent implements OnInit {
   }
 
   public showAllOrder(): void {
-    this.orderService.getOrderList().subscribe((data:Order[])=>{this.orderList = data},
+    this.orderService.getOrderList().subscribe((data:Order[]) =>
+        {this.orderList = data},
         error => {
           this.notificationService.add('getError');
           setTimeout(()=>{this.notificationService.remove('getError')}, 2000);

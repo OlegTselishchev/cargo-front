@@ -14,9 +14,9 @@
         <b>Country: </b>
         <span>{{orderDet?.location.country}} </span>
         <b>City: </b>
-        <span>{{orderDet?.location.city}} </span>
+        <span>{{orderDet?.location.city}} </span><br>
         <b>Street: </b>
-        <span>{{orderDet?.location.street}} </span>
+        <span>{{orderDet?.location.street}} </span><br>
         <b>Home: </b>
         <span>{{orderDet?.location.home}} </span>
         <b>Apartment: </b>
@@ -27,9 +27,9 @@
         <b>Country: </b>
         <span>{{orderDet?.destination.country}} </span>
         <b>City: </b>
-        <span>{{orderDet?.destination.city}} </span>
+        <span>{{orderDet?.destination.city}} </span><br>
         <b>Street: </b>
-        <span>{{orderDet?.destination.street}} </span>
+        <span>{{orderDet?.destination.street}} </span><br>
         <b>Home: </b>
         <span>{{orderDet?.destination.home}} </span>
         <b>Apartment: </b>
@@ -85,10 +85,13 @@
           <span>{{orderDet?.driver?.lastName}} {{orderDet?.driver?.firstName}} {{orderDet?.driver?.middleName}}</span><br>
         </div>
       </div>
-      <div *ngIf="orderDet?.driver == null && isLoggedAndDriver">
-        <button mat-button >take order</button>
+      <div *ngIf="orderDet?.driver == null && isLoggedAndDriver" class="cont1">
+        <button mat-button class="button" (click)="modifyByIdStatusInWork()">take order</button>
       </div>
     </div>
   </div>
-  <div id="map-mapbox"></div>
+  <div class="mat-elevation-z8 test">
+    <div id="map-mapbox"></div>
+  </div>
+
 </div>

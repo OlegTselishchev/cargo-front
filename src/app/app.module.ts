@@ -56,6 +56,7 @@ import {LoaderComponent} from "./loader/loader.component";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { MapsComponent } from './maps/maps.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
@@ -122,6 +123,7 @@ export function tokenGetter(){
     MatMenuModule,
     MatIconModule,
     MatAutocompleteModule,
+    MatTabsModule,
 
     JwtModule.forRoot({
         config: {

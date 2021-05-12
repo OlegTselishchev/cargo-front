@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { OrderService} from "../services/order.service";
 import {Client} from "../model/client.model";
 import {Order} from "../model/order.model";
@@ -9,6 +9,10 @@ import {StatusService} from "../services/status.service";
 import {NotificationService} from "../services/notification.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {environment} from "../../environments/environment";
+import * as mapboxgl from 'mapbox-gl';
+import {Router} from "@angular/router";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 @Component({
@@ -25,11 +29,13 @@ export class DriverComponent implements OnInit {
   dataSource1: any;
 
   public pageSize = 1;
-
+  @ViewChild('mapElement')
+  mapElement: ElementRef;
   @ViewChild
   (MatPaginator) paginator: MatPaginator;
 
   constructor(public orderService: OrderService,
+              public router: Router,
               public clientService: ClientService,
               private authService: AuthService,
               public statusService: StatusService,
@@ -46,6 +52,7 @@ export class DriverComponent implements OnInit {
   public isLoaderOrderStatusImplement: boolean = false;
   public isLouderStatus: boolean = false;
   public isLoaderDriver: boolean = false;
+  public map: mapboxgl.Map;
 
 
   ngOnInit(): void {
@@ -53,7 +60,29 @@ export class DriverComponent implements OnInit {
     this.showClientByEmail();
     this.fillTableOrderByStatusOpen();
     this.fillTableOrderByDriverIdAndStatusInWork();
+
+    (mapboxgl as any).accessToken = environment.mapboxKey;
+
+
   }
+
+  // ngAfterViewInit(){
+  //   this.map = new mapboxgl.Map({
+  //     container: this.mapElement.nativeElement, // container id
+  //     style: 'mapbox://styles/mapbox/streets-v11',
+  //     center: [49.3859888, 53.5431899], // starting position
+  //     zoom: 11
+  //   });
+  //   this.map.addControl(
+  //       new mapboxgl.GeolocateControl({
+  //         positionOptions: {
+  //           enableHighAccuracy: false
+  //         },
+  //         trackUserLocation: true,
+  //         fitBoundsOptions: {maxZoom:11}
+  //       })
+  //   );
+  // }
 
   fillTableOrderByStatusOpen():void{
     this.orderService.getOrderListByStatus(this.STATUS_OPEN).subscribe((result: Order[])=>{
@@ -70,8 +99,12 @@ export class DriverComponent implements OnInit {
             "weight":item.box.weight
           });
         })
+          this.orderList = result;
         this.dataSource  = new MatTableDataSource<any>(array);
         this.dataSource.paginator = this.paginator;
+        // this.createMap()
+        //   this.createMarkers();
+          // this.createMarkers();
       },()=>{this.isLoaderOrderStatusOpen = false},
       ()=>{this.isLoaderOrderStatusOpen = true});
   }
@@ -300,6 +333,53 @@ export class DriverComponent implements OnInit {
   fullOrders():void {
     this.isOrderFull = true;
     this.fillTableOrderByStatusOpen();
+  }
+
+  // public createMap() {
+  //
+  //   this.map = new mapboxgl.Map({
+  //     container: this.mapElement.nativeElement, // container id
+  //     style: 'mapbox://styles/mapbox/streets-v11',
+  //     center: [49.3859888, 53.5431899], // starting position
+  //     zoom: 11
+  //   });
+  //   this.map.addControl(
+  //       new mapboxgl.GeolocateControl({
+  //         positionOptions: {
+  //           enableHighAccuracy: false
+  //         },
+  //         trackUserLocation: true,
+  //         fitBoundsOptions: {maxZoom:11}
+  //       })
+  //   );
+  // }
+
+  public createMarkers(){
+    for (var i = 0; i < this.orderList.length; i++) {
+
+      var html = '<h2>' + this.orderList[i].box.name +'</h2>'+
+          '<b>To:</b><br> ' +
+          '<b>Country: </b> ' +
+          '<span>' + this.orderList[i].location.country + ' </span>' +
+          '<b>City: </b> ' +
+          '<span>' + this.orderList[i].location.city + ' </span><br>' +
+          '<b>Street: </b> ' +
+          '<span>' + this.orderList[i].location.street+ ' </span><br> ' +
+          '<b>Home: </b> ' +
+          '<span>' + this.orderList[i].location.home+ ' </span> ' +
+          '<b>Apartment: </b> ' +
+          '<span>' + this.orderList[i].location.apartment + '</span><br>' +
+          '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" ><b>details</ b></a>';
+
+      var popup = new mapboxgl.Popup({ offset: 25 })
+          .setHTML(html);
+      const marker = new mapboxgl.Marker({
+        draggable: false
+      })
+          .setLngLat([this.orderList[i].location.lng, this.orderList[i].location.lat])
+          .setPopup(popup)
+          .addTo(this.map);
+    }
   }
 
 }
