@@ -1,59 +1,221 @@
 
-<h1> Welcome
-<p *ngIf="!isLoggedIn"> Please Sign In or Sign Up </p>
-<p *ngIf="isLoggedIn"> Success SignIn</p>
-</h1>
+<!--<h1> Welcome-->
+<!--<p *ngIf="!isLoggedIn"> Please Sign In or Sign Up </p>-->
+<!--<p *ngIf="isLoggedIn"> Success SignIn</p>-->
+<!--</h1>-->
 
-<div *ngIf="addressList.length && typeCargoList.length && orderList.length; else noOrder">
+<!--<div *ngIf="addressList.length && typeCargoList.length && orderList.length; else noOrder">-->
 
-<div>
-  <label>LocationByCity</label>
-  <select [(ngModel)]="locCity" >
-    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} {{a.street}} </option>
-  </select>
+<div  class="mat-elevation-z8 test"  [hidden]="!isLoaderType && !isLoaderAddress">
 
-  <label>DestinationByCity</label>
-  <select [(ngModel)]="destCity">
-    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} {{a.street}} </option>
-  </select>
+  <div class="cont1">
+    <a (click)="fillTableOrder()"  class = "button">
+      Find Orders
+    </a>
 
-  <input type="number" placeholder="price" [(ngModel)]="price"/>
+    <a class = "button" (click)="mapOn()" *ngIf="orderList.length && keyMap">
+      Map
+    </a>
 
-  <label>TypeCargo</label>
-  <select [(ngModel)]="type">
-    <option *ngFor="let t of typeCargoList" value="{{t.name}}"> {{t.name}} </option>
-  </select>
-</div>
-
-<div class="cont3" *ngIf="orderList.length && price">
-
-  <div>
-    <tr>
-      <td style="width: 30px">id</td>
-      <td style="width: 80px">name</td>
-      <td style="width: 130px">status</td>
-      <td style="width: 80px">price</td>
-      <td style="width: 150px">loc_city</td>
-      <td style="width: 150px">dest_city</td>
-      <td style="width: 80px">weight, kg</td>
-      <td style="width: 80px">volume, kbm</td>
-    </tr>
+    <a class = "button" (click)="mapOff()" *ngIf="!keyMap">
+      Table
+    </a>
   </div>
 
-  <div class="cont33" *ngIf="orderList.length">
-  <ng-container *ngFor="let order of orderList
-    | orderPrice: price
-    | orderFilterByLocCity: locCity
-    | orderFilterByDestCity: destCity
-    | orderFilterByType: type
-    ">
-    <app-order-list [modelOrder]="order"></app-order-list>
-  </ng-container>
+  <div class="cont1">
+    <div class="y">
+    <label>Location</label>
+    <div *ngIf="addressListLoc.length">
+
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search location by city"
+               [formControl]="controlLoc"
+               [matAutocomplete]="auto"
+               style="width: 280px"
+               [(ngModel)]="inputLoc"
+               (blur)="clearLoc()"
+        >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let loc of filteredAddressLoc | async" [value]="loc.city" (click)="addLocation(loc)" >
+            {{loc.city}}
+<!--            {{loc.street}} {{loc.home}} {{loc.apartment}}-->
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
   </div>
-</div>
+    <div class="y">
+    <label>Destination</label>
+    <div *ngIf="addressListDest.length">
+
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search destination by city"
+               [formControl]="controlDest"
+               [matAutocomplete]="auto"
+               style="width: 280px"
+               [(ngModel)]="inputDest"
+               (blur)="clearDest()"
+        >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let dest of filteredAddressDest | async" [value]="dest.city" (click)="addDestination(dest)" >
+            {{dest.city}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+  </div>
+    <div class="y">
+    <label>Type</label>
+    <div *ngIf="typeList.length">
+
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search by type"
+               [formControl]="controlType"
+               [matAutocomplete]="auto"
+               style="width: 180px"
+               [(ngModel)]="inputType"
+               (blur)="clearType()"
+        >
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let type of filteredType | async" [value]="type.name" (click)="addType(type)" >
+            {{type.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+  </div>
+    <div class="y">
+      <label>Price</label>
+      <div class="example-form">
+        <input type="number"  placeholder="price" [(ngModel)]="price"/>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-<ng-template #noOrder>
+<div *ngIf="!isMap">
+<div class="mat-elevation-z8 test" [hidden]="!isLoaderOrder">
+
+  <mat-form-field class="search">
+    <mat-label>SEARCH</mat-label>
+    <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
+  </mat-form-field>
+
+  <table class="table" mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> <a routerLink="/orderDetail/{{element.id}}">{{element.id}}</a> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loc">
+      <th mat-header-cell *matHeaderCellDef> Location </th>
+      <td mat-cell *matCellDef="let element"> {{element.loc}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dest">
+      <th mat-header-cell *matHeaderCellDef> Destination </th>
+      <td mat-cell *matCellDef="let element"> {{element.dest}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="volume">
+      <th mat-header-cell *matHeaderCellDef> Volume </th>
+      <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator   showFirstLastButtons
+                   [length]="10"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="[1, 3, 7]">
+  </mat-paginator>
+
+</div>
+
+</div>
+
+<div *ngIf="isMap">
+  MAP
+</div>
+
+<!--<div>-->
+<!--  <label>LocationByCity</label>-->
+<!--  <select [(ngModel)]="locCity" >-->
+<!--    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} {{a.street}} </option>-->
+<!--  </select>-->
+
+<!--  <label>DestinationByCity</label>-->
+<!--  <select [(ngModel)]="destCity">-->
+<!--    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} {{a.street}} </option>-->
+<!--  </select>-->
+
+<!--  <input type="number" placeholder="price" [(ngModel)]="price"/>-->
+
+<!--  <label>TypeCargo</label>-->
+<!--  <select [(ngModel)]="type">-->
+<!--    <option *ngFor="let t of typeCargoList" value="{{t.name}}"> {{t.name}} </option>-->
+<!--  </select>-->
+<!--</div>-->
+
+<!--<div class="y" *ngIf="orderList.length">-->
+
+<!--  <div>-->
+<!--    <tr>-->
+<!--      <td style="width: 30px">id</td>-->
+<!--      <td style="width: 80px">name</td>-->
+<!--      <td style="width: 130px">status</td>-->
+<!--      <td style="width: 80px">price</td>-->
+<!--      <td style="width: 150px">loc_city</td>-->
+<!--      <td style="width: 150px">dest_city</td>-->
+<!--      <td style="width: 80px">weight, kg</td>-->
+<!--      <td style="width: 80px">volume, kbm</td>-->
+<!--    </tr>-->
+<!--  </div>-->
+
+<!--  <div class="cont33" *ngIf="orderList.length">-->
+<!--  <ng-container *ngFor="let order of orderList">-->
+<!--    <app-order-list [modelOrder]="order"></app-order-list>-->
+<!--  </ng-container>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<ng-container *ngIf="!isLoaderAddress && !isLoaderType ">
+  <app-loader></app-loader>
+</ng-container>
+
+<!--<ng-container *ngIf="!isLoaderOrder ">-->
+<!--  <app-loader></app-loader>-->
+<!--</ng-container>-->
+
+<ng-template #noData>
   <app-loader></app-loader>
 </ng-template>
