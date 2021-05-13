@@ -14,6 +14,10 @@ export class AddressService {
     return this.http.get(this.urlAddress);
   }
 
+  public getAddressAllCityDistinct() {
+    return this.http.get(this.urlAddress + 'city');
+  }
+
   public delete(id: number)  {
     return this.http.delete(this.urlAddress + id);
   }
