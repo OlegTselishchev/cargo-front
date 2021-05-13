@@ -35,10 +35,6 @@ export class HomeComponent implements OnInit {
               private notificationService: NotificationService) { }
 
   public orderList: Order[] = [];
-  // public addressList: Address[] = [];
-  // public typeCargoList: TypeCargo[] = [];
-
-
   public addressListDest: Address[] = [];
   public addressListLoc: Address[] = [];
   public typeList: TypeCargo[] = [];
@@ -67,12 +63,8 @@ export class HomeComponent implements OnInit {
 
   inputDest: string = '';
   inputLoc: string = '';
-  inputType: string = '';
+  inputType: string ='';
 
-  // locCity: string;
-  // destCity: string;
-  // price: number;
-  // type: string;
 
   ngOnInit(): void {
     this.getAddressCityDistinct();
@@ -93,35 +85,7 @@ export class HomeComponent implements OnInit {
       map(value => this._filterType(value))
     );
 
-
-    // this.getAddress();
-
   }
-
-  // public get isLoggedIn(): boolean{
-  //   return this.authService.isAuthenticated()
-  // }
-
-  // public getAddress(): void{
-  //   this.addressService.getAddressAll().subscribe((data: Address[])=>{this.addressList = data;});
-  // }
-  //
-
-
-  // public getOrders(): void{
-  //   if(this.loc.addressId != null && this.dest.addressId != null && this.type.typeId != null && this.price != null) {
-  //     this.orderService.getOrderListByLocDestTypePrice(this.loc.addressId, this.dest.addressId, this.type.typeId, this.price)
-  //       .subscribe((data: Order[]) => {
-  //         this.orderList = data
-  //       },
-  //       error => {
-  //         alert('error get orders')
-  //       },
-  //       () => {
-  //         console.log('getOrders-OK')
-  //       });
-  //   } else {alert('error data xxxxxx')}
-  // }
 
 
   private _filterDest(value: string): Address[] {

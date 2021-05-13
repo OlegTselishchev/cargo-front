@@ -1,11 +1,4 @@
 
-<!--<h1> Welcome-->
-<!--<p *ngIf="!isLoggedIn"> Please Sign In or Sign Up </p>-->
-<!--<p *ngIf="isLoggedIn"> Success SignIn</p>-->
-<!--</h1>-->
-
-<!--<div *ngIf="addressList.length && typeCargoList.length && orderList.length; else noOrder">-->
-
 <div  class="mat-elevation-z8 test"  [hidden]="!isLoaderType && !isLoaderAddress">
 
   <div class="cont1">
@@ -39,7 +32,6 @@
         <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let loc of filteredAddressLoc | async" [value]="loc.city" (click)="addLocation(loc)" >
             {{loc.city}}
-<!--            {{loc.street}} {{loc.home}} {{loc.apartment}}-->
           </mat-option>
         </mat-autocomplete>
       </form>
@@ -166,55 +158,11 @@
   MAP
 </div>
 
-<!--<div>-->
-<!--  <label>LocationByCity</label>-->
-<!--  <select [(ngModel)]="locCity" >-->
-<!--    <option *ngFor="let a of addressList" value="{{a.city}}" > {{a.city}} {{a.street}} </option>-->
-<!--  </select>-->
-
-<!--  <label>DestinationByCity</label>-->
-<!--  <select [(ngModel)]="destCity">-->
-<!--    <option *ngFor="let a of addressList" value="{{a.city}}"> {{a.city}} {{a.street}} </option>-->
-<!--  </select>-->
-
-<!--  <input type="number" placeholder="price" [(ngModel)]="price"/>-->
-
-<!--  <label>TypeCargo</label>-->
-<!--  <select [(ngModel)]="type">-->
-<!--    <option *ngFor="let t of typeCargoList" value="{{t.name}}"> {{t.name}} </option>-->
-<!--  </select>-->
-<!--</div>-->
-
-<!--<div class="y" *ngIf="orderList.length">-->
-
-<!--  <div>-->
-<!--    <tr>-->
-<!--      <td style="width: 30px">id</td>-->
-<!--      <td style="width: 80px">name</td>-->
-<!--      <td style="width: 130px">status</td>-->
-<!--      <td style="width: 80px">price</td>-->
-<!--      <td style="width: 150px">loc_city</td>-->
-<!--      <td style="width: 150px">dest_city</td>-->
-<!--      <td style="width: 80px">weight, kg</td>-->
-<!--      <td style="width: 80px">volume, kbm</td>-->
-<!--    </tr>-->
-<!--  </div>-->
-
-<!--  <div class="cont33" *ngIf="orderList.length">-->
-<!--  <ng-container *ngFor="let order of orderList">-->
-<!--    <app-order-list [modelOrder]="order"></app-order-list>-->
-<!--  </ng-container>-->
-<!--  </div>-->
-<!--</div>-->
-
 
 <ng-container *ngIf="!isLoaderAddress && !isLoaderType ">
   <app-loader></app-loader>
 </ng-container>
 
-<!--<ng-container *ngIf="!isLoaderOrder ">-->
-<!--  <app-loader></app-loader>-->
-<!--</ng-container>-->
 
 <ng-template #noData>
   <app-loader></app-loader>
