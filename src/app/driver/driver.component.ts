@@ -60,8 +60,6 @@ export class DriverComponent implements OnInit {
     this.showStatusAll();
     this.showClientByEmail();
     this.fillTableOrderByStatusOpen();
-    // this.fillTableOrderByDriverIdAndStatusInWork();
-    // this.createMap();
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
 
@@ -336,24 +334,6 @@ export class DriverComponent implements OnInit {
     this.fillTableOrderByStatusOpen();
   }
 
-  // public createMap() {
-  //   this.map = new mapboxgl.Map({
-  //     container: this.mapElement.nativeElement, // container id
-  //     style: 'mapbox://styles/mapbox/streets-v11',
-  //     center: [49.3859888, 53.5431899], // starting position
-  //     zoom: 11
-  //   });
-  //   this.map.addControl(
-  //       new mapboxgl.GeolocateControl({
-  //         positionOptions: {
-  //           enableHighAccuracy: false
-  //         },
-  //         trackUserLocation: true,
-  //         fitBoundsOptions: {maxZoom:11}
-  //       })
-  //   );
-  // }
-
   public createMarkers(){
     for (var i = 0; i < this.orderList.length; i++) {
 
@@ -381,5 +361,4 @@ export class DriverComponent implements OnInit {
           .addTo(this.map);
     }
   }
-
 }
