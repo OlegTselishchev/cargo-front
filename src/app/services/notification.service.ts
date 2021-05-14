@@ -21,7 +21,7 @@ export class NotificationService {
 
     if (action === 'deleteError') {
       const notification: Notification = new Notification();
-      notification.message = `Record with id ${id} do not delete`;
+      notification.message = `Record with id ${id} do not delete  it is using`;
       notification.action = action;
       notification.status = false;
       this.notifications.push(notification);
@@ -37,7 +37,7 @@ export class NotificationService {
 
     if (action === 'createError') {
       const notification: Notification = new Notification();
-      notification.message = 'Error while adding record';
+      notification.message = 'Data not added';
       notification.action = action;
       notification.status = false;
       this.notifications.push(notification);
@@ -102,7 +102,7 @@ export class NotificationService {
 
     if (action === 'loginError') {
       const notification: Notification = new Notification();
-      notification.message = 'Error authentication';
+      notification.message = 'incorrect login or password';
       notification.action = action;
       notification.status = false;
       this.notifications.push(notification);
@@ -126,7 +126,15 @@ export class NotificationService {
 
     if (action === 'keyError') {
       const notification: Notification = new Notification();
-      notification.message = 'error key';
+      notification.message = 'incorrect key';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
+
+    if (action === 'deleteCarError') {
+      const notification: Notification = new Notification();
+      notification.message = 'you cannot delete car. you have not completed orders.';
       notification.action = action;
       notification.status = false;
       this.notifications.push(notification);

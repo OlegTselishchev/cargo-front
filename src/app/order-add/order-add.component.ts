@@ -46,13 +46,12 @@ export class OrderAddComponent implements OnInit {
   loc: Address = new Address();
   box: Box = new Box();
   receiver: Client = new Client();
+  newOrder: Order = new Order();
 
   isLoaderAddress: boolean = false;
   isLoaderBox: boolean = false;
   isLoaderClient: boolean = false;
   isLoaderStatus: boolean = false;
-
-  //searchBoxClientEmail: string = this.authService.getAuthEmail();
 
 
   controlDest = new FormControl();
@@ -190,7 +189,8 @@ export class OrderAddComponent implements OnInit {
       order.location.addressId != null && order.destination.addressId != null &&
       order.price != null && order.status.id != null
     ) {
-      this.orderService.create(order).subscribe(() => {
+      this.orderService.create(order).subscribe((data:Order) => {
+        this.newOrder = data;
         },
         error => {
           this.notificationService.add('createError');

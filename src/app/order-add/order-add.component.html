@@ -1,13 +1,16 @@
-<ng-container *ngIf="isLoaderAddress && isLoaderBox && isLoaderClient && isLoaderStatus">
 
-<div class="cont3">
-  <button class="button" (click)="goBack()">goBack</button>
-  <button class="button" (click)="create()">Order Create</button>
-  <button class="button" routerLink="/box">Box</button>
-  <button class="button" routerLink="/address">Address</button>
+<div  class="mat-elevation-z8 test">
+
+<ng-container  *ngIf="isLoaderAddress && isLoaderBox && isLoaderClient && isLoaderStatus">
+
+<div class="cont1">
+  <a class="button" (click)="goBack()">Back</a>
+  <a class="button" (click)="create()">Create Order</a>
+  <a class="button" routerLink="/box">Box</a>
+  <a class="button" routerLink="/address">Address</a>
 </div>
 
-<div>
+<div class="cont1">
   <div class="y">
     <label>Destination</label>
     <div *ngIf="addressListDest.length">
@@ -17,7 +20,7 @@
                placeholder="Search destination by city"
                [formControl]="controlDest"
                [matAutocomplete]="auto"
-               style="width: 300px"
+               style="width: 500px"
                [(ngModel)]="inputDest"
                (blur)="clearDest()"
                >
@@ -29,9 +32,7 @@
       </form>
     </div>
   </div>
-
-
-<div class="y">
+  <div class="y">
   <label>Location</label>
   <div *ngIf="addressListLoc.length">
 
@@ -40,7 +41,7 @@
              placeholder="Search location by city"
              [formControl]="controlLoc"
              [matAutocomplete]="auto"
-             style="width: 300px"
+             style="width: 500px"
              [(ngModel)]="inputLoc"
              (blur)="clearLoc()"
       >
@@ -52,8 +53,7 @@
     </form>
   </div>
 </div>
-
-<div class="y">
+  <div class="y">
   <label>Receiver</label>
   <div *ngIf="clientList.length">
 
@@ -62,7 +62,7 @@
              placeholder="Search user by email"
              [formControl]="controlReceiver"
              [matAutocomplete]="auto"
-             style="width: 300px"
+             style="width: 500px"
              [(ngModel)]="inputRec"
              (blur)="clearReceiver()"
       >
@@ -74,9 +74,7 @@
     </form>
   </div>
 </div>
-
-
-<div class="y">
+  <div class="y">
   <label>Box</label>
   <div *ngIf="boxList.length; else noBox">
     <form class="example-form">
@@ -84,7 +82,7 @@
              placeholder="Search box by name"
              [formControl]="controlBox"
              [matAutocomplete]="auto"
-             style="width: 300px"
+             style="width: 500px"
              [(ngModel)]="inputBox"
              (blur)="clearBox()"
       >
@@ -97,7 +95,51 @@
   </div>
 </div>
 </div>
+
+  <div class="cont1" *ngIf="newOrder.id">
+    <strong>New order information.</strong>
+    <div>
+      <strong>General - </strong>
+    id: {{newOrder.id}}
+    price: {{newOrder.price}}
+    status: {{newOrder.status.name}}
+    </div>
+    <div>
+      <strong>Location - </strong>
+      city: {{newOrder.location.city}}
+      street: {{newOrder.location.street}}
+      home: {{newOrder.location.home}}
+      apartment: {{newOrder.location.apartment}}
+    </div>
+    <div>
+      <strong>Destination - </strong>
+      city: {{newOrder.destination.city}}
+      street: {{newOrder.destination.street}}
+      home: {{newOrder.destination.home}}
+      apartment: {{newOrder.destination.apartment}}
+    </div>
+    <div>
+      <strong>Box - </strong>
+      name: {{newOrder.box.name}}
+      type: {{newOrder.box.typeCargo.name}}
+      weight: {{newOrder.box.weight}}
+      volume: {{newOrder.box.volume.toFixed(4)}}
+    </div>
+    <div>
+      <strong>Receiver - </strong>
+      lastname: {{newOrder.receiver.lastName}}
+      firstname: {{newOrder.receiver.firstName}}
+      middlename: {{newOrder.receiver.middleName}}
+      phone: {{newOrder.receiver.phone}}
+      email: {{newOrder.receiver.email}}
+    </div>
+  </div>
 </ng-container>
+
+</div>
+
+
+
 
 <ng-container *ngIf="!isLoaderAddress && !isLoaderBox && !isLoaderClient && !isLoaderStatus">
   <app-loader></app-loader>

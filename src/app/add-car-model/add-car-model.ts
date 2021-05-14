@@ -6,6 +6,7 @@ import {Client} from "../model/client.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../profile/profile.component";
 import {NotificationService} from "../services/notification.service";
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AddCarModel implements OnInit {
               private route: ActivatedRoute,
               public notificationService: NotificationService,
               private carService: CarService,
+              private authService: AuthService,
               public dialogRef: MatDialogRef<AddCarModel>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
@@ -42,7 +44,8 @@ export class AddCarModel implements OnInit {
             }
           }, error => {
             this.dialogRef.close("error");
-          });
+          },
+            ()=>{this.authService.setIsDriver('true')});
   }
 
 
