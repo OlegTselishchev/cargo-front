@@ -28,7 +28,7 @@
     <div class="car">
       <div class="heading">
         <b>Car:</b>
-        <a *ngIf="profile.car != null"  class="buttonDeleteCar" (click)="deleteCar()">Delete</a>
+        <a *ngIf="profile.car != null"  class="buttonDeleteCar" (click)="checkPossibilityOfDelete()">Delete</a>
         <a *ngIf="profile.car == null"  class="buttonAddCar" (click)="addCar()">Add</a>
         <hr align="left" width="300" size="4" color="#87CEFA"/>
       </div>

@@ -17,7 +17,8 @@
       </div>
       <div>
         <label>Phone: </label><br>
-        <input class="window" [(ngModel)]="profile.phone" [ngModelOptions]="{standalone: true}">
+        <input class="window" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"
+               [(ngModel)]="profile.phone" [ngModelOptions]="{standalone: true}">
       </div>
 
       <div>

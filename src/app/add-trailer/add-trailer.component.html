@@ -1,36 +1,3 @@
-<!--<h1 mat-dialog-title>Add trailer</h1>-->
-<!--<div mat-dialog-content>-->
-
-<!--    <form>-->
-
-<!--        <mat-form-field>-->
-<!--            <label>Trailer name: </label>-->
-<!--            <input matInput [(ngModel)]="newTrailer.name" [ngModelOptions]="{standalone: true}">-->
-<!--        </mat-form-field><br>-->
-
-<!--        <mat-form-field>-->
-<!--            <label>Volume: </label>-->
-<!--            <input type="number" matInput [(ngModel)]="newTrailer.volume" [ngModelOptions]="{standalone: true}">-->
-<!--        </mat-form-field><br>-->
-
-<!--        <mat-form-field>-->
-<!--            <label>lifting Capacity: </label>-->
-<!--            <input type="number" matInput [(ngModel)]="newTrailer.liftingCapacity" [ngModelOptions]="{standalone: true}">-->
-<!--        </mat-form-field><br>-->
-
-<!--        <mat-form-field>-->
-<!--            <label>Number: </label>-->
-<!--            <input type="number" matInput [(ngModel)]="newTrailer.number" [ngModelOptions]="{standalone: true}">-->
-<!--        </mat-form-field><br>-->
-
-<!--    </form>-->
-<!--</div>-->
-<!--<div mat-dialog-actions>-->
-<!--    <button mat-button (click)="onNoClick()">Close</button>-->
-<!--    <button mat-button (click)="onSubmit()">Save</button>-->
-<!--</div>-->
-
-
 <div class="body-box">
  <h1 mat-dialog-title>Add car</h1>
     <mat-dialog-content>
@@ -41,15 +8,18 @@
             </div>
             <div>
                 <label>Volume: (kbm) </label><br>
-                <input type="number" class="window" matInput [(ngModel)]="newTrailer.volume" [ngModelOptions]="{standalone: true}">
+                <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window" matInput
+                       [(ngModel)]="newTrailer.volume" [ngModelOptions]="{standalone: true}">
             </div>
             <div>
                 <label>lifting Capacity: (kg) </label><br>
-                <input type="number" class="window" [(ngModel)]="newTrailer.liftingCapacity" [ngModelOptions]="{standalone: true}">
+                <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window"
+                       [(ngModel)]="newTrailer.liftingCapacity" [ngModelOptions]="{standalone: true}">
             </div>
             <div>
                 <label>Number:</label><br>
-                <input type="number" class="window" [(ngModel)]="newTrailer.number" [ngModelOptions]="{standalone: true}">
+                <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window"
+                       [(ngModel)]="newTrailer.number" [ngModelOptions]="{standalone: true}">
             </div>
         </form>
     </mat-dialog-content>

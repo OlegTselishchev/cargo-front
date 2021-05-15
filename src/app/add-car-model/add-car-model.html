@@ -36,11 +36,13 @@
       </div>
       <div>
         <label>Volume: (kbm) </label><br>
-        <input type="number" class="window" matInput [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
+        <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window" matInput
+               [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
       </div>
       <div>
         <label>lifting Capacity: (kg) </label><br>
-        <input type="number" class="window" [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
+        <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window"
+               [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
       </div>
     </form>
   </mat-dialog-content>
