@@ -14,6 +14,7 @@ import {HomeComponent} from "./home/home.component";
 
 
 import {ProfileComponent} from "./profile/profile.component";
+import {MapsComponent} from "./maps/maps.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'client', component: ClientComponent, canActivate: [AuthGuard]},
   {path: 'address', component: AddressComponent, canActivate: [AuthGuard]},
   {path: 'box', component: BoxComponent, canActivate: [AuthGuard]},
+  {path: 'maps', component: MapsComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

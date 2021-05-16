@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ClientService} from "../services/client.service";
 import {Client} from "../model/client.model";
 import {OrderService} from "../services/order.service";
@@ -12,6 +12,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddTrailerComponent} from "../add-trailer/add-trailer.component";
 import {TrailerService} from "../services/trailer.service";
 import {NotificationService} from "../services/notification.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {Status} from "../model/status.model";
+import {StatusService} from "../services/status.service";
 
 @Component({
   selector: 'app-profile',
@@ -20,10 +24,14 @@ import {NotificationService} from "../services/notification.service";
 })
 export class ProfileComponent implements OnInit {
 
+  @ViewChild
+  (MatPaginator) paginator: MatPaginator;
+
   constructor(public clientService: ClientService,
               public orderService: OrderService,
               public notificationService: NotificationService,
               public dialog: MatDialog,
+              private statusService: StatusService,
               public carService: CarService,
               public trailerService: TrailerService,
               private authService: AuthService) {
@@ -33,12 +41,19 @@ export class ProfileComponent implements OnInit {
   profile: Client = new Client();
   car: Car;
   orderList: Order [] = [];
+  displayedColumns: string[] = ['id', 'name', 'status', 'location', 'destination', 'weight', 'volume', 'price'];
+  dataSource: any;
+  STATUS_CLOSE:string = 'close';
+  isLoaderOrder: boolean = false;
+  isLoaderStatus: boolean = false;
+  public pageSize = 7;
+  public statusList: Status[] = [];
   orderListByDriverId: Order[] = [];
   STATUS_IN_WORK: string = 'in_work';
 
   ngOnInit(): void {
+    this.fillTableOrder();
     this.showClient();
-    this.showOrders();
   }
 
   addTrailer (){
@@ -93,17 +108,6 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  showOrders(): void {
-    this.orderService.showOrderById(this.currentId)
-      .subscribe((date: Order[]) => {
-        this.orderList = date;
-      });
-  }
-
-  public deleteById(id: number): void {
-    this.orderService.delete(id);
-  }
-
   public  deleteCar(): void{
     this.carService.delete(this.profile.car.id)
         .subscribe(() => {
@@ -130,6 +134,49 @@ export class ProfileComponent implements OnInit {
           setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
           this.showClient()
         },error => {alert('error')});
+  }
+
+  fillTableOrder(){
+    this.orderService.getOrderListByBoxClientIdAndStatus(this.authService.getClientId(), this.STATUS_CLOSE)
+        .subscribe((result: Order[])=>{
+              let array = [];
+              result.forEach(function(item) {
+                array.push({
+                  "id":item.id,
+                  "name":item.name,
+                  "status": item.status,
+                  "location":item.location.city,
+                  "destination":item.destination.city,
+                  "weight":item.box.weight,
+                  "volume":item.box.volume.toFixed(4),
+                  "price":item.price})
+              })
+              this.dataSource  = new MatTableDataSource<any>(array);
+              this.dataSource.paginator = this.paginator;
+            },
+            ()=>{this.isLoaderOrder = false},
+            ()=>{this.isLoaderOrder = true});
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  getStatus(): void{
+    this.statusService.getStatus().subscribe((data:Status[])=>{this.statusList = data},
+        error => {
+          this.isLoaderStatus = false;
+          this.notificationService.add('getError');
+          setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+        },
+        ()=>{
+          this.isLoaderStatus = true;
+          console.log('getStatus-ok')});
   }
 
   public checkPossibilityOfDelete(): void{

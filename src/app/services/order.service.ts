@@ -48,6 +48,6 @@ export class OrderService {
   }
 
   public showOrderById(id: number): Observable<any> {
-    return this.http.get(this.urlOrder+ "ByReceiver/" + id);
+    return this.http.get(this.urlOrder+ "displayById/" + id);
   }
 }

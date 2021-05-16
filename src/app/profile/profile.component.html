@@ -1,56 +1,145 @@
-<div class="profile">
-  <h1 >{{profile?.firstName}} {{profile?.lastName}}</h1>
-  <b>Details</b><br>
-
-  <div class = "details">
-    <span>Name: {{profile?.firstName}}</span> <br>
-    <span>Last name: {{profile?.lastName}}</span> <br>
-    <span>Middle name: {{profile?.middleName}}</span><br>
-    <span>Email: {{profile?.email}}</span><br>
-    <span>Phone: {{profile?.phone}}</span><br>
-    <span  *ngIf="profile?.car != null;" >Car: {{profile.car?.name}}</span><br>
-    <span  *ngIf="profile?.car?.trailer != null;" >Trailer: {{profile.car?.trailer.name}}</span>
-  </div>
-
-  <div *ngIf="profile?.car == null; else elseBlock" class = "addButton">
-    <button mat-button (click)="addCar()" >add car</button>
+<div class="grid" [hidden]="!isLoaderOrder && !isLoaderStatus">
+  <div class="information">
+    <div class="profile">
+      <div class="heading">
+        <b>Profile:</b>
+        <a class="editButton" (click)="edit()">Edit</a>
+        <hr align="left" width="300" size="4" color="#87CEFA"/>
       </div>
-
-  <div class = "deleteButton">
-    <ng-template #elseBlock>
-      <button mat-button (click)=checkPossibilityOfDelete() class = "deleteButton">delete car</button>
-<!--      <button mat-button (click)="addTrailer()" >add trailer</button>-->
-    </ng-template>
+      <div class="profileInformation">
+        <div>
+          <b>Full name: </b>
+          <span>{{profile.lastName}} {{profile.firstName}} {{profile.middleName}}</span><br>
+        </div>
+        <div>
+          <b>Phone: </b>
+          <span>{{profile.phone}}</span><br>
+        </div>
+        <div>
+          <b>Email: </b>
+          <span>{{profile.email}}</span>
+        </div>
+        <div *ngIf="profile.driveCategory != null">
+          <b>Drive category: </b>
+          <span>{{profile.driveCategory}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="car">
+      <div class="heading">
+        <b>Car:</b>
+        <a *ngIf="profile.car != null"  class="buttonDeleteCar" (click)="checkPossibilityOfDelete()">Delete</a>
+        <a *ngIf="profile.car == null"  class="buttonAddCar" (click)="addCar()">Add</a>
+        <hr align="left" width="300" size="4" color="#87CEFA"/>
+      </div>
+      <div class="carInformation" *ngIf="profile.car != null">
+        <div>
+          <b>Name: </b>
+          <span>{{profile.car.name}}</span><br>
+        </div>
+        <div>
+          <b>Volume: </b>
+          <span>{{profile.car.volume}} kbm</span><br>
+        </div>
+        <div>
+          <b>LiftingCapacity: </b>
+          <span>{{profile.car.liftingCapacity}} kg</span><br>
+        </div>
+      </div>
+    </div>
+    <div class="trailer" *ngIf="profile.car != null">
+      <div class="heading">
+        <b>Trailer:</b>
+        <a *ngIf="profile.car?.trailer != null"  class="buttonDeleteTrailer" (click)="deleteTrailer()">Delete</a>
+        <a *ngIf="profile.car?.trailer == null"  class="buttonAddTrailer" (click)="addTrailer()">Add</a>
+        <hr align="left" width="300" size="4" color="#87CEFA"/>
+      </div>
+      <div class="trailerInformation" *ngIf="profile.car?.trailer != null">
+        <div>
+          <b>name: </b>
+          <span>{{profile.car.trailer?.name}}</span><br>
+        </div>
+        <div>
+          <b>number: </b>
+          <span>{{profile.car.trailer?.number}}</span><br>
+        </div>
+        <div>
+          <b>liftingCapacity: </b>
+          <span>{{profile.car.trailer?.liftingCapacity}} kg</span><br>
+        </div>
+        <div>
+          <b>volume: </b>
+          <span>{{profile.car.trailer?.volume}} kbm</span><br>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="profile?.car != null && profile?.car?.trailer == null;">
-    <button mat-button (click)="addTrailer()" >add trailer</button>  </div>
+  <div class="orderHistory">
+    <div class="heading">
+      <b>Order history:</b>
+      <hr align="left" width="300" size="4" color="#87CEFA"/>
+    <div  class="mat-elevation-z8 test">
+      <mat-form-field class="search">
+        <mat-label>SEARCH</mat-label>
+        <input  matInput (keyup)="applyFilter($event)" placeholder="Ввод:" #input>
+      </mat-form-field>
 
-  <div *ngIf="profile?.car?.trailer != null;">
-    <button mat-button (click)="deleteTrailer()" >delete trailer</button>
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> <a routerLink="/orderDetail/{{element.id}}">{{element?.id}} </a></td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef> Location </th>
+          <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="destination">
+          <th mat-header-cell *matHeaderCellDef> Destination </th>
+          <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> Weight, kg </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="volume">
+          <th mat-header-cell *matHeaderCellDef> Volume, kbm </th>
+          <td mat-cell *matCellDef="let element"> {{element.volume}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator   showFirstLastButtons
+                       [length]="10"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[1, 3, 7]">
+      </mat-paginator >
+    </div>
   </div>
-
-  <div class="edit">
-    <button mat-button (click)="edit()" >Edit</button>
-  </div>
-
-  <div class="tableOrders">
-    <h2>Your orders</h2>
-     <tr>
-       <td style="width: 30px">id</td>
-       <td style="width: 80px">name</td>
-       <td style="width: 60px">status</td>
-       <td style="width: 70px">price</td>
-       <td style="width: 70px">loc_city</td>
-       <td style="width: 70px">dest_city</td>
-       <td style="width: 50px">weight</td>
-     </tr>
-
-    <ng-container *ngFor="let order of orderList">
-      <app-order-list [modelOrder]="order" ></app-order-list>
-      <button (click)="deleteById(order.id)">delete</button>
-    </ng-container>
-  </div>
-
 </div>
 
+<ng-container *ngIf="!isLoaderOrder && !isLoaderStatus">
+  <app-loader></app-loader>
+</ng-container>

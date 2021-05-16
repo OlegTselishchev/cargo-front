@@ -1,110 +1,97 @@
-<div [hidden]="!isLoaderOrderList">
-<div *ngIf="orderDet.length; else noOrder">
-  <div *ngFor="let ord of orderDet" class="block1">
-    <strong>OrderId - {{ord.id}}:  {{ord.name}}   {{ord.price}}</strong>
-    <p *ngIf="ord.status; else noStatus">
-      Status: {{ord.status.id}} {{ord.status.name}}  {{ord.status.description}}
-    </p>
-    <p *ngIf="ord.location; else noLocation">
-      Location: {{ord.location.addressId}} {{ord.location.country}} {{ord.location.city}}
-      {{ord.location.street}} {{ord.location.home}} {{ord.location.apartment}}
-    </p>
-    <p *ngIf="ord.destination; else noDestination">
-      Destination: {{ord.destination.addressId}} {{ord.destination.country}} {{ord.destination.city}}
-      {{ord.destination.street}} {{ord.destination.home}} {{ord.destination.apartment}}
-    </p>
-
-    <div *ngIf="ord.driver; else noDriver">
-    <p>
-      Driver: {{ord.driver.userId}} {{ord.driver.lastName}} {{ord.driver.firstName}}
-      {{ord.driver.middleName}} {{ord.driver.phone}} {{ord.driver.email}} {{ord.driver.driveCategory}}
-    </p>
-      <div *ngIf="ord.driver.car; else noCar">
-        <p >
-          Car: {{ord.driver.car.id}} {{ord.driver.car.name}} {{ord.driver.car.volume}}
-        </p>
-        <div *ngIf="ord.driver.car.trailer; else noTrailer">
-          <p>
-            Trailer: {{ord.driver.car.trailer.id}} {{ord.driver.car.trailer.name}} {{ord.driver.car.trailer.number}}
-            {{ord.driver.car.trailer.volume}} {{ord.driver.car.trailer.liftingCapacity}}
-          </p>
-        </div>
+<div class="grid">
+  <div class="information">
+    <div class="orderInformation">
+      <div class="heading">
+        <b>Order information:</b>
+        <hr align="left" width="300" size="4" color="#87CEFA"/>
+      </div>
+      <div>
+        <b>Customer: </b>
+        <span> {{orderDet?.box.client.lastName}} {{orderDet?.box.client.firstName}} {{orderDet?.box.client.middleName}}</span><br>
+      </div>
+      <div class="address">
+        <b>From:</b><br>
+        <b>Country: </b>
+        <span>{{orderDet?.location.country}} </span>
+        <b>City: </b>
+        <span>{{orderDet?.location.city}} </span><br>
+        <b>Street: </b>
+        <span>{{orderDet?.location.street}} </span><br>
+        <b>Home: </b>
+        <span>{{orderDet?.location.home}} </span>
+        <b>Apartment: </b>
+        <span>{{orderDet?.location.apartment}} </span><br>
+      </div>
+      <div clas="address">
+        <b>To:</b><br>
+        <b>Country: </b>
+        <span>{{orderDet?.destination.country}} </span>
+        <b>City: </b>
+        <span>{{orderDet?.destination.city}} </span><br>
+        <b>Street: </b>
+        <span>{{orderDet?.destination.street}} </span><br>
+        <b>Home: </b>
+        <span>{{orderDet?.destination.home}} </span>
+        <b>Apartment: </b>
+        <span>{{orderDet?.destination.apartment}} </span><br>
+      </div>
+       <div>
+         <b>Status: </b>
+         <span>{{orderDet?.status.description}} </span><br>
+       </div>
+      <div>
+        <b>Price: </b>
+        <span>{{orderDet?.price}} rub.</span><br>
+      </div>
+      <div>
+        <b>Receiver: </b>
+        <span>{{orderDet?.receiver.lastName}} {{orderDet?.receiver.firstName}} {{orderDet?.receiver.middleName}}</span><br>
       </div>
     </div>
-
-    <p *ngIf="ord.receiver; else noReceiver">
-      Receiver: {{ord.receiver.userId}} {{ord.receiver.lastName}} {{ord.receiver.firstName}}
-      {{ord.receiver.middleName}} {{ord.receiver.email}} {{ord.receiver.phone}}
-    </p>
-
-    <div *ngIf="ord.box; else noBox">
-    <p>
-      Box: {{ord.box.boxId}} {{ord.box.name}} {{ord.box.height}} {{ord.box.width}}
-      {{ord.box.weight}} {{ord.box.volume}}
-    </p>
-      <div  *ngIf="ord.box; else noBoxOwner">
-        <p>
-          Box owner: {{ord.box.client.userId}} {{ord.box.client.lastName}} {{ord.box.client.firstName}}
-          {{ord.box.client.middleName}} {{ord.box.client.email}} {{ord.box.client.phone}}
-        </p>
+    <div class="boxInformation">
+      <div class="heading">
+        <b>Box information:</b>
+        <hr align="left" width="300" size="4" color="#87CEFA"/>
       </div>
-
-      <div  *ngIf="ord.box; else noTypeBox">
-        <p>
-          Type box: {{ord.box.typeCargo.typeId}} {{ord.box.typeCargo.name}} {{ord.box.typeCargo.description}}
-        </p>
+      <div>
+        <b>Box name: </b>
+        <span> {{orderDet?.box.name}} </span><br>
+      </div>
+      <div>
+        <b>Box dimensions: </b><br>
+        <b>Volume: </b>
+        <span>{{orderDet?.box.volume}} </span>
+        <span>kbm </span>
+        <b>Weight: </b>
+        <span>{{orderDet?.box.weight}} kg </span>
+        <b>Width: </b>
+        <span>{{orderDet?.box.width}} cm </span>
+        <b>Height: </b>
+        <span>{{orderDet?.box.height}} cm </span>
+      </div>
+      <div>
+        <b>Type of box: </b>
+        <span>{{orderDet?.box.typeCargo.name}} </span>
+      </div>
+    </div>
+    <div class="driver" >
+      <div *ngIf="orderDet?.driver != null">
+        <div class="heading">
+          <b>Driver:</b>
+          <hr align="left" width="300" size="4" color="#87CEFA"/>
+        </div>
+        <div>
+          <b>Driver: </b>
+          <span>{{orderDet?.driver?.lastName}} {{orderDet?.driver?.firstName}} {{orderDet?.driver?.middleName}}</span><br>
+        </div>
+      </div>
+      <div *ngIf="orderDet?.driver == null && isLoggedAndDriver" class="cont1">
+        <button mat-button class="button" (click)="modifyByIdStatusInWork()">take order</button>
       </div>
     </div>
   </div>
-</div>
-<button (click)="goBack()">go_back</button>
-
-
-<ng-template #noOrder>
-  <p> No order now!</p>
-</ng-template>
-
-<ng-template #noTrailer>
-  <p> No Trailer!</p>
-</ng-template>
-
-<ng-template #noReceiver>
-  <p> No Receiver!</p>
-</ng-template>
-
-<ng-template #noBox>
-  <p> No Box!</p>
-</ng-template>
-
-<ng-template #noBoxOwner>
-  <p> No BoxOwner!</p>
-</ng-template>
-
-<ng-template #noTypeBox>
-  <p> No TypeBox!</p>
-</ng-template>
-
-<ng-template #noDriver>
-  <p> No Driver!</p>
-</ng-template>
-<ng-template #noCar>
-  <p> No Car!</p>
-</ng-template>
-
-<ng-template #noStatus>
-  <p> No Status!</p>
-</ng-template>
-
-<ng-template #noLocation>
-  <p> No Location!</p>
-</ng-template>
-
-<ng-template #noDestination>
-  <p> No Destination!</p>
-</ng-template>
+  <div class="mat-elevation-z8 test">
+    <div id="map-mapbox"></div>
+  </div>
 
 </div>
-
-<ng-container *ngIf="!isLoaderOrderList">
-  <app-loader></app-loader>
-</ng-container>

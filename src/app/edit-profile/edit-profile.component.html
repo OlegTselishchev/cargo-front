@@ -1,41 +1,39 @@
-<h1 mat-dialog-title>Edit Your data</h1>
-<div mat-dialog-content>
+<div class="body-box">
 
-  <form>
+  <h1 mat-dialog-title>Edit Your data</h1>
+  <mat-dialog-content>
+    <form>
+      <div>
+        <label>First name: </label><br>
+        <input class="window" [(ngModel)]="profile.firstName" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>Last name: </label><br>
+        <input class="window" [(ngModel)]="profile.lastName" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>Middle name: </label><br>
+        <input class="window" [(ngModel)]="profile.middleName" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>Phone: </label><br>
+        <input class="window" onkeyup="this.value = this.value.replace(/[^\d]/g,'');"
+               [(ngModel)]="profile.phone" [ngModelOptions]="{standalone: true}">
+      </div>
 
-    <mat-form-field>
-      <label>First name: </label>
-      <input matInput [(ngModel)]="profile.firstName" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-    <mat-form-field>
-      <label>Last name: </label>
-      <input matInput [(ngModel)]="profile.lastName" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-    <mat-form-field>
-      <label>Middle name: </label>
-      <input matInput [(ngModel)]="profile.middleName" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-    <mat-form-field>
-      <label>Phone: </label>
-      <input matInput [(ngModel)]="profile.phone" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-    <mat-form-field>
-      <label>Password: </label>
-      <input type ="password" matInput [(ngModel)]="profile.password" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-    <mat-form-field>
-      <label>Confirm password: </label><input type ="password" matInput [(ngModel)]="passwordConfirm" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
-
-  </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="onSubmit()">Save</button>
+      <div>
+        <label>Password: </label><br>
+        <input type ="password" class="window" [(ngModel)]="profile.password" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>Confirm password: </label><br>
+        <input type ="password" class="window" [(ngModel)]="passwordConfirm" [ngModelOptions]="{standalone: true}">
+      </div>
+    </form>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <button class="button-create-box-popup" mat-button (click)="onNoClick()">Close</button>
+    <button class="button-create-box-popup" mat-button (click)="onSubmit()">Save</button>
+  </div>
 </div>
 

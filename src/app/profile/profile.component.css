@@ -1,26 +1,224 @@
+.information{
+  display: grid;
+  grid-gap: 30px;
+  margin-left: 7%;
+  font-size: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-gap: 15px;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 1%;
+
+}
+
+.grid > div:nth-child(1){
+  grid-row: 1/-1;
+}
+
+.profileInformation{
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
+  margin-left: 5%;
+}
+
 .profile{
-  position: absolute;
-  top: 150px;
-  left: 100px;
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
 }
 
-.details {
+.car{
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
+}
+
+.carInformation{
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
+  margin-left: 5%;
+}
+
+.trailer{
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
+}
+
+.trailerInformation{
+  display: grid;
+  grid-gap: 10px;
+  font-size: 15px;
+  margin-left: 5%;
+
+}
+
+.heading{
+  font-size: 20px;
+  padding: 2px;
+}
+
+.button{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 25%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.cont1 {
+  position: center;
+}
+
+.button:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+.buttonPosition{
   position: relative;
-  top: 0px;
-  right: 0px;
-}
-.edit{
-  position: relative;
-  top: -180px;
-  left: 150px;
-}
-.tableOrders{
-  position: relative;
-  top: -125px;
-  left: 750px;
-  width: 600px;
+  right: 0;
 }
 
+.buttonDeleteTrailer{
+  background-color: white;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 27%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
 
+.buttonDeleteTrailer:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
 
+.buttonAddTrailer{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 32%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
 
+.buttonAddTrailer:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+.buttonAddCar{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 37%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.buttonAddCar:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+.editButton{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 31%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.editButton:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+  /*height:25px;*/
+}
+
+.buttonDeleteCar{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left: 32%;
+  font-size:13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.buttonDeleteCar:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+.search{
+  font-family: "Montserrat", sans-serif;
+  margin-left: 350px;
+}
+
+.mat-elevation-z8 {
+  margin-right:5%;
+  background-color: white;
+}
+
+table {
+  width: 100%;
+  font-size: 0.85rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+}

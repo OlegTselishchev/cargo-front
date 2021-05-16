@@ -1,27 +1,56 @@
-<h1 mat-dialog-title>Add car</h1>
-<div mat-dialog-content>
+<!--<h1 mat-dialog-title>Add car</h1>-->
+<!--<div mat-dialog-content>-->
 
-  <form>
+<!--  <form>-->
 
-    <mat-form-field>
-      <label>Car name: </label>
-      <input  matInput [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
+<!--    <mat-form-field>-->
+<!--      <label>Car name: </label>-->
+<!--      <input  matInput [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}">-->
+<!--    </mat-form-field><br>-->
 
-    <mat-form-field>
-      <label>Volume: </label>
-      <input type="number" matInput [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
+<!--    <mat-form-field>-->
+<!--      <label>Volume: </label>-->
+<!--      <input type="number" matInput [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">-->
+<!--    </mat-form-field><br>-->
 
-    <mat-form-field>
-      <label>lifting Capacity: </label>
-      <input type="number" matInput [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
-    </mat-form-field><br>
+<!--    <mat-form-field>-->
+<!--      <label>lifting Capacity: </label>-->
+<!--      <input type="number" matInput [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">-->
+<!--    </mat-form-field><br>-->
 
-  </form>
+<!--  </form>-->
+<!--</div>-->
+<!--<div mat-dialog-actions>-->
+<!--  <button mat-button (click)="onNoClick()">Close</button>-->
+<!--  <button mat-button (click)="onSubmit()">Save</button>-->
+<!--</div>-->
+
+<div class="body-box">
+
+  <h1 mat-dialog-title>Add car</h1>
+  <mat-dialog-content>
+    <form>
+      <div>
+        <label>Car name: </label><br>
+        <input class="window" [(ngModel)]="newCar.name" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>Volume: (kbm) </label><br>
+        <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window" matInput
+               [(ngModel)]="newCar.volume" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div>
+        <label>lifting Capacity: (kg) </label><br>
+        <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window"
+               [(ngModel)]="newCar.liftingCapacity" [ngModelOptions]="{standalone: true}">
+      </div>
+    </form>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <button class="button-create-box-popup" mat-button (click)="onNoClick()">Close</button>
+    <button class="button-create-box-popup" mat-button (click)="onSubmit()">Save</button>
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button (click)="onSubmit()">Save</button>
-</div>
+
+
 

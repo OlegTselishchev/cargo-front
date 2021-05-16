@@ -1,6 +1,13 @@
+.map-mapbox {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
 .mat-elevation-z8 {
   margin-left:5%;
   background-color: white;
+  width: 90%;
 }
 
 .table tr:hover td{
@@ -54,8 +61,9 @@ table {
   letter-spacing: 0.1rem;
 }
 
-.test{
+.map-size{
   width: 90%;
+  height: 100%;
 }
 
 * {box-sizing: border-box;}
@@ -64,4 +72,19 @@ table {
   font-family: "Montserrat", sans-serif;
   margin-left: 550px;
 }
+
+.mat-tab-group{
+  height: 100%;
+}
+
+/*.mat-primary{*/
+/*  height: 100%;*/
+/*}*/
+
+:host ::ng-deep .mat-tab-body-wrapper{
+  height: 85%;
+}
+
+
+
 
