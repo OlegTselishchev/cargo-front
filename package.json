@@ -27,7 +27,6 @@
     "bootstrap": "^4.5.0",
     "mapbox-gl": "^0.41.0",
     "mat-table-filter": "^10.2.0",
-    "mat-table-filter": "^10.2.0",
     "nan": "^2.14.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

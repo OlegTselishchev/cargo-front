@@ -20,10 +20,10 @@ import {NotificationService} from "../services/notification.service";
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight'];
+  displayedColumns: string[] = ['name', 'status','price','loc','dest','volume', 'weight'];
   dataSource: any;
 
-  public pageSize = 1;
+  public pageSize = 7;
 
   @ViewChild
   (MatPaginator) paginator: MatPaginator;

@@ -21,7 +21,7 @@ export class BoxComponent implements OnInit {
   displayedColumns: string[] = ['boxId', 'name', 'weight','volume','width','height','typeCargo', 'delete'];
   dataSource: any;
 
-  public pageSize = 1;
+  public pageSize = 7;
 
   @ViewChild
   (MatPaginator) paginator: MatPaginator;
@@ -31,7 +31,7 @@ export class BoxComponent implements OnInit {
               public dialog: MatDialog,
               public authService: AuthService,
               public typeService: TypeCargoService,
-              public clientService: ClientService,
+              //public clientService: ClientService,
               public notificationService: NotificationService) { }
 
   public typeCargoList: TypeCargo[] = [];

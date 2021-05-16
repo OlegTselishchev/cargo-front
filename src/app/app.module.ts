@@ -57,6 +57,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { MapsComponent } from './maps/maps.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { AddKeyComponent } from './add-key/add-key.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_USER_ID);
@@ -100,6 +101,7 @@ export function tokenGetter(){
     LoaderComponent,
     MapsComponent,
     CreateAddressComponent,
+    AddKeyComponent,
   ],
 
   schemas: [
