@@ -1,0 +1,15 @@
+
+<div class="body-box">
+  <h1 mat-dialog-title>Enter secret key</h1>
+  <div mat-dialog-content>
+    <form>
+      <p>
+        <input class="window" type="text"  name="key" placeholder="key" [(ngModel)]="key"/>
+      </p>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button class="button-create-box-popup" mat-button (click)="onSubmit()">Ok</button>
+    <button class="button-create-box-popup" mat-button (click)="onNoClick()">Close</button>
+  </div>
+</div>

@@ -9,6 +9,9 @@ import {StatusService} from "../services/status.service";
 import {NotificationService} from "../services/notification.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
+import {KeyService} from "../services/key.service";
+import {AddKeyComponent} from "../add-key/add-key.component";
 
 
 @Component({
@@ -18,11 +21,14 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class DriverComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight', 'take'];
-  dataSource: any;
+  displayedColumnsFullOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'take', 'detail'];
+  dataSourceFullOrders: any;
 
-  displayedColumns1: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back'];
-  dataSource1: any;
+  displayedColumnsMyOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back', 'detail'];
+  dataSourceMyOrders: any;
+
+  displayedColumnsCloseOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'detail'];
+  dataSourceCloseOrders: any;
 
   public pageSize = 1;
 
@@ -30,22 +36,26 @@ export class DriverComponent implements OnInit {
   (MatPaginator) paginator: MatPaginator;
 
   constructor(public orderService: OrderService,
+              public dialog: MatDialog,
               public clientService: ClientService,
               private authService: AuthService,
               public statusService: StatusService,
+              public keyService: KeyService,
               public notificationService: NotificationService) { }
 
   public statusList: Status[] = [];
-  public orderList: Order[] = [];
   public driver: Client = new Client();
   public driverEmail: string = this.authService.getAuthEmail();
   public isOrderFull: boolean = true;
   public STATUS_OPEN: string = 'open';
   public STATUS_IN_WORK: string = 'in_work';
+  public STATUS_CLOSE: string = 'close';
   public isLoaderOrderStatusOpen: boolean = false;
   public isLoaderOrderStatusImplement: boolean = false;
+  public isLoaderOrderStatusClose: boolean = false;
   public isLouderStatus: boolean = false;
   public isLoaderDriver: boolean = false;
+  public isOrderClose: boolean = false;
 
 
   ngOnInit(): void {
@@ -53,6 +63,7 @@ export class DriverComponent implements OnInit {
     this.showClientByEmail();
     this.fillTableOrderByStatusOpen();
     this.fillTableOrderByDriverIdAndStatusInWork();
+    this.fillTableOrderClose();
   }
 
   fillTableOrderByStatusOpen():void{
@@ -70,8 +81,8 @@ export class DriverComponent implements OnInit {
             "weight":item.box.weight
           });
         })
-        this.dataSource  = new MatTableDataSource<any>(array);
-        this.dataSource.paginator = this.paginator;
+        this.dataSourceFullOrders  = new MatTableDataSource<any>(array);
+        this.dataSourceFullOrders.paginator = this.paginator;
       },()=>{this.isLoaderOrderStatusOpen = false},
       ()=>{this.isLoaderOrderStatusOpen = true});
   }
@@ -92,27 +103,59 @@ export class DriverComponent implements OnInit {
               "weight":item.box.weight
             });
           })
-          this.dataSource1  = new MatTableDataSource<any>(array);
-          this.dataSource1.paginator = this.paginator;
+          this.dataSourceMyOrders  = new MatTableDataSource<any>(array);
+          this.dataSourceMyOrders.paginator = this.paginator;
         },()=>{this.isLoaderOrderStatusImplement = false},
         ()=>{this.isLoaderOrderStatusImplement = true});
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  fillTableOrderClose():void{
+    this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_CLOSE)
+      .subscribe((result: Order[])=>{
+          let array = [];
+          result.forEach(function(item) {
+            array.push({
+              "id":item.id,
+              "name":item.name,
+              "status":item.status.name,
+              "price":item.price,
+              "loc":item.location.city,
+              "dest":item.destination.city,
+              "volume":item.box.volume.toFixed(4),
+              "weight":item.box.weight
+            });
+          })
+          this.dataSourceCloseOrders  = new MatTableDataSource<any>(array);
+          this.dataSourceCloseOrders.paginator = this.paginator;
+        },()=>{this.isLoaderOrderStatusClose = false},
+        ()=>{this.isLoaderOrderStatusClose = true});
+  }
+
+  applyFilterFullOrders(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceFullOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceFullOrders.paginator) {
+      this.dataSourceFullOrders.paginator.firstPage();
     }
   }
 
-  applyFilter1(event: Event) {
+  applyFilterMyOrders(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource1.filter = filterValue.trim().toLowerCase();
+    this.dataSourceMyOrders.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource1.paginator) {
-      this.dataSource1.paginator.firstPage();
+    if (this.dataSourceMyOrders.paginator) {
+      this.dataSourceMyOrders.paginator.firstPage();
+    }
+  }
+
+  applyFilterCloseOrders(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceCloseOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceCloseOrders.paginator) {
+      this.dataSourceCloseOrders.paginator.firstPage();
     }
   }
 
@@ -208,11 +251,11 @@ export class DriverComponent implements OnInit {
 
   public modifyByIdStatusImplemented(id: number): void {
 
-    let key1 = prompt('Введи ключ');
-    let key2: string = '0000';
+    let key: string = this.keyService.key;
+    let keyForCheck: string = '0000';
 
-    if(key1 == key2) {
-
+    if(key == keyForCheck) {
+      this.keyService.key = '';
       let status: Status = this.statusList.find(x => x.name == 'implemented');
 
       const order: Order = {
@@ -294,12 +337,26 @@ export class DriverComponent implements OnInit {
 
   myOrder(): void {
     this.isOrderFull = false;
+    this.isOrderClose = false;
     this.fillTableOrderByDriverIdAndStatusInWork();
   }
 
   fullOrders():void {
     this.isOrderFull = true;
+    this.isOrderClose = false;
     this.fillTableOrderByStatusOpen();
+  }
+
+  history(): void {
+    this.isOrderClose = true;
+    this.fillTableOrderClose();
+  }
+
+  checkKey(id: number):void{
+    const addKey = this.dialog.open(AddKeyComponent);
+    addKey.afterClosed().subscribe(result => {
+        this.modifyByIdStatusImplemented(id);
+    });
   }
 
 }

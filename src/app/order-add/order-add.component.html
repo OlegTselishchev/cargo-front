@@ -100,37 +100,37 @@
     <strong>New order information.</strong>
     <div>
       <strong>General - </strong>
-    id: {{newOrder.id}}
-    price: {{newOrder.price}}
+    id: {{newOrder.id}};
+    price: {{newOrder.price}};
     status: {{newOrder.status.name}}
     </div>
     <div>
       <strong>Location - </strong>
-      city: {{newOrder.location.city}}
-      street: {{newOrder.location.street}}
-      home: {{newOrder.location.home}}
-      apartment: {{newOrder.location.apartment}}
+       {{newOrder.location.city}}
+       {{newOrder.location.street}}
+       {{newOrder.location.home}}
+       {{newOrder.location.apartment}}
     </div>
     <div>
       <strong>Destination - </strong>
-      city: {{newOrder.destination.city}}
-      street: {{newOrder.destination.street}}
-      home: {{newOrder.destination.home}}
-      apartment: {{newOrder.destination.apartment}}
+       {{newOrder.destination.city}}
+       {{newOrder.destination.street}}
+       {{newOrder.destination.home}}
+       {{newOrder.destination.apartment}}
     </div>
     <div>
       <strong>Box - </strong>
-      name: {{newOrder.box.name}}
-      type: {{newOrder.box.typeCargo.name}}
-      weight: {{newOrder.box.weight}}
+      name: {{newOrder.box.name}};
+      type: {{newOrder.box.typeCargo.name}};
+      weight: {{newOrder.box.weight}};
       volume: {{newOrder.box.volume.toFixed(4)}}
     </div>
     <div>
       <strong>Receiver - </strong>
-      lastname: {{newOrder.receiver.lastName}}
-      firstname: {{newOrder.receiver.firstName}}
-      middlename: {{newOrder.receiver.middleName}}
-      phone: {{newOrder.receiver.phone}}
+       {{newOrder.receiver.lastName}}
+       {{newOrder.receiver.firstName}}
+       {{newOrder.receiver.middleName}};
+      phone: {{newOrder.receiver.phone}};
       email: {{newOrder.receiver.email}}
     </div>
   </div>

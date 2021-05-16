@@ -24,7 +24,7 @@ table th{
 .button{
   background-color: #ffffff;
   border-radius: 3px;
-  padding:5px 10px;
+  padding: 5px 10px;
   margin-left: 40px;
   font-size:13px;
   font-family: "Montserrat", sans-serif;
@@ -38,6 +38,27 @@ table th{
 }
 
 .button:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+.buttonInTable{
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding: 2px 7px;
+  font-size:10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #020101;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.buttonInTable:hover{
   background-color: #59acec;
   color: rgba(255, 255, 255, 0.85);
   background-color: #2196f3;

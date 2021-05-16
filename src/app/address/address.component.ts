@@ -16,7 +16,7 @@ import {CreateAddressComponent} from "../create-address/create-address.component
 })
 export class AddressComponent implements OnInit {
 
-  displayedColumns: string[] = ['addressId','country', 'city', 'street','home','apartment', 'delete'];
+  displayedColumns: string[] = ['country', 'city', 'street','home','apartment', 'delete'];
   dataSource: any;
 
   public pageSize = 1;

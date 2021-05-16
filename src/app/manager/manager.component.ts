@@ -15,7 +15,7 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'del/close'];
+  displayedColumns: string[] = ['name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'del/close', 'detail'];
   dataSource: any;
 
   public pageSize = 1;
