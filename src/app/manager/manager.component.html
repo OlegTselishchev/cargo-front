@@ -49,7 +49,7 @@
     </ng-container>
 
     <ng-container matColumnDef="del/close">
-      <th mat-header-cell *matHeaderCellDef> Del/Close </th>
+      <th mat-header-cell *matHeaderCellDef> utton </th>
       <td mat-cell *matCellDef="let element">
         <a class="buttonInTable" (click)="deleteById(element.id)" *ngIf="element.status.name == 'open'">delete</a>
         <a class="buttonInTable" (click)="closeById(element.id)" *ngIf="element.status.name == 'implemented'">close</a>

@@ -31,7 +31,6 @@ export class BoxComponent implements OnInit {
               public dialog: MatDialog,
               public authService: AuthService,
               public typeService: TypeCargoService,
-              //public clientService: ClientService,
               public notificationService: NotificationService) { }
 
   public typeCargoList: TypeCargo[] = [];
