@@ -47,7 +47,8 @@
               <input type="text" name="middleName" placeholder="Middle Name" class="forms_field-input" required [(ngModel)]="middleName"/>
             </div>
             <div class="forms_field">
-              <input type="text" name="phone" placeholder="phone" class="forms_field-input" required [(ngModel)]="phone"/>
+              <input id="telNo" type="tel" size="20" minlength="11" maxlength="11" name="phone" placeholder="phone"
+                     class="forms_field-input"  required [(ngModel)]="phone"/>
             </div>
             <div class="forms_field">
               <input type="email" name="email" placeholder="Email" class="forms_field-input" required [(ngModel)]="email"/>
