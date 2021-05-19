@@ -16,6 +16,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {KeyService} from "../services/key.service";
 import {AddKeyComponent} from "../add-key/add-key.component";
 import {MatDialog} from "@angular/material/dialog";
+import {LoaderService} from "../services/loader.service";
 
 
 @Component({
@@ -25,7 +26,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class DriverComponent implements OnInit {
 
-  displayedColumnsFullOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'take', 'detail'];
+  displayedColumnsFullOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'detail'];
   dataSourceFullOrders: any;
 
   displayedColumnsMyOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back', 'detail'];
@@ -34,7 +35,7 @@ export class DriverComponent implements OnInit {
   displayedColumnsCloseOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'detail'];
   dataSourceCloseOrders: any;
 
-  public pageSize = 7;
+  public pageSize = 3;
   @ViewChild('mapElement')
   mapElement: ElementRef;
   @ViewChild
@@ -48,6 +49,7 @@ export class DriverComponent implements OnInit {
               public statusService: StatusService,
               public notificationService: NotificationService,
               public keyService: KeyService,
+              public loaderService: LoaderService,
               public cdr: ChangeDetectorRef) { }
 
   public statusList: Status[] = [];
@@ -59,9 +61,6 @@ export class DriverComponent implements OnInit {
   public STATUS_OPEN: string = 'open';
   public STATUS_IN_WORK: string = 'in_work';
   public STATUS_CLOSE: string = 'close';
-  public isLoaderOrderStatusOpen: boolean = false;
-  public isLoaderOrderStatusImplement: boolean = false;
-  public isLoaderOrderStatusClose: boolean = false;
   public isLouderStatus: boolean = false;
   public isLoaderDriver: boolean = false;
   public map: mapboxgl.Map;
@@ -96,6 +95,7 @@ export class DriverComponent implements OnInit {
   }
 
   fillTableOrderByStatusOpen():void{
+    this.loaderService.isLoading = true;
     this.orderService.getOrderListByStatus(this.STATUS_OPEN).subscribe((result: Order[])=>{
         let array = [];
         result.forEach(function(item) {
@@ -110,15 +110,22 @@ export class DriverComponent implements OnInit {
             "weight":item.box.weight
           });
         })
-          this.orderList = result;
+        this.orderList = result;
         this.dataSourceFullOrders  = new MatTableDataSource<any>(array);
         this.dataSourceFullOrders.paginator = this.paginator;
-          this.createMarkers();
-      },()=>{this.isLoaderOrderStatusOpen = false},
-      ()=>{this.isLoaderOrderStatusOpen = true});
+
+      },() => {
+        this.loaderService.isLoading = false;
+      this.notificationService.add('getError');
+      setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{this.loaderService.isLoading = false;
+        this.createMarkers();
+    });
   }
 
   fillTableOrderByDriverIdAndStatusInWork():void{
+    this.loaderService.isLoading = true;
     this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_IN_WORK)
       .subscribe((result: Order[])=>{
           let array = [];
@@ -136,12 +143,13 @@ export class DriverComponent implements OnInit {
           })
           this.dataSourceMyOrders  = new MatTableDataSource<any>(array);
           this.dataSourceMyOrders.paginator = this.paginator;
-        },()=>{this.isLoaderOrderStatusImplement = false},
-        ()=>{this.isLoaderOrderStatusImplement = true});
+        },()=>{this.loaderService.isLoading = false;},
+        ()=>{this.loaderService.isLoading = false;});
   }
 
 
   fillTableOrderClose():void{
+    this.loaderService.isLoading = true;
     this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_CLOSE)
       .subscribe((result: Order[])=>{
           let array = [];
@@ -159,8 +167,10 @@ export class DriverComponent implements OnInit {
           })
           this.dataSourceCloseOrders  = new MatTableDataSource<any>(array);
           this.dataSourceCloseOrders.paginator = this.paginator;
-        },()=>{this.isLoaderOrderStatusClose = false},
-        ()=>{this.isLoaderOrderStatusClose = true});
+        },()=>{this.loaderService.isLoading = false;
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);},
+        ()=>{this.loaderService.isLoading = false;});
   }
 
   applyFilterFullOrders(event: Event) {
@@ -282,7 +292,6 @@ export class DriverComponent implements OnInit {
   }
 
   public modifyByIdStatusImplemented(id: number): void {
-
     let key: string = this.keyService.key;
     let keyForCheck: string = '0000';
 

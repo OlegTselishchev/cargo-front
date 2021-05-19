@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
   profile: Client = new Client();
   car: Car;
   orderList: Order [] = [];
-  displayedColumns: string[] = ['id', 'name', 'status', 'location', 'destination', 'weight', 'volume', 'price'];
+  displayedColumns: string[] = ['name', 'location', 'destination', 'weight', 'volume', 'price', 'detail', 'delete'];
   dataSource: any;
   STATUS_CLOSE:string = 'close';
   isLoaderOrder: boolean = false;
@@ -190,6 +190,20 @@ export class ProfileComponent implements OnInit {
       }else {this.notificationService.add('deleteCarError');
         setTimeout(()=>{this.notificationService.remove('deleteCarError')}, 2000);
       }
+      });
+  }
+
+
+  public deleteById(id: number): void {
+    this.orderService.delete(id).subscribe(()=>{},
+      error => {
+        this.notificationService.add('deleteError', id);
+        setTimeout(()=>{this.notificationService.remove('deleteError')}, 2000);
+      },
+      ()=>{
+        this.fillTableOrder()
+        this.notificationService.add('deleteOk', id);
+        setTimeout(()=>{this.notificationService.remove('deleteOk')}, 2000);
       });
   }
 }

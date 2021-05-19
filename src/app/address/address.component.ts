@@ -36,6 +36,7 @@ export class AddressComponent implements OnInit {
   }
 
   fillTableAddress():void{
+    this.isLoaderAddress = false;
     this.addressService.getAddressAll().subscribe((result: Address[])=>{
         let array = [];
         result.forEach(function(item) {

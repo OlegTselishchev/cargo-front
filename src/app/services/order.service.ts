@@ -19,8 +19,8 @@ export class OrderService {
     return this.http.get(this.urlOrder + 'boxClientIdAndNotStatus/' + id + '/' + status);
   }
 
-  public getOrderListByLocDestTypePrice(locCity: string, destCity: string, idType: number, price: number){
-    return this.http.get(this.urlOrder + 'byLocDestTypePrice/' + locCity + '/' + destCity + '/' +idType + '/' + price);
+  public getOrderListByLocDestTypePriceStatus(locCity: string, destCity: string, idType: number, price: number, status: string){
+    return this.http.get(this.urlOrder + 'byLocDestTypePrice/' + locCity + '/' + destCity + '/' +idType + '/' + price + '/' + status);
   }
 
   public getOrderListByBoxClientIdAndStatus(id: string, status: string ){

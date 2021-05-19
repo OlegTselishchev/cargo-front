@@ -171,15 +171,28 @@ export class OrderAddComponent implements OnInit {
 
   create(): void {
     let status: Status = this.statusList.find(x => x.name == 'open');
-
-    let price = this.box.weight * 500;
+    let priceWithSale = 1;
+    let weight = this.box.weight
+    let price = weight * 500;
+    if(weight <= 5){
+      priceWithSale = price;
+    }else if(weight > 5 && weight <=10){
+      let sale = price * 0.1;
+      priceWithSale = price - sale;
+    }else if(weight > 10 && weight < 15){
+      let sale = price * 0.2;
+      priceWithSale = price - sale;
+    }else {
+      let sale = price * 0.3;
+      priceWithSale = price - sale;
+    }
 
     const order: Order = {
       name: 'order',
       destination: this.dest,
       location: this.loc,
       box: this.box,
-      price: price,
+      price: priceWithSale,
       receiver: this.receiver,
       status: status,
       driver: null

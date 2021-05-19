@@ -15,7 +15,7 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'del/close'];
+  displayedColumns: string[] = ['name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'action','detail'];
   dataSource: any;
 
   public pageSize = 7;
@@ -53,7 +53,7 @@ export class ManagerComponent implements OnInit {
               "weight":item.box.weight,
               "volume":item.box.volume.toFixed(4),
               "price":item.price,
-              "del/close":item.status})
+              "action":item.status})
           })
           this.dataSource  = new MatTableDataSource<any>(array);
           this.dataSource.paginator = this.paginator;

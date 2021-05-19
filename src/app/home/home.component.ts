@@ -20,7 +20,7 @@ import {NotificationService} from "../services/notification.service";
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'status','price','loc','dest','volume', 'weight'];
+  displayedColumns: string[] = ['name', 'price','loc','dest','volume', 'weight'];
   dataSource: any;
 
   public pageSize = 7;
@@ -64,6 +64,8 @@ export class HomeComponent implements OnInit {
   inputDest: string = '';
   inputLoc: string = '';
   inputType: string ='';
+
+  STATUS_OPEN: string = 'open';
 
 
   ngOnInit(): void {
@@ -158,9 +160,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  fillTableOrder():void{
+
+  fillTableOrderByStatusOpen():void{
     if(this.loc.city != null && this.dest.city != null && this.type.typeId != null && this.price != null) {
-      this.orderService.getOrderListByLocDestTypePrice(this.loc.city, this.dest.city, this.type.typeId, this.price)
+      this.orderService.getOrderListByLocDestTypePriceStatus(this.loc.city, this.dest.city, this.type.typeId, this.price, this.STATUS_OPEN)
         .subscribe((result: Order[]) => {
             let array = [];
             result.forEach(function (item) {
@@ -169,8 +172,8 @@ export class HomeComponent implements OnInit {
                 "name": item.name,
                 "status": item.status.name,
                 "price": item.price,
-                "loc": item.location.city,
-                "dest": item.destination.city,
+                "loc": item.location.city + ', ' + item.location.street,
+                "dest": item.destination.city + ', '+ item.destination.street,
                 "volume": item.box.volume.toFixed(4),
                 "weight": item.box.weight
               });

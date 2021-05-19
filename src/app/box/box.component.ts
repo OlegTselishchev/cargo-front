@@ -4,7 +4,6 @@ import {BoxService} from "../services/box.service";
 import {AuthService} from "../services/auth.service";
 import {Box} from "../model/box.model";
 import {TypeCargoService} from "../services/typeCargo.service";
-import {ClientService} from "../services/client.service";
 import {TypeCargo} from "../model/typeCargo.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
@@ -45,6 +44,7 @@ export class BoxComponent implements OnInit {
   }
 
   fillTableBox():void{
+    this.isLoaderBox = false;
     this.boxService.getBoxByClientId(this.authService.getClientId()).subscribe((result: Box[])=>{
         let array = [];
         result.forEach(function(item) {
@@ -73,6 +73,7 @@ export class BoxComponent implements OnInit {
   }
 
   showTypeAll():void{
+    this.isLoaderType = false;
     this.typeService.getType().subscribe((data:TypeCargo[])=>{this.typeCargoList = data},
       error => {
         this.isLoaderType = false;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../services/auth.service";
-import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +15,27 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isDriver: boolean = false;
+  isManager: boolean = false;
+
+  activeDriver(){
+    this.isDriver = true;
+    this.isManager = false;
+  }
+
+  activeManager(){
+    this.isDriver = false;
+    this.isManager = true;
+  }
+
+  activeProfile(){
+    this.isDriver = false;
+    this.isManager = false;
+  }
+
   logout():void{
+    this.isDriver = false;
+    this.isManager = false;
     this.authService.logout();
   }
 
