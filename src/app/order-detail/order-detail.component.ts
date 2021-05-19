@@ -5,13 +5,15 @@ import { Location } from "@angular/common";
 import { OrderService} from "../services/order.service";
 import {environment} from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import {NotificationService} from "../services/notification.service";
 import {AuthService} from "../services/auth.service";
 import {Status} from "../model/status.model";
 import {Client} from "../model/client.model";
 import {ClientService} from "../services/client.service";
 import {StatusService} from "../services/status.service";
+
+declare const MapboxDirections: any;
+
 
 @Component({
   selector: 'app-order-detail',
