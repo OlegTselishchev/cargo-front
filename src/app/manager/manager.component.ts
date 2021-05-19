@@ -15,7 +15,7 @@ import {NotificationService} from "../services/notification.service";
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'status', 'location', 'destination', 'weight', 'volume', 'price', 'action','detail'];
+  displayedColumns: string[] = ['name', 'location', 'destination', 'weight', 'volume', 'price', 'action','detail'];
   dataSource: any;
 
   public pageSize = 7;
@@ -48,8 +48,8 @@ export class ManagerComponent implements OnInit {
               "id":item.id,
               "name":item.name,
               "status": item.status,
-              "location":item.location.city,
-              "destination":item.destination.city,
+              "location":item.location.city +', '+ item.location.street,
+              "destination":item.destination.city +', '+ item.destination.street,
               "weight":item.box.weight,
               "volume":item.box.volume.toFixed(4),
               "price":item.price,
@@ -133,4 +133,8 @@ export class ManagerComponent implements OnInit {
     }
   }
 
+  deleteOrderWithStatusInWork(id: number):void{
+    this.notificationService.add('deleteError', id);
+    setTimeout(()=>{this.notificationService.remove('deleteError')},2000);
+  }
 }

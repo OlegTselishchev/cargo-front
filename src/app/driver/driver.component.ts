@@ -26,13 +26,13 @@ import {LoaderService} from "../services/loader.service";
 })
 export class DriverComponent implements OnInit {
 
-  displayedColumnsFullOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'detail'];
+  displayedColumnsFullOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'detail'];
   dataSourceFullOrders: any;
 
-  displayedColumnsMyOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back', 'detail'];
+  displayedColumnsMyOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'impl', 'back', 'detail'];
   dataSourceMyOrders: any;
 
-  displayedColumnsCloseOrders: string[] = ['name', 'status','price','loc','dest','volume', 'weight', 'detail'];
+  displayedColumnsCloseOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'detail'];
   dataSourceCloseOrders: any;
 
   public pageSize = 3;
@@ -104,8 +104,8 @@ export class DriverComponent implements OnInit {
             "name":item.name,
             "status":item.status.name,
             "price":item.price,
-            "loc":item.location.city,
-            "dest":item.destination.city,
+            "loc":item.location.city +', '+ item.location.street,
+            "dest":item.destination.city +', '+ item.destination.street,
             "volume":item.box.volume.toFixed(4),
             "weight":item.box.weight
           });
@@ -135,8 +135,8 @@ export class DriverComponent implements OnInit {
               "name":item.name,
               "status":item.status.name,
               "price":item.price,
-              "loc":item.location.city,
-              "dest":item.destination.city,
+              "loc":item.location.city +', '+ item.location.street,
+              "dest":item.destination.city +', '+ item.destination.street,
               "volume":item.box.volume.toFixed(4),
               "weight":item.box.weight
             });
@@ -159,8 +159,8 @@ export class DriverComponent implements OnInit {
               "name":item.name,
               "status":item.status.name,
               "price":item.price,
-              "loc":item.location.city,
-              "dest":item.destination.city,
+              "loc":item.location.city +', '+ item.location.street,
+              "dest":item.destination.city +', '+ item.destination.street,
               "volume":item.box.volume.toFixed(4),
               "weight":item.box.weight
             });

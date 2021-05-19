@@ -15,12 +15,7 @@
   <table class="table" mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}{{element.id}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status.name}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} №{{element.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="location">
@@ -51,7 +46,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
-        <button class="buttonInTable"  disabled *ngIf="element.status.name == 'in_work'">delete</button>
+        <button class="buttonInTable"  (click)="deleteOrderWithStatusInWork(element.id)"  *ngIf="element.status.name == 'in_work'">delete</button>
         <button class="buttonInTableDelete" (click)="deleteById(element.id)" *ngIf="element.status.name == 'open'">delete</button>
         <button class="buttonInTableDelete" (click)="closeById(element.id)" *ngIf="element.status.name == 'implemented'">close</button>
       </td>
@@ -73,8 +68,6 @@
   </mat-paginator >
 
 </div>
-
-
 
 <ng-container *ngIf="!isLoaderOrder && !isLoaderStatus">
   <app-loader></app-loader>
