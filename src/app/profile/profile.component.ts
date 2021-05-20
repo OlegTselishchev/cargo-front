@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
         this.showClient();
       } else if (result === "error") {
         this.notificationService.add('errorUpdate');
-        setTimeout(()=>{this.notificationService.remove('equalsPassword')}, 2000);
+        setTimeout(()=>{this.notificationService.remove('errorUpdate')}, 2000);
       }
     });
   };

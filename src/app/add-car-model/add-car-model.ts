@@ -35,17 +35,27 @@ export class AddCarModel implements OnInit {
 
 
   onSubmit() {
+    if(this.newCar.volume > 0 && this.newCar.volume < 999999 &&
+      this.newCar.liftingCapacity > 0 && this.newCar.liftingCapacity < 999999) {
       this.carService.create(this.newCar)
-          .subscribe((response) => {
+        .subscribe((response) => {
             if (response.status === 200) {
               this.dialogRef.close("Yes");
-                this.notificationService.add('successfulUpdate');
-                setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
+              this.notificationService.add('successfulUpdate');
+              setTimeout(() => {
+                this.notificationService.remove('successfulUpdate')
+              }, 2000);
             }
           }, error => {
             this.dialogRef.close("error");
           },
-            ()=>{this.authService.setIsDriver('true')});
+          () => {
+            this.authService.setIsDriver('true')
+          });
+    }else {
+      this.notificationService.add('errorVolumeAndLiftingCapacity');
+      setTimeout(()=>{this.notificationService.remove('errorVolumeAndLiftingCapacity')},2000);
+    }
   }
 
 

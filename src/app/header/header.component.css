@@ -19,7 +19,7 @@ body{
 }
 
 .button{
-  left: 19%;
+  left: 10%;
   bottom: 10px;
   transform: translate(10%, -20%);
   position: relative;
@@ -32,6 +32,7 @@ body{
   letter-spacing: 2px;
   overflow: hidden;
   transition: 0.2s;
+  margin-left: 20px;
 }
 
 .button__line{

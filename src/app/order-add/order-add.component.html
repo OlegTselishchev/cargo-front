@@ -66,8 +66,9 @@
              [matAutocomplete]="auto"
              style="width: 500px"
              [(ngModel)]="inputRec"
-             (blur)="clearReceiver()"
-      >
+
+             (blur)="clearReceiver()">
+
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let rec of filteredReceiver | async" [value]="rec.lastName+' '+rec.firstName+' '+rec.middleName" (click)="addReceiver(rec)" >
           {{rec.lastName}} {{rec.firstName}} {{rec.middleName}}
@@ -87,8 +88,8 @@
              [matAutocomplete]="auto"
              style="width: 500px"
              [(ngModel)]="inputBox"
-             (blur)="clearBox()"
-      >
+             (blur)="clearBox()">
+
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let box of filteredBox | async" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'kg  ' + box.volume.toFixed(4)+'m3' " (click)="addBox(box)" >
           {{box.name}} {{box.typeCargo.name}} {{box.weight + 'kg'}} {{box.volume.toFixed(4) + 'm3'}}
@@ -148,6 +149,6 @@
 
 <ng-template #noBox>
   <div>
-    You have no box! <a class="button-2" (click)="createBox()"> Create Box</a>
+    You have no box! <button class="buttonInTable" (click)="createBox()"> Create Cargo</button>
   </div>
 </ng-template>

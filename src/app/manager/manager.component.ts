@@ -7,6 +7,7 @@ import {StatusService} from "../services/status.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {NotificationService} from "../services/notification.service";
+import {Client} from "../model/client.model";
 
 
 @Component({
@@ -97,40 +98,49 @@ export class ManagerComponent implements OnInit {
   }
 
   public closeById(id: number): void {
-
     let status: Status = this.statusList.find(x => x.name == 'close');
 
-    const order: Order = {
-      id: id,
-      name: null,
-      destination: null,
-      location: null,
-      box: null,
-      price: null,
-      receiver: null,
-      status: status,
-      driver: null
-    };
-    if(id != null){
-      if(order.status != null){
-        this.orderService.modify(order).subscribe(()=>{},
-          error => {
-            this.notificationService.add('modifyError', id);
-            setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
-          },
-          ()=>{
-            this.fillTableOrder()
-            this.notificationService.add('modifyOk', id);
-            setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
-        });
-      }else {
-        this.notificationService.add('dataError');
-        setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-      }
-    }else {
-      this.notificationService.add('dataError');
-      setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
-    }
+    let orderForModify: Order = new Order();
+
+    this.orderService.showOrderById(id).subscribe((order: Order)=>{orderForModify = order},
+      ()=>{},
+      ()=>{
+
+        const order: Order = {
+          id: id,
+          name: null,
+          destination: null,
+          location: null,
+          box: null,
+          price: null,
+          receiver: null,
+          status: status,
+          driver: orderForModify.driver
+        };
+        if(id != null){
+          if(order.status != null){
+            this.orderService.modify(order).subscribe(()=>{},
+              error => {
+                this.notificationService.add('modifyError', id);
+                setTimeout(()=>{this.notificationService.remove('modifyError')}, 2000);
+              },
+              ()=>{
+                this.fillTableOrder()
+                this.notificationService.add('modifyOk', id);
+                setTimeout(()=>{this.notificationService.remove('modifyOk')}, 2000);
+              });
+          }else {
+            this.notificationService.add('dataError');
+            setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+          }
+        }else {
+          this.notificationService.add('dataError');
+          setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);
+        }
+
+
+      });
+
   }
 
   deleteOrderWithStatusInWork(id: number):void{

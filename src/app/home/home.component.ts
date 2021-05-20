@@ -20,7 +20,7 @@ import {NotificationService} from "../services/notification.service";
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'price','loc','dest','volume', 'weight'];
+  displayedColumns: string[] = ['name', 'price', 'loc', 'dest', 'volume', 'weight'];
   dataSource: any;
 
   public pageSize = 7;
@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
               private orderService: OrderService,
               private addressService: AddressService,
               private typeService: TypeCargoService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService) {
+  }
 
   public orderList: Order[] = [];
   public addressListDest: Address[] = [];
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
 
   inputDest: string = '';
   inputLoc: string = '';
-  inputType: string ='';
+  inputType: string = '';
 
   STATUS_OPEN: string = 'open';
 
@@ -114,14 +115,23 @@ export class HomeComponent implements OnInit {
         this.addressListDest = data;
         this.addressListLoc = data;
       },
-      ()=>{this.isLoaderAddress = false;},
-      ()=>{this.isLoaderAddress = true;});
+      () => {
+        this.isLoaderAddress = false;
+      },
+      () => {
+        this.isLoaderAddress = true;
+      });
   }
 
-  public getType(): void{
-    this.typeService.getType().subscribe((data: TypeCargo[])=>{this.typeList = data},
-      ()=>{},
-      ()=>{this.isLoaderType = true});
+  public getType(): void {
+    this.typeService.getType().subscribe((data: TypeCargo[]) => {
+        this.typeList = data
+      },
+      () => {
+      },
+      () => {
+        this.isLoaderType = true
+      });
   }
 
   addDestination(dest: Address): void {
@@ -161,35 +171,49 @@ export class HomeComponent implements OnInit {
   }
 
 
-  fillTableOrderByStatusOpen():void{
-    if(this.loc.city != null && this.dest.city != null && this.type.typeId != null && this.price != null) {
-      this.orderService.getOrderListByLocDestTypePriceStatus(this.loc.city, this.dest.city, this.type.typeId, this.price, this.STATUS_OPEN)
-        .subscribe((result: Order[]) => {
-            let array = [];
-            result.forEach(function (item) {
-              array.push({
-                "id": item.id,
-                "name": item.name,
-                "status": item.status.name,
-                "price": item.price,
-                "loc": item.location.city + ', ' + item.location.street,
-                "dest": item.destination.city + ', '+ item.destination.street,
-                "volume": item.box.volume.toFixed(4),
-                "weight": item.box.weight
-              });
-            })
-            this.dataSource = new MatTableDataSource<any>(array);
-            this.dataSource.paginator = this.paginator;
-            this.orderList = result;
-          }, () => {
-            this.isLoaderOrder = false
-          },
-          () => {
-            this.isLoaderOrder = true;
-          });
-    }else{this.notificationService.add('dataError');
-    setTimeout(()=>{this.notificationService.remove('dataError')}, 2000);}
-  }
+  fillTableOrderByStatusOpen(): void {
+    if (this.loc.city != null && this.dest.city != null && this.type.typeId != null && this.price != null) {
+
+      if (this.price > 0 && this.price < 9999999){
+        this.orderService.getOrderListByLocDestTypePriceStatus(this.loc.city, this.dest.city, this.type.typeId, this.price, this.STATUS_OPEN)
+          .subscribe((result: Order[]) => {
+              let array = [];
+              result.forEach(function (item) {
+                array.push({
+                  "id": item.id,
+                  "name": item.name,
+                  "status": item.status.name,
+                  "price": item.price,
+                  "loc": item.location.city + ', ' + item.location.street,
+                  "dest": item.destination.city + ', ' + item.destination.street,
+                  "volume": item.box.volume.toFixed(4),
+                  "weight": item.box.weight
+                });
+              })
+              this.dataSource = new MatTableDataSource<any>(array);
+              this.dataSource.paginator = this.paginator;
+              this.orderList = result;
+            }, () => {
+              this.isLoaderOrder = false
+            },
+            () => {
+              this.isLoaderOrder = true;
+            });
+
+      }else{
+        this.notificationService.add('priceError');
+        setTimeout(()=>{this.notificationService.remove('priceError')}, 2000);
+      }
+
+    } else {
+      this.notificationService.add('dataError');
+      setTimeout(() => {
+        this.notificationService.remove('dataError')
+      }, 2000);
+    }
+}
+
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

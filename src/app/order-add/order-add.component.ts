@@ -171,6 +171,7 @@ export class OrderAddComponent implements OnInit {
 
   create(): void {
     let status: Status = this.statusList.find(x => x.name == 'open');
+
     let priceWithSale = 1;
     let weight = this.box.weight
     let price = weight * 500;
@@ -223,6 +224,7 @@ export class OrderAddComponent implements OnInit {
         this.notificationService.remove('dataError')
       }, 2000);
     }
+
     this.box.boxId = null;
     this.loc.addressId = null;
     this.dest.addressId = null;

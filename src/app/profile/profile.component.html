@@ -119,7 +119,7 @@
 
         <ng-container matColumnDef="detail">
           <th mat-header-cell *matHeaderCellDef>Details</th>
-          <td mat-cell *matCellDef="let element"> <button class="buttonInTable" routerLink="/orderDetail/{{element.id}}">Details</button> </td>
+          <td mat-cell *matCellDef="let element"> <a target="_blank" class="buttonInTable" routerLink="/orderDetail/{{element.id}}">Details</a> </td>
         </ng-container>
 
         <ng-container matColumnDef="delete">

@@ -116,6 +116,14 @@ export class NotificationService {
       this.notifications.push(notification);
     }
 
+    if (action === 'errorVolumeAndLiftingCapacity') {
+      const notification: Notification = new Notification();
+      notification.message = 'incorrect volume and capacity lifting capacity';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
+
     if (action === 'equalsPassword') {
       const notification: Notification = new Notification();
       notification.message = 'passwords are not equal';
@@ -127,6 +135,14 @@ export class NotificationService {
     if (action === 'keyError') {
       const notification: Notification = new Notification();
       notification.message = 'incorrect key';
+      notification.action = action;
+      notification.status = false;
+      this.notifications.push(notification);
+    }
+
+    if (action === 'priceError') {
+      const notification: Notification = new Notification();
+      notification.message = 'incorrect price';
       notification.action = action;
       notification.status = false;
       this.notifications.push(notification);
