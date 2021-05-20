@@ -42,10 +42,10 @@ export class OrderAddComponent implements OnInit {
   public boxList: Box[] = [];
   public statusList: Status[] = [];
 
-  dest: Address = new Address();
-  loc: Address = new Address();
-  box: Box = new Box();
-  receiver: Client = new Client();
+  dest33: Address = new Address();
+  loc33: Address = new Address();
+  box33: Box = new Box();
+  receiver33: Client = new Client();
   newOrder: Order = new Order();
 
   isLoaderAddress: boolean = false;
@@ -121,50 +121,67 @@ export class OrderAddComponent implements OnInit {
   }
 
   addDestination(dest: Address): void {
-    this.dest = dest;
+    this.dest33 = dest;
   }
 
   clearDest(): void {
     if (this.inputDest == '') {
-      this.dest.addressId = null;
+      this.dest33 = null;
     } else {
       return;
     }
   }
 
   addLocation(loc: Address): void {
-    this.loc = loc;
+    this.loc33 = loc;
   }
 
   clearLoc(): void {
     if (this.inputLoc == '') {
-      this.loc.addressId = null;
+       this.loc33 = null;
     } else {
       return;
     }
   }
 
   addReceiver(receiver: Client): void {
-    this.receiver = receiver;
+    this.receiver33 = receiver;
   }
 
   clearReceiver(): void {
     if (this.inputRec == '') {
-      this.receiver.userId = null;
+       this.receiver33 = null;
     } else {
       return;
     }
   }
 
   addBox(box: Box): void {
-    this.box = box;
+    this.box33 = box;
   }
 
   clearBox(): void {
     if (this.inputBox == '') {
-      this.box.boxId = null;
+       this.box33 = null;
     } else {
       return;
+    }
+  }
+
+  calculatePrice(weight: number): number{
+    let price = weight * 500;
+
+    if (weight <= 5) {
+      return  price;
+    } else if (weight > 5 && weight <= 10) {
+      let sale = price * 0.1;
+      return  price - sale;
+    } else if (weight > 10 && weight < 15) {
+      let sale = price * 0.2;
+      return  price - sale;
+    } else {
+      let sale = price * 0.3;
+      return  price - sale;
     }
   }
 
@@ -172,36 +189,26 @@ export class OrderAddComponent implements OnInit {
   create(): void {
     let status: Status = this.statusList.find(x => x.name == 'open');
 
-    let priceWithSale = 1;
-    let weight = this.box.weight
-    let price = weight * 500;
-    if(weight <= 5){
-      priceWithSale = price;
-    }else if(weight > 5 && weight <=10){
-      let sale = price * 0.1;
-      priceWithSale = price - sale;
-    }else if(weight > 10 && weight < 15){
-      let sale = price * 0.2;
-      priceWithSale = price - sale;
-    }else {
-      let sale = price * 0.3;
-      priceWithSale = price - sale;
-    }
+      let priceWithSale = 1;
 
-    const order: Order = {
+      if(this.box33 != null) {
+       priceWithSale = this.calculatePrice(this.box33.weight);
+      }
+
+    let order: Order = {
       name: 'order',
-      destination: this.dest,
-      location: this.loc,
-      box: this.box,
+      destination: this.dest33,
+      location: this.loc33,
+      box: this.box33,
       price: priceWithSale,
-      receiver: this.receiver,
+      receiver: this.receiver33,
       status: status,
       driver: null
     };
 
-    if (order.receiver.userId != null && order.box.boxId != null &&
-      order.location.addressId != null && order.destination.addressId != null &&
-      order.price != null && order.status.id != null
+    if (order.receiver != null && order.box != null &&
+      order.location != null && order.destination != null &&
+      order.price != null && order.status != null
     ) {
       this.orderService.create(order).subscribe((data:Order) => {
         this.newOrder = data;
@@ -218,6 +225,17 @@ export class OrderAddComponent implements OnInit {
             this.notificationService.remove('createOk')
           }, 2000);
         });
+
+      this.box33 = null;
+      this.loc33 = null;
+      this.dest33 = null;
+      this.receiver33 = null;
+
+      this.inputBox = '';
+      this.inputRec = '';
+      this.inputDest = '';
+      this.inputLoc = '';
+
     } else {
       this.notificationService.add('dataError');
       setTimeout(()=>{
@@ -225,15 +243,6 @@ export class OrderAddComponent implements OnInit {
       }, 2000);
     }
 
-    this.box.boxId = null;
-    this.loc.addressId = null;
-    this.dest.addressId = null;
-    this.receiver.userId = null;
-
-    this.inputBox = '';
-    this.inputRec = '';
-    this.inputDest = '';
-    this.inputLoc = '';
   }
 
   goBack(): void {
