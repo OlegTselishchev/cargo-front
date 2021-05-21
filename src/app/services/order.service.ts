@@ -8,8 +8,8 @@ export class OrderService {
 
   constructor(public http: HttpClient) {}
 
-  //urlOrder: string = 'https://app-cargo2020.herokuapp.com/order/';
-  urlOrder: string = 'http://localhost:9000/order/';
+  urlOrder: string = 'https://app-cargo2020.herokuapp.com/order/';
+  //urlOrder: string = 'http://localhost:9000/order/';
 
   public getOrderList(){
     return this.http.get(this.urlOrder);

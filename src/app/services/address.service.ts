@@ -7,8 +7,8 @@ export class AddressService {
 
   constructor(public http: HttpClient) {}
 
-  //urlAddress: string = 'https://app-cargo2020.herokuapp.com/address/';
-  urlAddress: string = 'http://localhost:9000/address/';
+  urlAddress: string = 'https://app-cargo2020.herokuapp.com/address/';
+   //urlAddress: string = 'http://localhost:9000/address/';
 
   public getAddressAll() {
     return this.http.get(this.urlAddress);

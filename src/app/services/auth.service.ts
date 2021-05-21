@@ -20,8 +20,12 @@ export class AuthService {
               private jwtHelper: JwtHelperService,
               public notificationService: NotificationService){}
 
-  private urlLog: string = 'http://localhost:9000/login';
-  private urlReg: string = 'http://localhost:9000/reg';
+  // private urlLog: string = 'http://localhost:9000/login';
+  // private urlReg: string = 'http://localhost:9000/reg';
+
+  private urlLog: string = 'https://app-cargo2020.herokuapp.com/login';
+  private urlReg: string = 'https://app-cargo2020.herokuapp.com/reg';
+
   private userAuth: Auth = new Auth();
 
   public login(auth: Auth): void {

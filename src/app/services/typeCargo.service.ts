@@ -7,10 +7,10 @@ export class TypeCargoService {
   constructor(public http: HttpClient) {
   }
 
-  //urlTypeCargo: string = 'https://app-cargo2020.herokuapp.com/type/';
-  urlType: string = 'http://localhost:9000/type/';
+  urlTypeCargo: string = 'https://app-cargo2020.herokuapp.com/type/';
+  //urlTypeCargo: string = 'http://localhost:9000/type/';
 
   public getType(){
-   return this.http.get(this.urlType);
+   return this.http.get(this.urlTypeCargo);
   }
 }
