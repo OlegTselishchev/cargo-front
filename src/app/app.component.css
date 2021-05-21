@@ -26,6 +26,10 @@
   right: 0;
 }
 
+div.scroll{
+  height: 92%;
+  overflow-y: auto;
+}
 
 
 

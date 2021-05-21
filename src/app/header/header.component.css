@@ -1,11 +1,11 @@
 .header{
-  padding: 30px;
+  padding: 1.5%;
   text-align: center;
   background: transparent;
   font-size: 30px;
   z-index: 1;
   position: relative;
-  height: 30px;
+  height: 5%;
 }
 
 body{
