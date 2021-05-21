@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../services/auth.service";
 import {OrderService} from "../services/order.service";
 import {Order} from "../model/order.model";
@@ -12,6 +12,8 @@ import {map, startWith} from "rxjs/operators";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {NotificationService} from "../services/notification.service";
+import * as mapboxgl from 'mapbox-gl';
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-home',
@@ -24,6 +26,9 @@ export class HomeComponent implements OnInit {
   dataSource: any;
 
   public pageSize = 7;
+
+  @ViewChild('mapElement')
+  mapElement: ElementRef;
 
   @ViewChild
   (MatPaginator) paginator: MatPaginator;
@@ -51,6 +56,7 @@ export class HomeComponent implements OnInit {
   isLoaderOrder: boolean = false;
   isMap: boolean = false;
   keyMap: boolean = true;
+  public map: mapboxgl.Map;
 
 
   controlDest = new FormControl();
@@ -70,6 +76,8 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    (mapboxgl as any).accessToken = environment.mapboxKey;
+
     this.getAddressCityDistinct();
     this.getType();
 
@@ -88,6 +96,25 @@ export class HomeComponent implements OnInit {
       map(value => this._filterType(value))
     );
 
+  }
+
+  ngAfterViewInit(){
+    console.log(this.mapElement)
+    this.map = new mapboxgl.Map({
+      container: this.mapElement.nativeElement, // container id
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [49.3859888, 53.5431899], // starting position
+      zoom: 11
+    });
+    this.map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: false
+          },
+          trackUserLocation: true,
+          fitBoundsOptions: {maxZoom:11}
+        })
+    );
   }
 
 
@@ -193,6 +220,7 @@ export class HomeComponent implements OnInit {
               this.dataSource = new MatTableDataSource<any>(array);
               this.dataSource.paginator = this.paginator;
               this.orderList = result;
+              this.createMarkers();
             }, () => {
               this.isLoaderOrder = false
             },
@@ -234,4 +262,30 @@ export class HomeComponent implements OnInit {
     this.keyMap = true;
   }
 
+  public createMarkers(){
+    for (var i = 0; i < this.orderList.length; i++) {
+
+      var html = '<h2>' + this.orderList[i].box.name +'</h2>'+
+          '<b>To:</b><br> ' +
+          '<b>Country: </b> ' +
+          '<span>' + this.orderList[i].destination.country + ' </span>' +
+          '<b>City: </b> ' +
+          '<span>' + this.orderList[i].destination.city + ' </span><br>' +
+          '<b>Street: </b> ' +
+          '<span>' + this.orderList[i].destination.street+ ' </span><br> ' +
+          '<b>Home: </b> ' +
+          '<span>' + this.orderList[i].destination.home+ ' </span> ' +
+          '<b>Apartment: </b> ' +
+          '<span>' + this.orderList[i].destination.apartment + '</span><br>' ;
+
+      var popup = new mapboxgl.Popup({ offset: 25 })
+          .setHTML(html);
+      const marker = new mapboxgl.Marker({
+        draggable: false
+      })
+          .setLngLat([this.orderList[i].location.lng, this.orderList[i].location.lat])
+          .setPopup(popup)
+          .addTo(this.map);
+    }
+  }
 }

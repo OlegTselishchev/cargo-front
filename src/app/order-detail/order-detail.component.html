@@ -8,8 +8,8 @@
       <div>
         <b>Customer: </b>
         <span> {{orderDet?.box.client.lastName}} {{orderDet?.box.client.firstName}} {{orderDet?.box.client.middleName}}</span><br>
-        <strong>Phone: </strong> <span>{{orderDet?.box.client.phone}}; </span>
-        <strong>Email: </strong> <span>{{orderDet?.box.client.email}}; </span><br>
+        <strong>Phone: </strong> <span>{{orderDet?.box.client.phone}} </span>
+        <strong>Email: </strong> <span>{{orderDet?.box.client.email}} </span><br>
       </div>
       <div class="address">
         <b>From:</b><br>
@@ -48,8 +48,8 @@
       <div>
         <b>Receiver: </b>
         <span>{{orderDet?.receiver.lastName}} {{orderDet?.receiver.firstName}} {{orderDet?.receiver.middleName}}</span><br>
-        <strong>Phone: </strong> <span>{{orderDet?.receiver.phone}}; </span>
-        <strong>Email: </strong> <span>{{orderDet?.receiver.email}}; </span><br>
+        <strong>Phone: </strong> <span>{{orderDet?.receiver.phone}} </span>
+        <strong>Email: </strong> <span>{{orderDet?.receiver.email}} </span><br>
       </div>
     </div>
     <div class="boxInformation">
@@ -87,6 +87,8 @@
         <div>
           <b>Driver: </b>
           <span>{{orderDet?.driver?.lastName}} {{orderDet?.driver?.firstName}} {{orderDet?.driver?.middleName}}</span><br>
+          <strong>Phone: </strong> <span>{{orderDet?.receiver.phone}} </span>
+          <strong>Email: </strong> <span>{{orderDet?.receiver.email}} </span><br>
         </div>
       </div>
       <div *ngIf="orderDet?.driver == null && isLoggedAndDriver" class="cont1">

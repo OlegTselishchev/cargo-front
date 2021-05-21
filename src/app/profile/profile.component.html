@@ -4,7 +4,7 @@
       <div class="heading">
         <b>Profile:</b>
         <a class="editButton" (click)="edit()">Edit</a>
-        <hr align="left" width="300" size="4" color="#87CEFA"/>
+        <hr align="left" width="53%" size="4" color="#87CEFA"/>
       </div>
       <div class="profileInformation">
         <div>
@@ -25,13 +25,12 @@
         </div>
       </div>
     </div>
-
     <div class="car">
       <div class="heading">
         <b>Car:</b>
         <a *ngIf="profile.car != null"  class="buttonDeleteCar" (click)="checkPossibilityOfDelete()">Delete</a>
         <a *ngIf="profile.car == null"  class="buttonAddCar" (click)="addCar()">Add</a>
-        <hr align="left" width="300" size="4" color="#87CEFA"/>
+        <hr align="left" width="53%" size="4" color="#87CEFA"/>
       </div>
       <div class="carInformation" *ngIf="profile.car != null">
         <div>
@@ -53,7 +52,7 @@
         <b>Trailer:</b>
         <a *ngIf="profile.car?.trailer != null"  class="buttonDeleteTrailer" (click)="deleteTrailer()">Delete</a>
         <a *ngIf="profile.car?.trailer == null"  class="buttonAddTrailer" (click)="addTrailer()">Add</a>
-        <hr align="left" width="300" size="4" color="#87CEFA"/>
+        <hr align="left" width="53%" size="4" color="#87CEFA"/>
       </div>
       <div class="trailerInformation" *ngIf="profile.car?.trailer != null">
         <div>
@@ -79,7 +78,7 @@
   <div class="orderHistory">
     <div class="heading">
       <b>Order history:</b>
-      <hr align="left" width="300" size="4" color="#87CEFA"/>
+      <hr align="left" width="35%" size="4" color="#87CEFA"/>
     <div  class="mat-elevation-z8 test">
       <mat-form-field class="search">
         <mat-label>SEARCH</mat-label>

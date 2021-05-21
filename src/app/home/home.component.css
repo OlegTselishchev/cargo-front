@@ -94,3 +94,21 @@ table {
   background-color: #2196f3;
 }
 
+.mat-elevation-z9 {
+  margin-left:5%;
+  background-color: white;
+  width: 90%;
+}
+
+.map-size{
+  width: 90%;
+  height: 100%;
+}
+
+.mat-tab-group{
+  height: 100%;
+}
+
+:host ::ng-deep .mat-tab-body-wrapper{
+  height: 90%;
+}

@@ -49,8 +49,7 @@ export class DriverComponent implements OnInit {
               public statusService: StatusService,
               public notificationService: NotificationService,
               public keyService: KeyService,
-              public loaderService: LoaderService,
-              public cdr: ChangeDetectorRef) { }
+              public loaderService: LoaderService) { }
 
   public statusList: Status[] = [];
   public orderList: Order[] = [];
@@ -67,16 +66,14 @@ export class DriverComponent implements OnInit {
 
 
   ngOnInit(): void {
+    (mapboxgl as any).accessToken = environment.mapboxKey;
+
     this.showStatusAll();
     this.showClientByEmail();
     this.fillTableOrderByStatusOpen();
-
-    (mapboxgl as any).accessToken = environment.mapboxKey;
-
   }
 
   ngAfterViewInit(){
-    console.log(this.mapElement)
     this.map = new mapboxgl.Map({
       container: this.mapElement.nativeElement, // container id
       style: 'mapbox://styles/mapbox/streets-v11',
@@ -92,10 +89,13 @@ export class DriverComponent implements OnInit {
           fitBoundsOptions: {maxZoom:11}
         })
     );
+    setTimeout(()=> {
+      this.map.resize();
+    })
   }
 
+
   fillTableOrderByStatusOpen():void{
-    this.loaderService.isLoading = true;
     this.orderService.getOrderListByStatus(this.STATUS_OPEN).subscribe((result: Order[])=>{
         let array = [];
         result.forEach(function(item) {
@@ -115,7 +115,6 @@ export class DriverComponent implements OnInit {
         this.dataSourceFullOrders.paginator = this.paginator;
 
       },() => {
-        this.loaderService.isLoading = false;
       this.notificationService.add('getError');
       setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
       },
