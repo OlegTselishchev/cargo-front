@@ -1,0 +1,58 @@
+.body-box{
+  color: #2196f3;
+  width: 290px;
+  text-align: center;
+}
+
+.mat-dialog-title{
+  font-family: "Montserrat", sans-serif;
+}
+form{
+  width: 100%;
+  padding: 5px;
+  margin-left: -10px;
+  background-color: white;
+  border: solid 2px #ffffff;
+  overflow: auto;
+  text-decoration:none;
+  font-family: "Montserrat", sans-serif;
+}
+.window{
+  text-align: center;
+  width: 45%;
+  font-family: "Montserrat", sans-serif;
+  border-width: 0 0 1px 0;
+  border-color: white;
+  outline: none;
+  color: #2196f3;
+
+
+}
+.window:hover{
+  border-width: 0 0 1px 0;
+  border-color: rgb(33, 150, 243);
+}
+
+.button-create-box-popup{
+  background-color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  color: #2196f3;
+  margin-left: 65px;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration:none;
+}
+
+.button-create-box-popup:hover{
+  background-color: #59acec;
+  color: rgba(255, 255, 255, 0.85);
+  background-color: #2196f3;
+}
+
+select{
+  border:none;
+  color: #2196f3;
+}

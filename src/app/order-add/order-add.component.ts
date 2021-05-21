@@ -126,7 +126,7 @@ export class OrderAddComponent implements OnInit {
 
   clearDest(): void {
     if (this.inputDest == '') {
-      this.dest.addressId = null;
+      this.dest = null;
     } else {
       return;
     }
@@ -138,7 +138,7 @@ export class OrderAddComponent implements OnInit {
 
   clearLoc(): void {
     if (this.inputLoc == '') {
-      this.loc.addressId = null;
+       this.loc = null;
     } else {
       return;
     }
@@ -150,7 +150,7 @@ export class OrderAddComponent implements OnInit {
 
   clearReceiver(): void {
     if (this.inputRec == '') {
-      this.receiver.userId = null;
+       this.receiver = null;
     } else {
       return;
     }
@@ -162,9 +162,26 @@ export class OrderAddComponent implements OnInit {
 
   clearBox(): void {
     if (this.inputBox == '') {
-      this.box.boxId = null;
+       this.box = null;
     } else {
       return;
+    }
+  }
+
+  calculatePrice(weight: number): number{
+    let price = weight * 500;
+
+    if (weight <= 5) {
+      return  price;
+    } else if (weight > 5 && weight <= 10) {
+      let sale = price * 0.1;
+      return  price - sale;
+    } else if (weight > 10 && weight < 15) {
+      let sale = price * 0.2;
+      return  price - sale;
+    } else {
+      let sale = price * 0.3;
+      return  price - sale;
     }
   }
 
@@ -172,22 +189,26 @@ export class OrderAddComponent implements OnInit {
   create(): void {
     let status: Status = this.statusList.find(x => x.name == 'open');
 
-    let price = this.box.weight * 500;
+      let priceWithSale = 1;
 
-    const order: Order = {
+      if(this.box != null) {
+       priceWithSale = this.calculatePrice(this.box.weight);
+      }
+
+    let order: Order = {
       name: 'order',
       destination: this.dest,
       location: this.loc,
       box: this.box,
-      price: price,
+      price: priceWithSale,
       receiver: this.receiver,
       status: status,
       driver: null
     };
 
-    if (order.receiver.userId != null && order.box.boxId != null &&
-      order.location.addressId != null && order.destination.addressId != null &&
-      order.price != null && order.status.id != null
+    if (order.receiver != null && order.box != null &&
+      order.location != null && order.destination != null &&
+      order.price != null && order.status != null
     ) {
       this.orderService.create(order).subscribe((data:Order) => {
         this.newOrder = data;
@@ -204,21 +225,24 @@ export class OrderAddComponent implements OnInit {
             this.notificationService.remove('createOk')
           }, 2000);
         });
+
+      this.box = null;
+      this.loc = null;
+      this.dest = null;
+      this.receiver = null;
+
+      this.inputBox = '';
+      this.inputRec = '';
+      this.inputDest = '';
+      this.inputLoc = '';
+
     } else {
       this.notificationService.add('dataError');
       setTimeout(()=>{
         this.notificationService.remove('dataError')
       }, 2000);
     }
-    this.box.boxId = null;
-    this.loc.addressId = null;
-    this.dest.addressId = null;
-    this.receiver.userId = null;
 
-    this.inputBox = '';
-    this.inputRec = '';
-    this.inputDest = '';
-    this.inputLoc = '';
   }
 
   goBack(): void {

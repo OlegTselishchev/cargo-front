@@ -13,6 +13,10 @@ import {environment} from "../../environments/environment";
 import * as mapboxgl from 'mapbox-gl';
 import {Router} from "@angular/router";
 import 'mapbox-gl/dist/mapbox-gl.css';
+import {KeyService} from "../services/key.service";
+import {AddKeyComponent} from "../add-key/add-key.component";
+import {MatDialog} from "@angular/material/dialog";
+import {LoaderService} from "../services/loader.service";
 
 
 @Component({
@@ -22,13 +26,16 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 })
 export class DriverComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight', 'take'];
-  dataSource: any;
+  displayedColumnsFullOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'detail'];
+  dataSourceFullOrders: any;
 
-  displayedColumns1: string[] = ['id', 'name', 'status','price','loc','dest','volume', 'weight', 'impl', 'back'];
-  dataSource1: any;
+  displayedColumnsMyOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'impl', 'back', 'detail'];
+  dataSourceMyOrders: any;
 
-  public pageSize = 7;
+  displayedColumnsCloseOrders: string[] = ['name', 'price','loc','dest','volume', 'weight', 'detail'];
+  dataSourceCloseOrders: any;
+
+  public pageSize = 3;
   @ViewChild('mapElement')
   mapElement: ElementRef;
   @ViewChild
@@ -36,10 +43,13 @@ export class DriverComponent implements OnInit {
 
   constructor(public orderService: OrderService,
               public router: Router,
+              public dialog: MatDialog,
               public clientService: ClientService,
               private authService: AuthService,
               public statusService: StatusService,
               public notificationService: NotificationService,
+              public keyService: KeyService,
+              public loaderService: LoaderService,
               public cdr: ChangeDetectorRef) { }
 
   public statusList: Status[] = [];
@@ -47,10 +57,10 @@ export class DriverComponent implements OnInit {
   public driver: Client = new Client();
   public driverEmail: string = this.authService.getAuthEmail();
   public isOrderFull: boolean = true;
+  public isOrderClose: boolean = false;
   public STATUS_OPEN: string = 'open';
   public STATUS_IN_WORK: string = 'in_work';
-  public isLoaderOrderStatusOpen: boolean = false;
-  public isLoaderOrderStatusImplement: boolean = false;
+  public STATUS_CLOSE: string = 'close';
   public isLouderStatus: boolean = false;
   public isLoaderDriver: boolean = false;
   public map: mapboxgl.Map;
@@ -62,7 +72,6 @@ export class DriverComponent implements OnInit {
     this.fillTableOrderByStatusOpen();
 
     (mapboxgl as any).accessToken = environment.mapboxKey;
-
 
   }
 
@@ -86,6 +95,7 @@ export class DriverComponent implements OnInit {
   }
 
   fillTableOrderByStatusOpen():void{
+    this.loaderService.isLoading = true;
     this.orderService.getOrderListByStatus(this.STATUS_OPEN).subscribe((result: Order[])=>{
         let array = [];
         result.forEach(function(item) {
@@ -94,21 +104,28 @@ export class DriverComponent implements OnInit {
             "name":item.name,
             "status":item.status.name,
             "price":item.price,
-            "loc":item.location.city,
-            "dest":item.destination.city,
+            "loc":item.location.city +', '+ item.location.street,
+            "dest":item.destination.city +', '+ item.destination.street,
             "volume":item.box.volume.toFixed(4),
             "weight":item.box.weight
           });
         })
-          this.orderList = result;
-        this.dataSource  = new MatTableDataSource<any>(array);
-        this.dataSource.paginator = this.paginator;
-          this.createMarkers();
-      },()=>{this.isLoaderOrderStatusOpen = false},
-      ()=>{this.isLoaderOrderStatusOpen = true});
+        this.orderList = result;
+        this.dataSourceFullOrders  = new MatTableDataSource<any>(array);
+        this.dataSourceFullOrders.paginator = this.paginator;
+
+      },() => {
+        this.loaderService.isLoading = false;
+      this.notificationService.add('getError');
+      setTimeout(()=>{this.notificationService.remove('getError')}, 2000);
+      },
+      ()=>{this.loaderService.isLoading = false;
+        this.createMarkers();
+    });
   }
 
   fillTableOrderByDriverIdAndStatusInWork():void{
+    this.loaderService.isLoading = true;
     this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_IN_WORK)
       .subscribe((result: Order[])=>{
           let array = [];
@@ -118,33 +135,69 @@ export class DriverComponent implements OnInit {
               "name":item.name,
               "status":item.status.name,
               "price":item.price,
-              "loc":item.location.city,
-              "dest":item.destination.city,
+              "loc":item.location.city +', '+ item.location.street,
+              "dest":item.destination.city +', '+ item.destination.street,
               "volume":item.box.volume.toFixed(4),
               "weight":item.box.weight
             });
           })
-          this.dataSource1  = new MatTableDataSource<any>(array);
-          this.dataSource1.paginator = this.paginator;
-        },()=>{this.isLoaderOrderStatusImplement = false},
-        ()=>{this.isLoaderOrderStatusImplement = true});
+          this.dataSourceMyOrders  = new MatTableDataSource<any>(array);
+          this.dataSourceMyOrders.paginator = this.paginator;
+        },()=>{this.loaderService.isLoading = false;},
+        ()=>{this.loaderService.isLoading = false;});
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  fillTableOrderClose():void{
+    this.loaderService.isLoading = true;
+    this.orderService.getOrderListByDriverIdAndStatus(this.authService.getClientId(), this.STATUS_CLOSE)
+      .subscribe((result: Order[])=>{
+          let array = [];
+          result.forEach(function(item) {
+            array.push({
+              "id":item.id,
+              "name":item.name,
+              "status":item.status.name,
+              "price":item.price,
+              "loc":item.location.city +', '+ item.location.street,
+              "dest":item.destination.city +', '+ item.destination.street,
+              "volume":item.box.volume.toFixed(4),
+              "weight":item.box.weight
+            });
+          })
+          this.dataSourceCloseOrders  = new MatTableDataSource<any>(array);
+          this.dataSourceCloseOrders.paginator = this.paginator;
+        },()=>{this.loaderService.isLoading = false;
+        this.notificationService.add('getError');
+        setTimeout(()=>{this.notificationService.remove('getError')}, 2000);},
+        ()=>{this.loaderService.isLoading = false;});
+  }
+
+  applyFilterFullOrders(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceFullOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceFullOrders.paginator) {
+      this.dataSourceFullOrders.paginator.firstPage();
     }
   }
 
-  applyFilter1(event: Event) {
+  applyFilterMyOrders(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource1.filter = filterValue.trim().toLowerCase();
+    this.dataSourceMyOrders.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource1.paginator) {
-      this.dataSource1.paginator.firstPage();
+    if (this.dataSourceMyOrders.paginator) {
+      this.dataSourceMyOrders.paginator.firstPage();
+    }
+  }
+
+
+  applyFilterCloseOrders(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceCloseOrders.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceCloseOrders.paginator) {
+      this.dataSourceCloseOrders.paginator.firstPage();
     }
   }
 
@@ -239,11 +292,10 @@ export class DriverComponent implements OnInit {
   }
 
   public modifyByIdStatusImplemented(id: number): void {
+    let key: string = this.keyService.key;
+    let keyForCheck: string = '0000';
 
-    let key1 = prompt('Введи ключ');
-    let key2: string = '0000';
-
-    if(key1 == key2) {
+    if(key == keyForCheck) {
 
       let status: Status = this.statusList.find(x => x.name == 'implemented');
 
@@ -326,12 +378,26 @@ export class DriverComponent implements OnInit {
 
   myOrder(): void {
     this.isOrderFull = false;
+    this.isOrderClose = false;
     this.fillTableOrderByDriverIdAndStatusInWork();
   }
 
   fullOrders():void {
     this.isOrderFull = true;
+    this.isOrderClose = false;
     this.fillTableOrderByStatusOpen();
+  }
+
+  history(): void {
+    this.isOrderClose = true;
+    this.fillTableOrderClose();
+  }
+
+  checkKey(id: number):void{
+    const addKey = this.dialog.open(AddKeyComponent);
+    addKey.afterClosed().subscribe(result => {
+      this.modifyByIdStatusImplemented(id);
+    });
   }
 
   public createMarkers(){
@@ -340,15 +406,15 @@ export class DriverComponent implements OnInit {
       var html = '<h2>' + this.orderList[i].box.name +'</h2>'+
           '<b>To:</b><br> ' +
           '<b>Country: </b> ' +
-          '<span>' + this.orderList[i].location.country + ' </span>' +
+          '<span>' + this.orderList[i].destination.country + ' </span>' +
           '<b>City: </b> ' +
-          '<span>' + this.orderList[i].location.city + ' </span><br>' +
+          '<span>' + this.orderList[i].destination.city + ' </span><br>' +
           '<b>Street: </b> ' +
-          '<span>' + this.orderList[i].location.street+ ' </span><br> ' +
+          '<span>' + this.orderList[i].destination.street+ ' </span><br> ' +
           '<b>Home: </b> ' +
-          '<span>' + this.orderList[i].location.home+ ' </span> ' +
+          '<span>' + this.orderList[i].destination.home+ ' </span> ' +
           '<b>Apartment: </b> ' +
-          '<span>' + this.orderList[i].location.apartment + '</span><br>' +
+          '<span>' + this.orderList[i].destination.apartment + '</span><br>' +
           '<a target="_blank" href="/orderDetail/' + this.orderList[i].id +'" ><b>details</ b></a>';
 
       var popup = new mapboxgl.Popup({ offset: 25 })

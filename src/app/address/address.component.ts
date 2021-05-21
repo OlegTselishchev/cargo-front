@@ -16,10 +16,10 @@ import {CreateAddressComponent} from "../create-address/create-address.component
 })
 export class AddressComponent implements OnInit {
 
-  displayedColumns: string[] = ['addressId','country', 'city', 'street','home','apartment', 'delete'];
+  displayedColumns: string[] = ['country', 'city', 'street','home','apartment', 'delete'];
   dataSource: any;
 
-  public pageSize = 1;
+  public pageSize = 7;
 
   @ViewChild
   (MatPaginator) paginator: MatPaginator;
@@ -36,6 +36,7 @@ export class AddressComponent implements OnInit {
   }
 
   fillTableAddress():void{
+    this.isLoaderAddress = false;
     this.addressService.getAddressAll().subscribe((result: Address[])=>{
         let array = [];
         result.forEach(function(item) {

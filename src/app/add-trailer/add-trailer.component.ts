@@ -27,16 +27,24 @@ export class AddTrailerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.trailerService.create(this.newTrailer)
+    if(this.newTrailer.volume > 0 && this.newTrailer.volume < 999999 &&
+        this.newTrailer.liftingCapacity > 0 && this.newTrailer.liftingCapacity < 999999) {
+      this.trailerService.create(this.newTrailer)
         .subscribe((response) => {
           if (response.status === 200) {
             this.dialogRef.close("Yes");
-              this.notificationService.add('successfulUpdate');
-              setTimeout(()=>{this.notificationService.remove('successfulUpdate')}, 2000);
+            this.notificationService.add('successfulUpdate');
+            setTimeout(() => {
+              this.notificationService.remove('successfulUpdate')
+            }, 2000);
           }
-        },  error => {
-            this.dialogRef.close("error");
+        }, error => {
+          this.dialogRef.close("error");
         });
+    }else{
+      this.notificationService.add('errorVolumeAndLiftingCapacity');
+      setTimeout(()=>{this.notificationService.remove('errorVolumeAndLiftingCapacity')},2000);
+    }
   }
 
   onNoClick(): void {

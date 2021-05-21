@@ -5,35 +5,14 @@
 
 <div class="cont1">
   <a class="button" (click)="goBack()">Back</a>
-  <a class="button" (click)="create()">Create Order</a>
-  <a class="button" routerLink="/box">Box</a>
+  <a class="button" (click)="create()">Save Order</a>
+  <a class="button" routerLink="/box">Cargo List</a>
   <a class="button" routerLink="/address">Address</a>
 </div>
 
 <div class="cont1">
   <div class="y">
-    <label>Destination</label>
-    <div *ngIf="addressListDest.length">
-
-      <form class="example-form">
-        <input type="text"
-               placeholder="Search destination by city"
-               [formControl]="controlDest"
-               [matAutocomplete]="auto"
-               style="width: 500px"
-               [(ngModel)]="inputDest"
-               (blur)="clearDest()"
-               >
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let dest of filteredAddressDest | async" [value]="dest.city+' '+dest.street+' '+dest.home+' '+dest.apartment" (click)="addDestination(dest)" >
-            {{dest.city}} {{dest.street}} {{dest.home}} {{dest.apartment}}
-          </mat-option>
-        </mat-autocomplete>
-      </form>
-    </div>
-  </div>
-  <div class="y">
-  <label>Location</label>
+  <label>From</label>
   <div *ngIf="addressListLoc.length">
 
     <form class="example-form">
@@ -43,8 +22,8 @@
              [matAutocomplete]="auto"
              style="width: 500px"
              [(ngModel)]="inputLoc"
-             (blur)="clearLoc()"
-      >
+             (blur)="clearLoc()">
+
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let loc of filteredAddressLoc | async" [value]="loc.city+' '+loc.street+' '+loc.home+' '+loc.apartment" (click)="addLocation(loc)" >
           {{loc.city}} {{loc.street}} {{loc.home}} {{loc.apartment}}
@@ -53,6 +32,29 @@
     </form>
   </div>
 </div>
+
+  <div class="y">
+    <label>To</label>
+    <div *ngIf="addressListDest.length">
+
+      <form class="example-form">
+        <input type="text"
+               placeholder="Search destination by city"
+               [formControl]="controlDest"
+               [matAutocomplete]="auto"
+               style="width: 500px"
+               [(ngModel)]="inputDest"
+               (blur)="clearDest()">
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let dest of filteredAddressDest | async" [value]="dest.city+' '+dest.street+' '+dest.home+' '+dest.apartment" (click)="addDestination(dest)" >
+            {{dest.city}} {{dest.street}} {{dest.home}} {{dest.apartment}}
+          </mat-option>
+        </mat-autocomplete>
+      </form>
+    </div>
+  </div>
+
   <div class="y">
   <label>Receiver</label>
   <div *ngIf="clientList.length">
@@ -64,8 +66,8 @@
              [matAutocomplete]="auto"
              style="width: 500px"
              [(ngModel)]="inputRec"
-             (blur)="clearReceiver()"
-      >
+             (blur)="clearReceiver()">
+
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let rec of filteredReceiver | async" [value]="rec.lastName+' '+rec.firstName+' '+rec.middleName" (click)="addReceiver(rec)" >
           {{rec.lastName}} {{rec.firstName}} {{rec.middleName}}
@@ -74,9 +76,11 @@
     </form>
   </div>
 </div>
+
   <div class="y">
-  <label>Box</label>
+  <label>Cargo</label>
   <div *ngIf="boxList.length; else noBox">
+
     <form class="example-form">
       <input type="text"
              placeholder="Search box by name"
@@ -84,11 +88,11 @@
              [matAutocomplete]="auto"
              style="width: 500px"
              [(ngModel)]="inputBox"
-             (blur)="clearBox()"
-      >
+             (blur)="clearBox()">
+
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let box of filteredBox | async" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'кг'+ box.volume.toFixed(4)+'куб.м' " (click)="addBox(box)" >
-          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'кг'}} {{box.volume.toFixed(4) + 'куб.м'}}
+        <mat-option *ngFor="let box of filteredBox | async" [value]="box.name+' '+box.typeCargo.name+' '+box.weight+'kg  ' + box.volume.toFixed(4)+'m3' " (click)="addBox(box)" >
+          {{box.name}} {{box.typeCargo.name}} {{box.weight + 'kg'}} {{box.volume.toFixed(4) + 'm3'}}
         </mat-option>
       </mat-autocomplete>
     </form>
@@ -105,32 +109,32 @@
     status: {{newOrder.status.name}}
     </div>
     <div>
-      <strong>Location - </strong>
-      city: {{newOrder.location.city}}
-      street: {{newOrder.location.street}}
-      home: {{newOrder.location.home}}
-      apartment: {{newOrder.location.apartment}}
+      <strong>Location: </strong>
+       {{newOrder.location.city}}
+       {{newOrder.location.street}}
+       {{newOrder.location.home}}
+      - {{newOrder.location.apartment}}
     </div>
     <div>
-      <strong>Destination - </strong>
-      city: {{newOrder.destination.city}}
-      street: {{newOrder.destination.street}}
-      home: {{newOrder.destination.home}}
-      apartment: {{newOrder.destination.apartment}}
+      <strong>Destination: </strong>
+      {{newOrder.destination.city}}
+      {{newOrder.destination.street}}
+      {{newOrder.destination.home}}
+      - {{newOrder.destination.apartment}}
     </div>
     <div>
-      <strong>Box - </strong>
+      <strong>Box: </strong>
       name: {{newOrder.box.name}}
       type: {{newOrder.box.typeCargo.name}}
       weight: {{newOrder.box.weight}}
       volume: {{newOrder.box.volume.toFixed(4)}}
     </div>
     <div>
-      <strong>Receiver - </strong>
-      lastname: {{newOrder.receiver.lastName}}
-      firstname: {{newOrder.receiver.firstName}}
-      middlename: {{newOrder.receiver.middleName}}
-      phone: {{newOrder.receiver.phone}}
+      <strong>Receiver: </strong>
+      {{newOrder.receiver.lastName}}
+      {{newOrder.receiver.firstName}}
+      {{newOrder.receiver.middleName}}
+      phone: {{newOrder.receiver.phone}};
       email: {{newOrder.receiver.email}}
     </div>
   </div>
@@ -139,14 +143,12 @@
 </div>
 
 
-
-
 <ng-container *ngIf="!isLoaderAddress && !isLoaderBox && !isLoaderClient && !isLoaderStatus">
   <app-loader></app-loader>
 </ng-container>
 
 <ng-template #noBox>
   <div>
-    You have no box! <a class="button-2" (click)="createBox()"> Create Box</a>
+    You have no box! <button class="buttonInTable" (click)="createBox()"> Create Cargo</button>
   </div>
 </ng-template>

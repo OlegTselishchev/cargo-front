@@ -13,15 +13,15 @@
 background-repeat: no-repeat;
 background-position: center right;"></div>
   </a>
-  <a routerLink = "/manager" class = "button" *ngIf="isLoggedIn">
+  <a routerLink = "/manager" (click)="activeManagerPage()" class = "button" [class.active]="isManagerPage" *ngIf="isLoggedIn">
     <span class="button__line button__line--top"></span>
     <span class="button__line button__line--right"></span>
     <span class="button__line button__line--bottom"></span>
     <span class="button__line button__line--left"></span>
-    Manager
+    My Orders
   </a>
 
-  <a routerLink = "/driver" class = "button" *ngIf="isLoggedAndDriver">
+  <a routerLink = "/driver" (click)="activeDriverPage()" class = "button" [class.active]="isDriverPage" *ngIf="isLoggedAndDriver">
     <span class="button__line button__line--top"></span>
     <span class="button__line button__line--right"></span>
     <span class="button__line button__line--bottom"></span>
@@ -41,7 +41,7 @@ background-position: center right;"></div>
       <mat-icon>person_outline</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink = "/profile">
+      <button mat-menu-item routerLink = "/profile" (click)="activeProfilePage()">
         <mat-icon> contacts</mat-icon>
         <span>Profile</span>
       </button>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NotificationService} from "./services/notification.service";
+import {LoaderService} from "./services/loader.service";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,12 @@ import {NotificationService} from "./services/notification.service";
 })
 export class AppComponent {
 
-  constructor(public notificationService: NotificationService) {
+  constructor(public notificationService: NotificationService,
+              public loaderService: LoaderService) {
   }
+
+   get loading():boolean{
+    return this.loaderService.isLoading;
+  }
+
 }

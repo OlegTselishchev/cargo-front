@@ -77,14 +77,9 @@ table {
   height: 100%;
 }
 
-/*.mat-primary{*/
-/*  height: 100%;*/
-/*}*/
-
 :host ::ng-deep .mat-tab-body-wrapper{
   height: 85%;
 }
-
 
 
 

@@ -7,8 +7,8 @@
                 <input class="window" [(ngModel)]="newTrailer.name" [ngModelOptions]="{standalone: true}">
             </div>
             <div>
-                <label>Volume: (kbm) </label><br>
-                <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window" matInput
+                <label>Volume: (m3) </label><br>
+                <input onkeyup="this.value = this.value.replace(/[^\d]/g,'');" class="window"
                        [(ngModel)]="newTrailer.volume" [ngModelOptions]="{standalone: true}">
             </div>
             <div>
