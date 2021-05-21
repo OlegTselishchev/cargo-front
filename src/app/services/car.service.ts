@@ -12,7 +12,7 @@ export class CarService {
   }
 
   urlCar: string = 'https://app-cargo2020.herokuapp.com/car/';
-  //urlCar: string = 'http://localhost:9000/car/';
+  // urlCar: string = 'http://localhost:9000/car/';
 
 
 

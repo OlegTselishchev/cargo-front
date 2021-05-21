@@ -8,7 +8,7 @@ export class StatusService {
   }
 
   statusUrl: string = 'https://app-cargo2020.herokuapp.com/status/';
-  //statusUrl: string = 'http://localhost:9000/status/';
+  // statusUrl: string = 'http://localhost:9000/status/';
 
   public getStatus(){
     return this.http.get(this.statusUrl);

@@ -11,7 +11,7 @@ export class ClientService {
   }
 
   urlClient: string = 'https://app-cargo2020.herokuapp.com/client';
-  //urlClient: string = 'http://localhost:9000/client/';
+  // urlClient: string = 'http://localhost:9000/client/';
 
   public getClientAll() {
     return this.http.get(this.urlClient);

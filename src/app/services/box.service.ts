@@ -10,7 +10,7 @@ export class BoxService {
   }
 
   boxUrl: string = 'https://app-cargo2020.herokuapp.com/box/';
-  //boxUrl: string = 'http://localhost:9000/box/';
+  // boxUrl: string = 'http://localhost:9000/box/';
 
   public getBoxAll(){
     return this.http.get(this.boxUrl);

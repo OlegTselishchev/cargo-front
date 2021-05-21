@@ -42,10 +42,10 @@ export class OrderAddComponent implements OnInit {
   public boxList: Box[] = [];
   public statusList: Status[] = [];
 
-  dest33: Address = new Address();
-  loc33: Address = new Address();
-  box33: Box = new Box();
-  receiver33: Client = new Client();
+  dest: Address = new Address();
+  loc: Address = new Address();
+  box: Box = new Box();
+  receiver: Client = new Client();
   newOrder: Order = new Order();
 
   isLoaderAddress: boolean = false;
@@ -121,48 +121,48 @@ export class OrderAddComponent implements OnInit {
   }
 
   addDestination(dest: Address): void {
-    this.dest33 = dest;
+    this.dest = dest;
   }
 
   clearDest(): void {
     if (this.inputDest == '') {
-      this.dest33 = null;
+      this.dest = null;
     } else {
       return;
     }
   }
 
   addLocation(loc: Address): void {
-    this.loc33 = loc;
+    this.loc = loc;
   }
 
   clearLoc(): void {
     if (this.inputLoc == '') {
-       this.loc33 = null;
+       this.loc = null;
     } else {
       return;
     }
   }
 
   addReceiver(receiver: Client): void {
-    this.receiver33 = receiver;
+    this.receiver = receiver;
   }
 
   clearReceiver(): void {
     if (this.inputRec == '') {
-       this.receiver33 = null;
+       this.receiver = null;
     } else {
       return;
     }
   }
 
   addBox(box: Box): void {
-    this.box33 = box;
+    this.box = box;
   }
 
   clearBox(): void {
     if (this.inputBox == '') {
-       this.box33 = null;
+       this.box = null;
     } else {
       return;
     }
@@ -191,17 +191,17 @@ export class OrderAddComponent implements OnInit {
 
       let priceWithSale = 1;
 
-      if(this.box33 != null) {
-       priceWithSale = this.calculatePrice(this.box33.weight);
+      if(this.box != null) {
+       priceWithSale = this.calculatePrice(this.box.weight);
       }
 
     let order: Order = {
       name: 'order',
-      destination: this.dest33,
-      location: this.loc33,
-      box: this.box33,
+      destination: this.dest,
+      location: this.loc,
+      box: this.box,
       price: priceWithSale,
-      receiver: this.receiver33,
+      receiver: this.receiver,
       status: status,
       driver: null
     };
@@ -226,10 +226,10 @@ export class OrderAddComponent implements OnInit {
           }, 2000);
         });
 
-      this.box33 = null;
-      this.loc33 = null;
-      this.dest33 = null;
-      this.receiver33 = null;
+      this.box = null;
+      this.loc = null;
+      this.dest = null;
+      this.receiver = null;
 
       this.inputBox = '';
       this.inputRec = '';
